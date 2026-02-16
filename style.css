@@ -120,6 +120,12 @@ button {
     letter-spacing: -0.02em;
 }
 
+.brand-signature {
+    font-family: 'Mr Dafoe', cursive;
+    font-weight: 400;
+    font-size: 1.3rem;
+}
+
 .nav-menu {
     display: flex;
     flex-direction: column;
@@ -376,10 +382,15 @@ button {
 .hero-section {
     margin-bottom: 3rem;
     max-width: 800px;
+    text-align: center;
+}
+
+.hero-content {
+    width: 100%;
 }
 
 .hero-content h1 {
-    font-size: 5rem;
+    font-size: 4rem;
     font-weight: 900;
     margin-bottom: 1rem;
     line-height: 1;
@@ -395,7 +406,7 @@ button {
     color: #ff0000;
     background: none;
     -webkit-text-fill-color: #ff0000;
-    font-size: 6rem;
+    font-size: 5rem;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -572,8 +583,27 @@ button {
         /* Above header background */
     }
 
+    .brand {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .brand a {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .brand h2 {
+        white-space: nowrap;
+        font-size: 0.95rem;
+    }
+
+    .brand-signature {
+        font-size: 1.2rem;
+    }
+
     .hero-content h1 {
-        font-size: 2.25rem;
+        font-size: 2rem;
     }
 
     .grid {
