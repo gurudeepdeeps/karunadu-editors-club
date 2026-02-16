@@ -65,9 +65,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Event Listeners
     searchTrigger.addEventListener('click', openSearch);
-    
+
     closeSearch.addEventListener('click', closeSearchModal);
-    
+
     searchModal.addEventListener('click', (e) => {
         if (e.target === searchModal) closeSearchModal();
     });
@@ -78,14 +78,66 @@ document.addEventListener('DOMContentLoaded', () => {
         renderResults(filtered);
     });
 
+    // Mobile Menu Logic
+    const header = document.querySelector('.top-header');
+
+    // Create Mobile Menu Button
+    const mobileBtn = document.createElement('button');
+    mobileBtn.className = 'mobile-menu-btn';
+    mobileBtn.innerHTML = '☰'; // Simple hamburger icon
+
+    // Insert button before everything else in the header
+    if (header) {
+        header.insertBefore(mobileBtn, header.firstChild);
+
+        // Ensure button is visible on mobile via JS if CSS load triggers differently, 
+        // though CSS media query handles display: block/none.
+    }
+
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.createElement('div');
+    overlay.className = 'overlay';
+    document.body.appendChild(overlay);
+
+    function toggleSidebar() {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+    }
+
+    function closeSidebar() {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+    }
+
+    mobileBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleSidebar();
+    });
+
+    overlay.addEventListener('click', closeSidebar);
+
+    // Close sidebar when clicking a link inside it (mobile UX)
+    const sidebarLinks = sidebar.querySelectorAll('a');
+    sidebarLinks.forEach(link => {
+        link.addEventListener('click', closeSidebar);
+    });
+
+    // Handle Breadcrumbs more dynamically if possible, or leave as static
+    // The previous implementation of breadcrumbs was static HTML. 
+
     // Keyboard Shortcuts
     document.addEventListener('keydown', (e) => {
         if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
             e.preventDefault();
             openSearch();
         }
-        if (e.key === 'Escape' && searchModal.classList.contains('active')) {
-            closeSearchModal();
+        if (e.key === 'Escape') {
+            if (searchModal.classList.contains('active')) {
+                closeSearchModal();
+            }
+            if (sidebar.classList.contains('active')) {
+                closeSidebar();
+            }
         }
     });
 });

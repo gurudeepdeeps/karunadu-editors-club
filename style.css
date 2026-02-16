@@ -230,6 +230,10 @@ button {
     z-index: 20;
 }
 
+.mobile-menu-btn {
+    display: none;
+}
+
 .breadcrumb {
     color: var(--text-secondary);
     font-size: 0.85rem;
@@ -521,7 +525,38 @@ button {
 /* Responsive */
 @media (max-width: 768px) {
     .sidebar {
-        display: none;
+        display: flex;
+        /* Changed from none */
+        position: fixed;
+        left: -100%;
+        top: 0;
+        bottom: 0;
+        z-index: 100;
+        width: 80%;
+        /* Takes up most of the screen on mobile */
+        max-width: 300px;
+        transition: left 0.3s ease-in-out;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+
+    /* Mobile Menu Button */
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: none;
+        color: var(--text-primary);
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        margin-right: 0.5rem;
+        z-index: 30;
+        /* Above header background */
     }
 
     .hero-content h1 {
@@ -534,9 +569,32 @@ button {
 
     .top-header {
         padding: 0 1rem;
+        /* Ensure header items align correctly with the new button */
+        justify-content: space-between;
     }
 
     .content-scroll {
         padding: 5rem 1rem 2rem 1rem;
+    }
+
+    /* Overlay checks */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 90;
+        /* Below sidebar, above content */
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+        backdrop-filter: blur(2px);
+    }
+
+    .overlay.active {
+        opacity: 1;
+        pointer-events: all;
     }
 }
