@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel='icon' href='kec-logo.png' type='image/png'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mac Plugins - Karunadu Editors Club</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .plugin-tag {
+            color: #ff0000;
+            font-size: 0.9em;
+            margin-left: 0.5rem;
+        }
+
+        .section-header {
+            color: #ff0000;
+            font-size: 1.1rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        .note-text {
+            color: #ff4500;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            margin-top: 0.2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo-icon"></div>
+                <h2>Karunadu Editors Club</h2>
+            </div>
+            <nav class="nav-menu">
+                <div class="nav-item search-trigger">
+                    <span class="icon">🔍</span>
+                    <span>Search...</span>
+                    <span class="shortcut">⌘K</span>
+                </div>
+                <div class="nav-group">
+                    <h3>Start Here</h3>
+                    <a href="index.html" class="nav-link">
+                        <span class="icon">🏠</span>
+                        Introduction
+                    </a>
+                </div>
+                <div class="nav-group">
+                    <h3>Softwares</h3>
+                    <a href="windows-softwares.html" class="nav-link">Windows-Softwares</a>
+                    <a href="mac-softwares.html" class="nav-link">Mac-Softwares</a>
+                </div>
+                <div class="nav-group">
+                    <h3>Plugins</h3>
+                    <a href="windows-plugins.html" class="nav-link">Windows plug-ins</a>
+                    <a href="mac-plugins.html" class="nav-link active">Mac plug-ins</a>
+                    <a href="blender-addons.html" class="nav-link">Blender addons</a>
+                </div>
+                <div class="nav-group">
+                    <h3>Assets</h3>
+                    <a href="car-clips.html" class="nav-link">Car clips</a>
+                    <a href="vfx-pack.html" class="nav-link">VFX Pack</a>
+                    <a href="sfx-pack.html" class="nav-link">SFX Pack</a>
+                </div>
+                <div class="nav-group">
+                    <h3>Frequently Asked Questions</h3>
+                    <a href="general-questions.html" class="nav-link">General Questions</a>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="breadcrumb">Plugins</div>
+                <div class="header-actions">
+
+                    <a href="https://discord.gg/BpvfnZbvdB" target="_blank" class="social-link"><svg class="social-icon"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037 26.153 26.153 0 0 0-1.04 2.135 18.257 18.257 0 0 0-4.636 0 26.549 26.549 0 0 0-1.03-2.135.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.674 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
+                        </svg></a><a href="https://www.instagram.com/xpensivemedia.co" target="_blank"
+                        class="social-link"><svg class="social-icon" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
+                        </svg></a>
+                </div>
+            </header>
+            <div class="content-scroll">
+                <section class="hero-section">
+                    <div class="hero-content">
+                        <h1>Mac <span class="highlight">plug-ins</span></h1>
+                        <h2 style="font-size: 2.5rem; margin-top: 0.5rem; color: #ffffff; font-weight: 500;">Adobe
+                            Plugins</h2>
+                    </div>
+                </section>
+
+                <section class="software-page-container">
+                    <p class="password-note" style="color: #ff0000; font-style: italic;">
+                        Pass - Join our <a href="https://discord.gg/BpvfnZbvdB" target="_blank"
+                            style="color: #fff; text-decoration: underline;">Discord server</a> to unlock the password
+                    </p>
+
+                    <div class="software-category">
+                        <h3>BorisFX</h3>
+                        <div class="software-list">
+                            <div class="list-item">
+                                <a href="#" class="software-link">BorisFX Continuum (BCC) 2025</a>
+                            </div>
+                            <div class="list-item">
+                                <a href="#" class="software-link">BorisFX Optics 2025</a>
+                            </div>
+                            <div class="list-item">
+                                <a href="#" class="software-link">BorisFX Sapphire 2025</a>
+                            </div>
+                            <div class="list-item">
+                                <a href="#" class="software-link">MochaPro2023</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="software-category">
+                        <h3>Maxon</h3>
+                        <div class="software-list">
+                            <div class="list-item">
+                                <a href="#" class="software-link">RedGiant Maxon Bundle 2025</a>
+                                <p class="note-text">Includes Red Giant 2025.2.1 (Magic Bullet Suite, Trapcode Suite &
+                                    VFX Suite) and Universe 2025.1.1.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="software-category">
+                        <h3>Video Copilot</h3>
+                        <div class="software-list">
+                            <div class="list-item">
+                                <a href="#" class="software-link">Element 3D 2.2.3 (2190)</a>
+                            </div>
+                            <div class="list-item">
+                                <a href="#" class="software-link">Optical Flares 1.3.8</a>
+                            </div>
+                            <div class="list-item">
+                                <a href="#" class="software-link">Pro Shaders 1</a>
+                            </div>
+                            <div class="list-item">
+                                <a href="#" class="software-link">Saber</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="software-category">
+                        <h3>RE:Vision FX</h3>
+                        <div class="software-list">
+                            <div class="list-item"><a href="#" class="software-link">RE:Vision Effections 2403 (2024
+                                    Bundle)</a></div>
+                            <p class="note-text">Includes all plugins by RE:VisionFX (<a href="#"
+                                    style="color:#fff; text-decoration:underline;">full list here</a>), including RSMB
+                                6.4.1 & Twixtor 7.5.5.</p>
+                        </div>
+                    </div>
+
+                    <div class="software-category">
+                        <h3>ElementSupply Co</h3>
+                        <div class="software-list">
+                            <div class="list-item"><a href="#" class="software-link">Glitchify</a></div>
+                        </div>
+                    </div>
+
+                    <div class="software-category">
+                        <h3>Plug-ins</h3>
+                        <div class="software-list">
+                            <div class="list-item"><a href="#" class="software-link">Discotext v1.2.5</a></div>
+                            <div class="list-item"><a href="#" class="software-link">Deep Glow 2 v1.1.0</a></div>
+                        </div>
+                    </div>
+
+                    <div class="software-category">
+                        <h3>Extensions</h3>
+                        <p style="color: #ff0000; font-style: italic; margin-bottom: 1rem;">Extensions and plugins work
+                            on both Mac and Windows</p>
+                        <div class="software-list">
+                            <div class="list-item"><a href="#" class="software-link">Flow</a></div>
+                            <div class="list-item"><a href="#" class="software-link">JryMedia.JerryFlow.V2.v2.3.1</a>
+                            </div>
+                            <div class="list-item"><a href="#" class="software-link">JerrySFX</a></div>
+                            <div class="list-item"><a href="#" class="software-link">Shake Sauce</a></div>
+                            <div class="list-item"><a href="#" class="software-link">TrueCompDuplicator3.9.11</a></div>
+                            <div class="list-item"><a href="#" class="software-link">Swiss_Knife_v1.2.2</a></div>
+                            <div class="list-item"><a href="#" class="software-link">Shadow_Studio_3_V1.0.8</a></div>
+                            <div class="list-item"><a href="#" class="software-link">Super_Morphings_v1.0.5</a></div>
+                            <div class="list-item"><a href="#" class="software-link">Light Patterns</a></div>
+                            <div class="list-item"><a href="#" class="software-link">Coco Color CoWorker</a></div>
+                            <div class="list-item"><a href="#" class="software-link">3D Extruder</a></div>
+                            <div class="list-item"><a href="#" class="software-link">Signal</a></div>
+                            <div class="list-item"><a href="#" class="software-link">Trim-Pack</a></div>
+                            <div class="list-item"><a href="#" class="software-link">EZ TOOLS</a></div>
+                            <div class="list-item"><a href="#"
+                                    class="software-link">Auto_Motion_Tracker_For_Objects_v1.2.1</a></div>
+                            <div class="list-item"><a href="#" class="software-link">PrimeTools_By_Naughtyyjuan</a>
+                            </div>
+                            <div class="list-item"><a href="#" class="software-link">Glitchify</a></div>
+                            <div class="list-item"><a href="#" class="software-link">OminoSuite</a></div>
+                            <div class="list-item"><a href="#" class="software-link">PixDither</a></div>
+                            <div class="list-item"><a href="#" class="software-link">Plexus</a></div>
+                        </div>
+                    </div>
+
+                    <div class="page-footer-legal">
+                        <p>all content provided on this website is for educational and personal use only.<br>
+                            we do not host or store any copyrighted material on our servers. all files shared here are
+                            either free, open-source, or submitted by the community for educational purposes.<br>
+                            if you are the rightful owner of any material and wish to request its removal, please
+                            contact
+                            us, and we will act<br><br>
+                            promptly.copyright ©Editorsclub 2025. all rights reserved.<br>
+                            this website is not affiliated with or endorsed by any software companies mentioned.</p>
+                    </div>
+
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
