@@ -388,6 +388,7 @@ button {
 
 .hero-content {
     width: 100%;
+    position: relative;
 }
 
 .hero-content h1 {
@@ -603,20 +604,6 @@ button {
         font-size: 1.2rem;
     }
 
-    .hero-content h1 {
-        font-size: 2rem;
-        display: block;
-    }
-
-    .hero-content .highlight {
-        font-size: 2.5rem;
-        position: relative;
-        transform: none;
-        left: auto;
-        top: auto;
-        display: inline;
-    }
-
     .grid {
         grid-template-columns: 1fr;
     }
@@ -629,12 +616,26 @@ button {
 
     .hero-section {
         overflow: visible;
+        min-height: auto;
+        margin-bottom: 2rem;
+    }
+
+    .hero-content h1 {
+        font-size: 1.75rem;
+        min-height: auto;
+        line-height: 1.2;
+    }
+
+    .hero-content .highlight {
+        font-size: 2.2rem;
     }
 
     .content-scroll {
         padding: 5rem 1rem 2rem 1rem;
-        overflow-y: auto !important;
+        overflow-y: scroll !important;
         -webkit-overflow-scrolling: touch !important;
+        min-height: 100vh;
+        height: auto;
     }
 
     /* Overlay checks */
