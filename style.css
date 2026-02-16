@@ -91,6 +91,19 @@ button {
     padding: 0 0.5rem;
 }
 
+.brand a {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s ease;
+}
+
+.brand a:hover {
+    opacity: 0.8;
+}
+
 .logo-icon {
     width: 40px;
     height: 40px;
