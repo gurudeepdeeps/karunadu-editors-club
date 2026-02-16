@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     searchModal.innerHTML = `
         <div class="search-content">
             <div class="search-header">
-                <input type="text" placeholder="Search pages..." id="searchInput" autofocus>
+                <input type="text" placeholder="Search pages..." id="searchInput">
                 <button class="close-search">Esc</button>
             </div>
             <div class="search-results" id="searchResults"></div>
