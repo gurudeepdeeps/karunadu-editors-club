@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const disabledRoutes = ['blender-addons.html'];
+
+    const currentPage = window.location.pathname.split('/').pop().toLowerCase();
+    if (disabledRoutes.includes(currentPage)) {
+        window.location.replace('index.html');
+        return;
+    }
+
     // Search Functionality
     const searchTrigger = document.querySelector('.search-trigger');
     const searchModal = document.createElement('div');
@@ -25,12 +33,20 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: 'Mac Softwares', url: 'mac-softwares.html', icon: '🍎' },
         { title: 'Windows Plugins', url: 'windows-plugins.html', icon: '🔌' },
         { title: 'Mac Plugins', url: 'mac-plugins.html', icon: '⚡' },
-        { title: 'Blender Addons', url: 'blender-addons.html', icon: '🧊' },
         { title: 'Car Clips', url: 'car-clips.html', icon: '🚗' },
         { title: 'VFX Pack', url: 'vfx-pack.html', icon: '🔥' },
         { title: 'SFX Pack', url: 'sfx-pack.html', icon: '🔊' },
         { title: 'FAQ', url: 'general-questions.html', icon: '❓' }
     ];
+
+    const blenderLinks = document.querySelectorAll('a[href="blender-addons.html"]');
+    blenderLinks.forEach(link => {
+        link.classList.add('disabled-link');
+        link.setAttribute('aria-disabled', 'true');
+        link.setAttribute('title', 'Temporarily unavailable');
+        link.style.pointerEvents = 'none';
+        link.style.opacity = '0.5';
+    });
 
     function openSearch() {
         searchModal.classList.add('active');
