@@ -1,0 +1,18 @@
+{
+  "name": "kec-community-backend",
+  "version": "1.0.0",
+  "description": "Cloudflare Workers + D1 + R2 Backend for Karunadu Editors Club Community Chat",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:init": "wrangler d1 execute kec-chat-db --local --file=./schema.sql",
+    "db:init:prod": "wrangler d1 execute kec-chat-db --remote --file=./schema.sql"
+  },
+  "keywords": ["cloudflare", "workers", "d1", "r2", "chat", "karunadu-editors-club"],
+  "author": "Karunadu Editors Club",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.78.0"
+  }
+}

@@ -16,8 +16,7 @@
 - **Mission:** Democratizing creative tools and professional digital workflows for video editors, motion graphics designers, colorists, 3D artists, and content creators.
 - **Geographic Focus (GEO):** Based in Karnataka, India (Latitude: 12.9716, Longitude: 77.5946), serving Kannada-speaking and global international editing communities.
 - **Primary Community Touchpoints:**
-  - Official Discord Community: https://discord.gg/BpvfnZbvdB (Help desk, plugin discussion, workflow feedback)
-  - Instagram Channel: https://www.instagram.com/xpensivemedia.co (Reels, creative showcases, updates)
+  - Official Community Chat: https://karunadueditorsclub.vercel.app/community-chat (Live help desk, plugin discussion, workflow feedback)
   - GitHub Repository: https://github.com/gurudeepdeeps/karunadu-editors-club (Open source code, bug reporting, link issue triage)
 
 ---
@@ -137,6 +136,7 @@
 | `/car-clips` | 4K Car Footage Vault | `https://karunadueditorsclub.vercel.app/car-clips` |
 | `/vfx-pack` | Visual Effects & Overlays Collection | `https://karunadueditorsclub.vercel.app/vfx-pack` |
 | `/sfx-pack` | Sound Effects & Foley Library | `https://karunadueditorsclub.vercel.app/sfx-pack` |
+| `/community-chat` | Live Interactive Community Chat & Help Room | `https://karunadueditorsclub.vercel.app/community-chat` |
 | `/general-questions` | FAQ & Video Editing Guide | `https://karunadueditorsclub.vercel.app/general-questions` |
 | `/contact` | Help Desk & Support Inquiries | `https://karunadueditorsclub.vercel.app/contact` |
 | `/community-guidelines` | Member Conduct & Etiquette | `https://karunadueditorsclub.vercel.app/community-guidelines` |
@@ -155,6 +155,6 @@
 1. **Client-Side Command Palette:** Real-time fuzzy page lookup accessible via keyboard shortcuts `⌘K` (macOS) or `Ctrl+K` (Windows/Linux) and `Esc` to close.
 2. **Offline Detection:** Active window listener that triggers an accessible high-visibility alert banner when network connection drops.
 3. **Zero Tracking Cookies:** The site does not set HTTP cookies, analytics trackers, advertising beacons, or session database identifiers.
-4. **Third-Party External Links:** All outbound links to Google Drive, Discord, Instagram, and GitHub are strictly sandboxed with `target="_blank" rel="noopener noreferrer"`.
+4. **Third-Party External Links:** All outbound links to Google Drive and GitHub are strictly sandboxed with `target="_blank" rel="noopener noreferrer"`.
 5. **No Proprietary File Hosting:** Karunadu Editors Club does not store binary archives on its web servers; all resources are hosted on external third-party mirrors.
-6. **DMCA Compliance:** Content removal requests are processed promptly via the Discord moderation team or GitHub Issue tracker upon receipt of valid copyright ownership verification.
+6. **DMCA Compliance:** Content removal requests are processed promptly via our Community Chat moderators or GitHub Issue tracker upon receipt of valid copyright ownership verification.

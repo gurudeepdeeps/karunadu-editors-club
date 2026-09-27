@@ -1,0 +1,1930 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" type="image/png" sizes="32x32" href="/kec-logo.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="/kec-logo.png?v=2">
+    <link rel="shortcut icon" href="/kec-logo.png?v=2" type="image/png">
+    <link rel="apple-touch-icon" href="/kec-logo.png?v=2">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Join the Karunadu Editors Club community chat & help room. Connect with Kannada editors, ask troubleshooting questions, and get project feedback.">
+    <meta name="keywords"
+        content="karunadu editors club chat, kannada editors chat, video editing community chat, editors help desk, premiere pro help, after effects help bangalore">
+    <meta name="author" content="Karunadu Editors Club">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+    <link rel="canonical" href="https://karunadueditorsclub.vercel.app/community-chat">
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:title" content="Community Chat & Editor Help Room | Karunadu Editors Club">
+    <meta property="og:description"
+        content="Connect with fellow Kannada video editors, ask questions in real-time, get editing feedback, and join our creative lounge.">
+    <meta property="og:image" content="https://karunadueditorsclub.vercel.app/kec-logo.png">
+    <meta property="og:url" content="https://karunadueditorsclub.vercel.app/community-chat">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Karunadu Editors Club">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Community Chat & Editor Help Room | Karunadu Editors Club">
+    <meta name="twitter:description"
+        content="Connect with fellow Kannada video editors, ask questions in real-time, get editing feedback, and join our creative lounge.">
+    <meta name="twitter:image" content="https://karunadueditorsclub.vercel.app/kec-logo.png">
+
+    <!-- Structured Data (JSON-LD) for LocalBusiness & Breadcrumb -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://karunadueditorsclub.vercel.app/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Community Chat & Help",
+      "item": "https://karunadueditorsclub.vercel.app/community-chat"
+    }
+  ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Karunadu Editors Club",
+  "alternateName": "KEC",
+  "description": "Karnataka's premier community platform and curated creative directory for video editors, motion designers, and VFX artists.",
+  "url": "https://karunadueditorsclub.vercel.app/",
+  "logo": "https://karunadueditorsclub.vercel.app/kec-logo.png",
+  "image": "https://karunadueditorsclub.vercel.app/kec-logo.png",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Bengaluru",
+    "addressRegion": "Karnataka",
+    "addressCountry": "IN"
+  },
+  "sameAs": [
+    "https://github.com/gurudeepdeeps/karunadu-editors-club"
+  ],
+  "priceRange": "Free"
+}
+    </script>
+
+    <title>Community Chat &amp; Help Room | Karunadu Editors Club</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="script.min.js" defer></script>
+
+    <style>
+        /* Fill available viewport space smoothly */
+        .chat-page-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .chat-app-wrapper {
+            display: grid;
+            grid-template-columns: 240px 1fr 240px;
+            height: calc(100vh - 170px);
+            min-height: 520px;
+            background: #0f1115;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        /* Channel Column */
+        .chat-channels-col {
+            background: #14171d;
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .server-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #101217;
+        }
+
+        .server-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .room-badge {
+            background: #e11d48;
+            color: #fff;
+            font-size: 0.65rem;
+            padding: 0.15rem 0.45rem;
+            border-radius: 4px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .channels-list {
+            padding: 0.75rem 0.5rem;
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .channel-category {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #71717a;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.75rem 0.5rem 0.25rem;
+        }
+
+        .channel-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: 6px;
+            color: #9ca3af;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: all 0.15s ease;
+            width: 100%;
+        }
+
+        .channel-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+
+        .channel-btn.active {
+            background: rgba(225, 29, 72, 0.15);
+            color: #fff;
+            border-left: 3px solid #e11d48;
+        }
+
+        .channel-icon {
+            color: #71717a;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .channel-btn.active .channel-icon {
+            color: #e11d48;
+        }
+
+        .chat-info-footer {
+            padding: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            background: #0d0f13;
+            font-size: 0.75rem;
+            color: #71717a;
+            line-height: 1.4;
+        }
+
+        .chat-info-footer strong {
+            color: #e5e7eb;
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+
+        /* Chat Main Area */
+        .chat-main-col {
+            display: flex;
+            flex-direction: column;
+            background: #0f1115;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .chat-header-bar {
+            height: 52px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.25rem;
+            background: #12151b;
+            flex-shrink: 0;
+        }
+
+        .current-channel-info {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            overflow: hidden;
+        }
+
+        .channel-heading {
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: #fff;
+            white-space: nowrap;
+        }
+
+        .channel-topic {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            border-left: 1px solid var(--border-color);
+            padding-left: 0.6rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .retention-notice-bar {
+            background: rgba(234, 179, 8, 0.08);
+            border-bottom: 1px solid rgba(234, 179, 8, 0.2);
+            padding: 0.4rem 1.25rem;
+            font-size: 0.74rem;
+            color: #eab308;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            flex-shrink: 0;
+        }
+
+        .chat-messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+            scroll-behavior: smooth;
+        }
+
+        .msg-row {
+            display: flex;
+            gap: 0.85rem;
+            align-items: flex-start;
+            animation: fadeIn 0.2s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .msg-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .avatar-red {
+            background: linear-gradient(135deg, #ef4444, #b91c1c);
+        }
+
+        .avatar-purple {
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+        }
+
+        .avatar-blue {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+
+        .avatar-green {
+            background: linear-gradient(135deg, #10b981, #047857);
+        }
+
+        .avatar-amber {
+            background: linear-gradient(135deg, #f59e0b, #b45309);
+        }
+
+        .msg-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .msg-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+            flex-wrap: wrap;
+        }
+
+        .msg-sender {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .msg-role {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.1rem 0.35rem;
+            border-radius: 3px;
+            letter-spacing: 0.04em;
+        }
+
+        .role-founder {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+        }
+
+        .role-mod {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+        }
+
+        .role-pro {
+            background: rgba(168, 85, 247, 0.2);
+            color: #c084fc;
+            border: 1px solid rgba(168, 85, 247, 0.4);
+        }
+
+        .role-member {
+            background: rgba(156, 163, 175, 0.15);
+            color: #9ca3af;
+            border: 1px solid rgba(156, 163, 175, 0.25);
+        }
+
+        .msg-time {
+            font-size: 0.72rem;
+            color: #6b7280;
+        }
+
+        .msg-text {
+            font-size: 0.92rem;
+            color: #d1d5db;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+
+        .msg-code-block {
+            background: #181b22;
+            border: 1px solid #27272a;
+            border-radius: 6px;
+            padding: 0.6rem 0.8rem;
+            font-family: monospace;
+            font-size: 0.84rem;
+            color: #10b981;
+            margin-top: 0.4rem;
+            overflow-x: auto;
+        }
+
+        /* Image Attachment Preview in Messages */
+        .msg-attachment-wrap {
+            margin-top: 0.6rem;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #27272a;
+            max-width: 380px;
+            background: #14171d;
+        }
+
+        .msg-attachment-img {
+            width: 100%;
+            max-height: 240px;
+            object-fit: cover;
+            display: block;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .msg-attachment-img:hover {
+            transform: scale(1.02);
+        }
+
+        .msg-attachment-meta {
+            padding: 0.4rem 0.6rem;
+            font-size: 0.7rem;
+            color: #9ca3af;
+            display: flex;
+            justify-content: space-between;
+            background: #101217;
+            border-top: 1px solid #1f242e;
+        }
+
+        .msg-reactions {
+            display: flex;
+            gap: 0.4rem;
+            margin-top: 0.4rem;
+        }
+
+        .reaction-tag {
+            background: #1c202a;
+            border: 1px solid #2d3343;
+            border-radius: 12px;
+            padding: 0.15rem 0.45rem;
+            font-size: 0.78rem;
+            color: #9ca3af;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            user-select: none;
+            transition: all 0.15s;
+        }
+
+        .reaction-tag:hover {
+            border-color: #ef4444;
+            color: #fff;
+        }
+
+        .reaction-tag.reacted {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+        }
+
+        /* Attachment Queue Strip Above Input */
+        .attachment-preview-bar {
+            display: none;
+            padding: 0.5rem 1.25rem;
+            background: #161922;
+            border-top: 1px solid var(--border-color);
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .preview-thumb-box {
+            position: relative;
+            width: 52px;
+            height: 52px;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #3b4252;
+        }
+
+        .preview-thumb-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .preview-remove-btn {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            background: rgba(0, 0, 0, 0.75);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .preview-details {
+            flex: 1;
+            font-size: 0.78rem;
+            color: #d1d5db;
+        }
+
+        .preview-details span {
+            color: #eab308;
+            font-size: 0.72rem;
+            display: block;
+        }
+
+        /* Chat Input Section */
+        .chat-input-wrapper {
+            padding: 0.75rem 1.25rem;
+            background: #12151b;
+            border-top: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .chat-input-box {
+            background: #1a1e27;
+            border: 1px solid #2d3343;
+            border-radius: 8px;
+            padding: 0.45rem 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .chat-input-box:focus-within {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+        }
+
+        .chat-text-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 0.92rem;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .chat-action-btn {
+            background: transparent;
+            border: none;
+            color: #9ca3af;
+            cursor: pointer;
+            padding: 0.4rem;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+            font-size: 1rem;
+        }
+
+        .chat-action-btn:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .send-btn {
+            background: #ef4444;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 0.45rem 1rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+
+        /* User Authentication & Onboarding Styles */
+        .auth-user-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-color);
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+
+        .auth-user-badge .user-avatar-mini {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ef4444, #f97316);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .auth-logout-btn {
+            background: none;
+            border: none;
+            color: #9ca3af;
+            cursor: pointer;
+            font-size: 0.72rem;
+            text-decoration: underline;
+            padding: 0 0.2rem;
+        }
+
+        .auth-logout-btn:hover {
+            color: #f87171;
+        }
+
+        .chat-login-gate-banner {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(15, 23, 42, 0.95));
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .google-auth-btn {
+            background: #ffffff;
+            color: #1f2937;
+            font-size: 0.86rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.5rem 1.1rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            white-space: nowrap;
+        }
+
+        .google-auth-btn:hover {
+            background: #f3f4f6;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Onboarding Modal */
+        .onboarding-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .onboarding-card {
+            background: #14171d;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(239, 68, 68, 0.25);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 440px;
+            padding: 1.75rem;
+            animation: fadeIn 0.25s ease-out;
+        }
+
+        .onboarding-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.35rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .onboarding-desc {
+            font-size: 0.86rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.45;
+        }
+
+        .onboarding-form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .onboarding-label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #d1d5db;
+            margin-bottom: 0.4rem;
+        }
+
+        .onboarding-input {
+            width: 100%;
+            background: #1a1e27;
+            border: 1px solid #2d3343;
+            border-radius: 8px;
+            padding: 0.65rem 0.85rem;
+            color: #fff;
+            font-size: 0.92rem;
+            font-family: inherit;
+            outline: none;
+            transition: border 0.15s;
+        }
+
+        .onboarding-input:focus {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+        }
+
+        .avatar-color-picker {
+            display: flex;
+            gap: 0.6rem;
+            margin-top: 0.5rem;
+        }
+
+        .color-radio-opt {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.15s;
+        }
+
+        .color-radio-opt.selected {
+            border-color: #fff;
+            transform: scale(1.15);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .send-btn:hover {
+            background: #dc2626;
+        }
+
+        .send-btn:disabled,
+        .send-btn.cooldown {
+            background: #374151 !important;
+            color: #9ca3af !important;
+            cursor: not-allowed !important;
+            opacity: 0.7;
+        }
+
+        .slowmode-status {
+            display: none;
+            align-items: center;
+            gap: 0.35rem;
+            color: #f59e0b;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Active Members Sidebar */
+        .chat-members-col {
+            background: #14171d;
+            border-left: 1px solid var(--border-color);
+            padding: 1rem 0.75rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .members-group-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #71717a;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.35rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .member-card {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.4rem 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .member-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .member-avatar-wrap {
+            position: relative;
+        }
+
+        .small-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+
+        .online-dot {
+            width: 9px;
+            height: 9px;
+            background: #22c55e;
+            border: 2px solid #14171d;
+            border-radius: 50%;
+            position: absolute;
+            bottom: -1px;
+            right: -1px;
+        }
+
+        .member-details {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .member-name {
+            font-size: 0.84rem;
+            font-weight: 600;
+            color: #e5e7eb;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .member-status {
+            font-size: 0.7rem;
+            color: #9ca3af;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Image modal overlay for previewing full screenshots */
+        .image-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .image-modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+        }
+
+        @media (max-width: 900px) {
+            .chat-app-wrapper {
+                grid-template-columns: 200px 1fr;
+            }
+
+            .chat-members-col {
+                display: none;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .chat-app-wrapper {
+                grid-template-columns: 1fr;
+                height: calc(100vh - 150px);
+            }
+
+            .chat-channels-col {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <a href="index.html">
+                    <img src="kec-logo.png" alt="Karunadu Editors Club Logo" class="logo-icon">
+                    <h2>Karunadu Editors <span class="brand-signature">Club</span></h2>
+                </a>
+            </div>
+
+            <nav class="nav-menu" aria-label="Main Navigation">
+                <div class="nav-item search-trigger" role="button" tabindex="0" aria-label="Search resources">
+                    <span class="icon">🔍</span>
+                    <span>Search...</span>
+                    <span class="shortcut">⌘K</span>
+                </div>
+
+                <div class="nav-group">
+                    <h3>Start Here</h3>
+                    <a href="index.html" class="nav-link">
+                        <span class="icon">🏠</span>
+                        Introduction
+                    </a>
+                </div>
+
+                <div class="nav-group">
+                    <h3>Softwares</h3>
+                    <a href="windows-softwares.html" class="nav-link">Windows-Softwares</a>
+                    <a href="mac-softwares.html" class="nav-link">Mac-Softwares</a>
+                </div>
+
+                <div class="nav-group">
+                    <h3>Plugins</h3>
+                    <a href="windows-plugins.html" class="nav-link">Windows plug-ins</a>
+                    <a href="mac-plugins.html" class="nav-link">Mac plug-ins</a>
+                    <a href="blender-addons.html" class="nav-link">Blender addons</a>
+                </div>
+
+                <div class="nav-group">
+                    <h3>Assets</h3>
+                    <a href="car-clips.html" class="nav-link">Car clips</a>
+                    <a href="vfx-pack.html" class="nav-link">VFX Pack</a>
+                    <a href="sfx-pack.html" class="nav-link">SFX Pack</a>
+                </div>
+
+                <div class="nav-group">
+                    <h3>Help &amp; Community</h3>
+                    <a href="community-chat.html" class="nav-link active">
+                        <span class="icon">💬</span>
+                        Community Chat &amp; Help
+                    </a>
+                    <a href="general-questions.html" class="nav-link">General Questions</a>
+                    <a href="contact.html" class="nav-link">Contact &amp; Support</a>
+                    <a href="community-guidelines.html" class="nav-link">Community Guidelines</a>
+                </div>
+
+                <div class="nav-group">
+                    <h3>Legal</h3>
+                    <a href="privacy.html" class="nav-link">Privacy Policy</a>
+                    <a href="terms.html" class="nav-link">Terms of Service</a>
+                    <a href="cookie-policy.html" class="nav-link">Cookie Policy</a>
+                    <a href="disclaimer.html" class="nav-link">Disclaimer</a>
+                    <a href="accessibility.html" class="nav-link">Accessibility</a>
+                    <a href="security.html" class="nav-link">Security</a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <ol style="display:inline-flex;list-style:none;padding:0;margin:0;gap:0.4rem;">
+                        <li><a href="index.html" style="color:var(--text-secondary);text-decoration:underline;">Home</a>
+                        </li>
+                        <li><span>/</span></li>
+                        <li><span style="color:var(--text-primary);">Community Chat &amp; Help</span></li>
+                    </ol>
+                </nav>
+                <div class="header-actions" style="display:flex; align-items:center; gap:0.75rem;">
+                    <!-- User Auth Info Pill -->
+                    <div id="headerAuthSlot"></div>
+                    <a href="community-chat.html" aria-label="Community Chat & Help Room" class="social-link active"
+                        title="Community Chat & Help Room">
+                        <svg class="social-icon" aria-hidden="true" viewBox="0 0 24 24"
+                            style="fill: var(--text-primary);">
+                            <path
+                                d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" />
+                        </svg>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Scrollable content wrapper with full vertical control -->
+            <div class="content-scroll" style="padding-top: 4.5rem; padding-bottom: 2rem;">
+                <div class="chat-page-container">
+                    <div style="margin-bottom: 0.75rem;">
+                        <h1 style="font-size: 1.75rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">
+                            Community Chat &amp; Help Room
+                        </h1>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                            Live peer support room for Kannada &amp; global video editors. Ask installation questions,
+                            solve crashes, and get constructive render feedback.
+                        </p>
+                    </div>
+
+                    <!-- Interactive Chat Application -->
+                    <div class="chat-app-wrapper">
+                        <!-- Channels Sidebar (Cleaned to 4 Core Channels) -->
+                        <aside class="chat-channels-col" aria-label="Chat Channels">
+                            <div class="server-header">
+                                <span class="server-title">
+                                    <span>KEC Lounge</span>
+                                    <span class="room-badge">ROOM</span>
+                                </span>
+                                <span style="font-size:0.75rem; color:#10b981; font-weight:600;">● Online</span>
+                            </div>
+
+                            <div class="channels-list">
+                                <div class="channel-category">Channels</div>
+                                <button type="button" class="channel-btn active" data-channel="general-chat">
+                                    <span class="channel-icon">#</span> general-chat
+                                </button>
+                                <button type="button" class="channel-btn" data-channel="editing-help">
+                                    <span class="channel-icon">#</span> editing-help
+                                </button>
+                                <button type="button" class="channel-btn" data-channel="announcements">
+                                    <span class="channel-icon">📢</span> announcements
+                                </button>
+                                <button type="button" class="channel-btn" data-channel="rules">
+                                    <span class="channel-icon">📜</span> rules-and-faq
+                                </button>
+                            </div>
+
+                            <div class="chat-info-footer">
+                                <strong>Auto-Purge Active</strong>
+                                <span>Uploaded files &amp; screenshots automatically expire after 24 hours to preserve
+                                    storage.</span>
+                            </div>
+                        </aside>
+
+                        <!-- Chat Stream Main Box -->
+                        <section class="chat-main-col" aria-label="Live Chat Room">
+                            <div class="chat-header-bar">
+                                <div class="current-channel-info">
+                                    <span class="channel-heading" id="channelHeaderTitle"># general-chat</span>
+                                    <span class="channel-topic" id="channelHeaderTopic">General discussion for Karnataka
+                                        editors, gear, tips &amp; creative workflows</span>
+                                </div>
+                                <div style="font-size:0.75rem; color:#71717a; white-space:nowrap;">
+                                    <span>Enter to send</span>
+                                </div>
+                            </div>
+
+                            <!-- 24h Expiry Warning Banner -->
+                            <div class="retention-notice-bar">
+                                <span>⚠️</span>
+                                <span><strong>Notice:</strong> Attached files &amp; error screenshots are automatically
+                                    deleted after 1 day (24 hours).</span>
+                            </div>
+
+                            <!-- Messages Scroll Container -->
+                            <div class="chat-messages-container" id="chatMessagesList" role="log" aria-live="polite">
+                                <!-- Messages rendered dynamically -->
+                            </div>
+
+                            <!-- Attachment Preview Strip (shown when user selects a file) -->
+                            <div class="attachment-preview-bar" id="attachmentPreviewBar">
+                                <div class="preview-thumb-box">
+                                    <img id="previewThumbImg" src="" alt="Selected Screenshot"
+                                        class="preview-thumb-img">
+                                    <button type="button" class="preview-remove-btn" onclick="clearSelectedAttachment()"
+                                        title="Remove file">✕</button>
+                                </div>
+                                <div class="preview-details">
+                                    <strong id="previewFileName">screenshot.png</strong>
+                                    <span>Expires automatically in 24 hours</span>
+                                </div>
+                            </div>
+
+                            <!-- Typing Indicator -->
+                            <div id="typingIndicator"
+                                style="display:none; padding:0 1.25rem 0.4rem; font-size:0.75rem; color:#9ca3af; font-style:italic;">
+                                An editor is typing...
+                            </div>
+
+                            <!-- Chat Input Box -->
+                            <div class="chat-input-wrapper">
+                                <!-- Login Required Gate Notice (Shown to unauthenticated guests) -->
+                                <div id="chatLoginGate" class="chat-login-gate-banner" style="display:none;">
+                                    <div>
+                                        <div
+                                            style="font-weight:700; color:#fff; font-size:0.95rem; margin-bottom:0.15rem;">
+                                            🔒 Google Sign-In Required
+                                        </div>
+                                        <div style="color:var(--text-secondary); font-size:0.8rem;">
+                                            Log in with your Google account to send messages, ask for help, and upload
+                                            error screenshots.
+                                        </div>
+                                    </div>
+                                    <button type="button" class="google-auth-btn" onclick="triggerGoogleLogin()">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                                            <path fill="#4285F4"
+                                                d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.67v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.16z" />
+                                            <path fill="#34A853"
+                                                d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.24v3.15C3.26 21.36 7.33 24 12 24z" />
+                                            <path fill="#FBBC05"
+                                                d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.24C.45 8.16 0 9.97 0 12s.45 3.84 1.24 5.42l4.04-3.15z" />
+                                            <path fill="#EA4335"
+                                                d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.24 6.58l4.04 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
+                                        </svg>
+                                        <span>Sign in with Google</span>
+                                    </button>
+                                </div>
+
+                                <form id="chatForm" onsubmit="handleSendMessage(event)">
+                                    <div class="chat-input-box">
+                                        <!-- Hidden real file input -->
+                                        <input type="file" id="fileUploadInput"
+                                            accept="image/*,.png,.jpg,.jpeg,.webp,.gif" style="display:none;"
+                                            onchange="handleFileSelected(event)">
+
+                                        <!-- Attachment Button -->
+                                        <button type="button" class="chat-action-btn"
+                                            title="Attach error screenshot or image (Deleted after 24h)"
+                                            onclick="document.getElementById('fileUploadInput').click()">
+                                            📎
+                                        </button>
+
+                                        <!-- Message Input -->
+                                        <input type="text" id="chatMessageInput" class="chat-text-input"
+                                            placeholder="Message #general-chat... (Type a question or error message)"
+                                            autocomplete="off">
+
+                                        <!-- Send Button (No emoji beside it) -->
+                                        <button type="submit" class="send-btn" id="sendBtn">
+                                            Send
+                                        </button>
+                                    </div>
+                                </form>
+                                <div
+                                    style="display:flex; justify-content:space-between; align-items:center; margin-top:0.4rem; font-size:0.72rem; color:#6b7280; flex-wrap:wrap; gap:0.25rem;">
+                                    <div style="display:flex; align-items:center; gap:0.5rem;">
+                                        <span>Please follow our <a href="community-guidelines.html"
+                                                style="color:#f87171; text-decoration:underline;">Community
+                                                Guidelines</a>.</span>
+                                        <span id="slowmodeNotice" class="slowmode-status">
+                                            ⏳ Slowmode active: <span id="cooldownTimer">30</span>s
+                                        </span>
+                                    </div>
+                                    <span>KEC Cloud Lounge</span>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Dynamic Active Members Column -->
+                        <aside class="chat-members-col" aria-label="Online Members">
+                            <div>
+                                <div class="members-group-title">
+                                    <span>Founders &amp; Staff</span>
+                                    <span id="staffCountBadge" style="color:#ef4444; font-weight:700;">2</span>
+                                </div>
+                                <div id="staffMembersList"></div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Image Modal for Fullscreen Screenshot Inspection -->
+    <div id="imageModal" class="image-modal-overlay" onclick="closeImageModal()">
+        <img id="modalImg" class="image-modal-content" src="" alt="Enlarged Screenshot">
+    </div>
+
+    <script>
+        // Cloudflare Backend API Config
+        const CLOUDFLARE_API_URL = 'https://kec-community-chat-api.karunadueditorsclub.workers.dev';
+
+        // Google OAuth Client ID (From Google Cloud Console: APIs & Services > Credentials > OAuth 2.0 Client IDs)
+        // Configure your Client ID here or define window.KEC_GOOGLE_CLIENT_ID
+        const GOOGLE_CLIENT_ID = window.KEC_GOOGLE_CLIENT_ID || '817855728257-hsj894einiqckj6udtvgk862h62f7dov.apps.googleusercontent.com';
+
+        // Storage & Session Keys (Only auth profile & slowmode timestamp - NO messages or attachments stored in localStorage)
+        const STORAGE_KEY_AUTH = 'kec_authenticated_user_v2';
+        const STORAGE_KEY_COOLDOWN = 'kec_chat_last_sent_ts';
+        const COOLDOWN_SECONDS = 30; // 30-second restriction once message is sent
+        let cooldownInterval = null;
+        let currentUser = null;
+        let googleTokenClient = null;
+
+        // Active State
+        let currentChannelKey = 'general-chat';
+        let currentAttachmentBase64 = null;
+        let currentAttachmentName = '';
+
+        // 4 Core Channels definition
+        const channelData = {
+            'general-chat': {
+                name: '# general-chat',
+                topic: 'General discussion for Karnataka editors, gear, tips & creative workflows'
+            },
+            'editing-help': {
+                name: '# editing-help',
+                topic: 'Ask technical questions, solve crashes, corrupt project files & export issues'
+            },
+            'announcements': {
+                name: '📢 announcements',
+                topic: 'Official community announcements, asset drops, and server updates'
+            },
+            'rules': {
+                name: '📜 rules-and-faq',
+                topic: 'Server rules, moderation policy, and community guidelines'
+            }
+        };
+
+        // Staff and Founders Data (All unified with blue badge)
+        const staffList = [
+            { name: 'Gurudeep', role: 'Founder / Developer', avatar: 'G', color: 'avatar-blue', nameColor: '#60a5fa' },
+            { name: 'Likhith', role: 'Editor / Tech Expert', avatar: 'L', color: 'avatar-blue', nameColor: '#60a5fa' }
+        ];
+
+        // ================= AUTHENTICATION (Google Identity Services) =================
+        function getStoredAuthUser() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY_AUTH);
+                if (raw) return JSON.parse(raw);
+            } catch (e) { }
+            return null;
+        }
+
+        function saveAuthUser(user) {
+            try {
+                localStorage.setItem(STORAGE_KEY_AUTH, JSON.stringify(user));
+                currentUser = user;
+                updateAuthUI();
+            } catch (e) { }
+        }
+
+        function removeAuthUser() {
+            try {
+                localStorage.removeItem(STORAGE_KEY_AUTH);
+                currentUser = null;
+                updateAuthUI();
+            } catch (e) { }
+        }
+
+        function initGoogleIdentity() {
+            if (typeof google === 'undefined' || !google.accounts || !google.accounts.id) {
+                return;
+            }
+
+            try {
+                // Initialize Google One Tap / Button with Client ID
+                google.accounts.id.initialize({
+                    client_id: GOOGLE_CLIENT_ID,
+                    callback: handleGoogleCredentialResponse,
+                    auto_select: false,
+                    cancel_on_tap_outside: true
+                });
+
+                // Render official Google button into slot if available
+                const slot = document.getElementById('googleBtnSlot');
+                if (slot) {
+                    google.accounts.id.renderButton(slot, {
+                        theme: 'filled_blue',
+                        size: 'large',
+                        shape: 'rectangular',
+                        text: 'continue_with',
+                        width: 280
+                    });
+                }
+            } catch (err) {
+                console.warn('Google Identity initialization notice:', err);
+            }
+
+            try {
+                if (google.accounts.oauth2) {
+                    googleTokenClient = google.accounts.oauth2.initTokenClient({
+                        client_id: GOOGLE_CLIENT_ID,
+                        scope: 'email profile openid',
+                        callback: handleGoogleTokenResponse
+                    });
+                }
+            } catch (e) {
+                console.warn('Token client init notice:', e);
+            }
+        }
+
+        function handleGoogleCredentialResponse(response) {
+            if (!response || !response.credential) return;
+            try {
+                // Decode Google ID Token (JWT) payload
+                const base64Url = response.credential.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+
+                const payload = JSON.parse(jsonPayload);
+                closeGoogleSignInModal();
+                processPostLogin({
+                    email: payload.email,
+                    googleName: payload.name || payload.given_name || 'Editor',
+                    googleId: payload.sub
+                });
+            } catch (e) {
+                console.error('Failed to parse Google credential:', e);
+            }
+        }
+
+        async function handleGoogleTokenResponse(tokenResponse) {
+            if (tokenResponse && tokenResponse.access_token) {
+                try {
+                    const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                        headers: { Authorization: `Bearer ${tokenResponse.access_token}` }
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        closeGoogleSignInModal();
+                        processPostLogin({
+                            email: data.email,
+                            googleName: data.name || data.given_name || 'Editor',
+                            googleId: data.sub
+                        });
+                        return;
+                    }
+                } catch (e) {
+                    console.warn('Fetch Google userinfo error:', e);
+                }
+            }
+        }
+
+        function triggerGoogleLogin() {
+            const modal = document.getElementById('googleSignInModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                // Try to render the Google button if not done yet
+                if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+                    initGoogleIdentity();
+                }
+            } else {
+                executeGoogleSignIn();
+            }
+        }
+
+        function closeGoogleSignInModal() {
+            const modal = document.getElementById('googleSignInModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function executeGoogleSignIn() {
+            // First check if real Google Client ID is configured and GIS is available
+            if (typeof google !== 'undefined' && google.accounts) {
+                if (GOOGLE_CLIENT_ID && !GOOGLE_CLIENT_ID.includes('placeholder')) {
+                    if (googleTokenClient) {
+                        googleTokenClient.requestAccessToken({ prompt: 'consent' });
+                        return;
+                    }
+                    if (google.accounts.id) {
+                        google.accounts.id.prompt();
+                        return;
+                    }
+                }
+            }
+
+            // Direct Google OAuth Popup
+            if (GOOGLE_CLIENT_ID && !GOOGLE_CLIENT_ID.includes('placeholder')) {
+                const redirectUri = window.location.origin + '/community-chat.html';
+                const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(GOOGLE_CLIENT_ID)}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token%20id_token&scope=openid%20email%20profile&nonce=${Date.now()}`;
+                window.open(authUrl, 'GoogleSignIn', 'width=520,height=600,top=100,left=100');
+                return;
+            }
+
+            alert("Google Sign-In is unavailable. Please check your network connection or verify that Google OAuth Client ID is configured.");
+        }
+
+        function processPostLogin(authPayload) {
+            currentUser = {
+                email: authPayload.email,
+                googleName: authPayload.googleName || 'Editor',
+                googleId: authPayload.googleId,
+                displayName: '', // will be set in onboarding
+                avatarColor: 'avatar-blue', // All users have blue badge
+                role: 'Community Member',
+                roleClass: 'role-member',
+                onboarded: false
+            };
+
+            // Check if user has already onboarded previously
+            const existing = getStoredAuthUser();
+            if (existing && existing.email === authPayload.email && existing.onboarded) {
+                currentUser = existing;
+                currentUser.avatarColor = 'avatar-blue'; // Ensure blue badge
+                saveAuthUser(currentUser);
+                updateAuthUI();
+                return;
+            }
+
+            // Launch Onboarding Setup Modal (Only asks for display name)
+            openOnboardingModal(currentUser.googleName);
+        }
+
+        function openOnboardingModal(suggestedName) {
+            const modal = document.getElementById('onboardingModal');
+            const input = document.getElementById('onboardingNameInput');
+            if (input) input.value = suggestedName || '';
+            if (modal) modal.style.display = 'flex';
+            setTimeout(() => { if (input) input.focus(); }, 100);
+        }
+
+        function handleOnboardingSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('onboardingNameInput');
+            const chosenName = (input.value || '').trim();
+
+            if (!chosenName) return;
+
+            currentUser.displayName = chosenName;
+            currentUser.avatarColor = 'avatar-blue'; // All users have blue badge
+            currentUser.onboarded = true;
+            saveAuthUser(currentUser);
+
+            // Close modal
+            document.getElementById('onboardingModal').style.display = 'none';
+
+            // Update chat input
+            const chatInput = document.getElementById('chatMessageInput');
+            if (chatInput) {
+                chatInput.placeholder = `Message #${currentChannelKey} as ${chosenName}...`;
+                chatInput.focus();
+            }
+        }
+
+        function updateAuthUI() {
+            const headerSlot = document.getElementById('headerAuthSlot');
+            const loginGate = document.getElementById('chatLoginGate');
+            const chatForm = document.getElementById('chatForm');
+
+            if (currentUser && currentUser.onboarded) {
+                if (headerSlot) {
+                    const initial = (currentUser.displayName || 'U')[0].toUpperCase();
+                    headerSlot.innerHTML = `
+                        <div class="auth-user-badge">
+                            <span class="user-avatar-mini avatar-blue">${initial}</span>
+                            <span style="font-weight:600;">${escapeHtml(currentUser.displayName)}</span>
+                            <button type="button" class="auth-logout-btn" onclick="handleLogout()" title="Sign out">Log out</button>
+                        </div>
+                    `;
+                }
+                if (loginGate) loginGate.style.display = 'none';
+                if (chatForm) chatForm.style.display = 'block';
+
+                const chatInput = document.getElementById('chatMessageInput');
+                if (chatInput) chatInput.placeholder = `Message #${currentChannelKey} as ${currentUser.displayName}...`;
+            } else {
+                if (headerSlot) {
+                    headerSlot.innerHTML = `
+                        <button type="button" class="google-auth-btn" onclick="triggerGoogleLogin()" style="padding:0.35rem 0.75rem; font-size:0.78rem;">
+                            <span>Sign in</span>
+                        </button>
+                    `;
+                }
+                if (loginGate) loginGate.style.display = 'flex';
+                if (chatForm) chatForm.style.display = 'none';
+            }
+        }
+
+        function handleLogout() {
+            if (confirm("Are you sure you want to sign out of the community lounge?")) {
+                removeAuthUser();
+            }
+        }
+
+        // ================= MEMBERS LIST =================
+        function renderMembersList() {
+            const staffContainer = document.getElementById('staffMembersList');
+            if (!staffContainer) return;
+            staffContainer.innerHTML = '';
+            staffList.forEach(m => {
+                const card = document.createElement('div');
+                card.className = 'member-card';
+                card.innerHTML = `
+                    <div class="member-avatar-wrap">
+                        <div class="small-avatar avatar-blue">${m.avatar}</div>
+                        <span class="online-dot"></span>
+                    </div>
+                    <div class="member-details">
+                        <span class="member-name" style="color:${m.nameColor};">${m.name}</span>
+                        <span class="member-status">${m.role}</span>
+                    </div>
+                `;
+                staffContainer.appendChild(card);
+            });
+
+            const staffBadge = document.getElementById('staffCountBadge');
+            if (staffBadge) {
+                staffBadge.textContent = staffList.length;
+            }
+        }
+
+        // ================= CHANNELS & MESSAGES (BACKEND ONLY - NO LOCALSTORAGE) =================
+        document.querySelectorAll('.channel-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const channelKey = btn.getAttribute('data-channel');
+                if (!channelData[channelKey]) return;
+
+                document.querySelectorAll('.channel-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                currentChannelKey = channelKey;
+                const info = channelData[channelKey];
+                document.getElementById('channelHeaderTitle').textContent = info.name;
+                document.getElementById('channelHeaderTopic').textContent = info.topic;
+
+                const chatInput = document.getElementById('chatMessageInput');
+                if (chatInput) {
+                    const asUser = (currentUser && currentUser.onboarded) ? ` as ${currentUser.displayName}` : '';
+                    chatInput.placeholder = `Message ${info.name}${asUser}...`;
+                }
+
+                renderChannelMessages(channelKey);
+            });
+        });
+
+        async function renderChannelMessages(channelKey) {
+            const list = document.getElementById('chatMessagesList');
+            list.innerHTML = `
+                <div style="display:flex; align-items:center; justify-content:center; height:100%; color:#71717a; font-size:0.85rem;">
+                    Loading messages from database...
+                </div>
+            `;
+
+            try {
+                const res = await fetch(`${CLOUDFLARE_API_URL}/api/messages?channel=${encodeURIComponent(channelKey)}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    list.innerHTML = '';
+                    if (data.messages && data.messages.length > 0) {
+                        data.messages.forEach(msg => {
+                            list.appendChild(createMessageElement(msg));
+                        });
+                        list.scrollTop = list.scrollHeight;
+                        return;
+                    }
+                }
+            } catch (e) {
+                console.warn('Backend fetch error:', e);
+            }
+
+            // If empty or database has no messages
+            list.innerHTML = `
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; color:#71717a; text-align:center; padding:2rem 1rem;">
+                    <div style="font-size:2rem; margin-bottom:0.5rem; opacity:0.6;">💬</div>
+                    <h3 style="font-size:1.05rem; font-weight:600; color:#d1d5db; margin-bottom:0.25rem;">No messages yet</h3>
+                    <p style="font-size:0.82rem; max-width:320px; line-height:1.4;">Be the first to start the conversation or ask a question in this room!</p>
+                </div>
+            `;
+        }
+
+        function createMessageElement(msg) {
+            const row = document.createElement('div');
+            row.className = 'msg-row';
+            row.id = 'msg-' + (msg.id || Math.random());
+
+            let attachmentHtml = '';
+            if (msg.attachment) {
+                attachmentHtml = `
+                    <div class="msg-attachment-wrap">
+                        <img src="${msg.attachment}" alt="Screenshot" class="msg-attachment-img" onclick="openImageModal('${msg.attachment}')">
+                        <div class="msg-attachment-meta">
+                            <span>📎 ${escapeHtml(msg.attachmentName || 'screenshot.png')}</span>
+                            <span style="color:#eab308;">Expires in 24h</span>
+                        </div>
+                    </div>
+                `;
+            } else if (msg.attachmentExpired) {
+                attachmentHtml = `
+                    <div style="font-size:0.75rem; color:#71717a; margin-top:0.4rem; font-style:italic;">
+                        ⚠️ Attachment expired and automatically purged after 24 hours.
+                    </div>
+                `;
+            }
+
+            // All users get the blue badge ('avatar-blue')
+            const avatarColorClass = 'avatar-blue';
+
+            row.innerHTML = `
+                <div class="msg-avatar ${avatarColorClass}">${escapeHtml(msg.avatar || 'U')}</div>
+                <div class="msg-body">
+                    <div class="msg-meta">
+                        <span class="msg-sender">${escapeHtml(msg.name || 'Member')}</span>
+                        <span class="msg-role ${msg.roleClass || 'role-member'}">${escapeHtml(msg.role || 'Member')}</span>
+                        <span class="msg-time">${escapeHtml(msg.time || '')}</span>
+                    </div>
+                    <div class="msg-text">${escapeHtml(msg.text || '')}</div>
+                    ${attachmentHtml}
+                    <div class="msg-reactions">
+                        <span class="reaction-tag" onclick="toggleReaction(this)">🔥 <span>1</span></span>
+                        <span class="reaction-tag" onclick="toggleReaction(this)">💡 <span>1</span></span>
+                    </div>
+                </div>
+            `;
+            return row;
+        }
+
+        // ================= ATTACHMENT HANDLING =================
+        function handleFileSelected(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (file.size > 2.5 * 1024 * 1024) {
+                alert('For optimal performance, please select an image under 2.5 MB.');
+                event.target.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                currentAttachmentBase64 = e.target.result;
+                currentAttachmentName = file.name;
+
+                // Show preview bar
+                document.getElementById('previewThumbImg').src = currentAttachmentBase64;
+                document.getElementById('previewFileName').textContent = file.name;
+                document.getElementById('attachmentPreviewBar').style.display = 'flex';
+                document.getElementById('chatMessageInput').focus();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearSelectedAttachment() {
+            currentAttachmentBase64 = null;
+            currentAttachmentName = '';
+            document.getElementById('fileUploadInput').value = '';
+            document.getElementById('attachmentPreviewBar').style.display = 'none';
+        }
+
+        // ================= SEND MESSAGE (STRICTLY TO DATABASE) =================
+        async function handleSendMessage(e) {
+            e.preventDefault();
+
+            // Enforce Google Sign-In & Onboarding
+            if (!currentUser || !currentUser.onboarded) {
+                triggerGoogleLogin();
+                return;
+            }
+
+            // Check if 30-second restriction is active
+            const remaining = getRemainingCooldownSeconds();
+            if (remaining > 0) {
+                alert(`Slowmode active: Please wait ${remaining} more seconds before sending another message.`);
+                return;
+            }
+
+            const input = document.getElementById('chatMessageInput');
+            const text = input.value.trim();
+
+            if (!text && !currentAttachmentBase64) return;
+
+            const sendBtn = document.getElementById('sendBtn');
+            sendBtn.disabled = true;
+            sendBtn.textContent = 'Posting...';
+
+            const payload = {
+                channel: currentChannelKey,
+                text: text,
+                attachment: currentAttachmentBase64,
+                attachmentName: currentAttachmentName,
+                name: currentUser.displayName,
+                email: currentUser.email,
+                avatarColor: 'avatar-blue',
+                role: currentUser.role || 'Community Member',
+                roleClass: currentUser.roleClass || 'role-member'
+            };
+
+            try {
+                const res = await fetch(`${CLOUDFLARE_API_URL}/api/messages`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.status === 429) {
+                    const data = await res.json();
+                    alert(data.error || 'Slowmode restriction is active. Please wait 30 seconds.');
+                    activateSlowmodeCooldown();
+                    return;
+                }
+
+                if (!res.ok) {
+                    const data = await res.json().catch(() => ({}));
+                    throw new Error(data.error || 'Server returned status ' + res.status);
+                }
+
+                const data = await res.json();
+
+                // Clear input & attachment
+                input.value = '';
+                clearSelectedAttachment();
+
+                // Append the newly saved database message directly to list
+                const list = document.getElementById('chatMessagesList');
+                // Remove placeholder if present
+                if (list.querySelector('h3')) {
+                    list.innerHTML = '';
+                }
+                const savedMsg = data.message || {
+                    id: 'msg_' + Date.now(),
+                    name: currentUser.displayName,
+                    role: currentUser.role || 'Community Member',
+                    roleClass: currentUser.roleClass || 'role-member',
+                    avatar: (currentUser.displayName[0] || 'E').toUpperCase(),
+                    avatarColor: 'avatar-blue',
+                    time: 'Today at ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    text: text,
+                    attachment: currentAttachmentBase64,
+                    attachmentName: currentAttachmentName
+                };
+                list.appendChild(createMessageElement(savedMsg));
+                list.scrollTop = list.scrollHeight;
+
+                // Trigger 30-second restriction
+                activateSlowmodeCooldown();
+            } catch (err) {
+                console.error('Post message error:', err);
+                alert('Could not send message to database: ' + err.message);
+            } finally {
+                sendBtn.disabled = false;
+                sendBtn.textContent = 'Send';
+            }
+        }
+
+        // Emoji Reaction Toggle
+        function toggleReaction(tag) {
+            const countSpan = tag.querySelector('span');
+            let count = parseInt(countSpan.textContent, 10) || 0;
+            if (tag.classList.contains('reacted')) {
+                tag.classList.remove('reacted');
+                countSpan.textContent = Math.max(0, count - 1);
+            } else {
+                tag.classList.add('reacted');
+                countSpan.textContent = count + 1;
+            }
+        }
+
+        // Fullscreen Image Modal
+        function openImageModal(src) {
+            const modal = document.getElementById('imageModal');
+            const img = document.getElementById('modalImg');
+            img.src = src;
+            modal.style.display = 'flex';
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        function escapeHtml(string) {
+            return String(string || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        // ================= 30-SECOND SLOWMODE =================
+        function getRemainingCooldownSeconds() {
+            try {
+                const lastSent = parseInt(localStorage.getItem(STORAGE_KEY_COOLDOWN), 10);
+                if (!lastSent) return 0;
+                const elapsedSeconds = Math.floor((Date.now() - lastSent) / 1000);
+                const remaining = COOLDOWN_SECONDS - elapsedSeconds;
+                return remaining > 0 ? remaining : 0;
+            } catch (e) {
+                return 0;
+            }
+        }
+
+        function activateSlowmodeCooldown() {
+            try {
+                localStorage.setItem(STORAGE_KEY_COOLDOWN, Date.now().toString());
+            } catch (e) { }
+            startCooldownTimer(COOLDOWN_SECONDS);
+        }
+
+        function startCooldownTimer(seconds) {
+            if (cooldownInterval) clearInterval(cooldownInterval);
+
+            const sendBtn = document.getElementById('sendBtn');
+            const slowmodeNotice = document.getElementById('slowmodeNotice');
+            const cooldownTimerSpan = document.getElementById('cooldownTimer');
+            const input = document.getElementById('chatMessageInput');
+
+            let currentSec = seconds;
+
+            const updateUI = () => {
+                if (currentSec > 0) {
+                    sendBtn.disabled = true;
+                    sendBtn.classList.add('cooldown');
+                    sendBtn.textContent = `Wait ${currentSec}s`;
+                    if (slowmodeNotice) slowmodeNotice.style.display = 'inline-flex';
+                    if (cooldownTimerSpan) cooldownTimerSpan.textContent = currentSec;
+                } else {
+                    clearInterval(cooldownInterval);
+                    cooldownInterval = null;
+                    sendBtn.disabled = false;
+                    sendBtn.classList.remove('cooldown');
+                    sendBtn.textContent = 'Send';
+                    if (slowmodeNotice) slowmodeNotice.style.display = 'none';
+                    if (input) input.focus();
+                }
+            };
+
+            updateUI();
+            cooldownInterval = setInterval(() => {
+                currentSec--;
+                updateUI();
+            }, 1000);
+        }
+
+        function checkExistingCooldown() {
+            const remaining = getRemainingCooldownSeconds();
+            if (remaining > 0) {
+                startCooldownTimer(remaining);
+            }
+        }
+
+        // Initial setup on DOM ready
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMembersList();
+            renderChannelMessages(currentChannelKey);
+            currentUser = getStoredAuthUser();
+            if (currentUser) {
+                currentUser.avatarColor = 'avatar-blue'; // enforce blue badge
+            }
+            updateAuthUI();
+            checkExistingCooldown();
+
+            // Init Google Identity Services when script loads
+            if (typeof google !== 'undefined' && google.accounts) {
+                initGoogleIdentity();
+            } else {
+                window.addEventListener('load', () => {
+                    if (typeof google !== 'undefined' && google.accounts) {
+                        initGoogleIdentity();
+                    }
+                });
+            }
+        });
+    </script>
+
+    <!-- Onboarding Setup Modal (Shown immediately after successful Google login) -->
+
+    <!-- Dedicated Google Sign-In Dialog (Direct Single-Click Google Sign In - No email input) -->
+    <div id="googleSignInModal" class="onboarding-modal-overlay">
+        <div class="onboarding-card" style="max-width: 400px; text-align: center;">
+            <div style="font-size: 2.25rem; margin-bottom: 0.5rem;">🎬</div>
+            <h2 style="font-size: 1.35rem; font-weight: 700; color: #fff; margin-bottom: 0.35rem;">
+                Sign In to Join Chat
+            </h2>
+            <p style="font-size: 0.84rem; color: #9ca3af; margin-bottom: 1.5rem; line-height: 1.4;">
+                Authenticate with your Google account to participate, ask questions, and share project feedback in the
+                lounge.
+            </p>
+
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem;">
+                <!-- Official Google Identity Services Container -->
+                <div id="googleBtnSlot" style="min-height: 44px; display: flex; justify-content: center; width: 100%;">
+                </div>
+
+                <button type="button" onclick="closeGoogleSignInModal()"
+                    style="background: none; border: none; color: #9ca3af; font-size: 0.8rem; cursor: pointer; text-decoration: underline; margin-top: 0.5rem;">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="onboardingModal" class="onboarding-modal-overlay">
+        <div class="onboarding-card">
+            <div class="onboarding-title">
+                <span>👋 Welcome to KEC Lounge!</span>
+            </div>
+            <p class="onboarding-desc">
+                Setup your community profile. The display name you choose here will be shown next to all your messages
+                with your official blue badge.
+            </p>
+
+            <form id="onboardingForm" onsubmit="handleOnboardingSubmit(event)">
+                <div class="onboarding-form-group">
+                    <label class="onboarding-label" for="onboardingNameInput">Display Name in Chat</label>
+                    <input type="text" id="onboardingNameInput" class="onboarding-input"
+                        placeholder="e.g. Puneeth_Editor, Rahul_VFX, Ananya" required maxlength="24"
+                        autocomplete="name">
+                    <div style="font-size:0.72rem; color:#9ca3af; margin-top:0.35rem;">
+                        This name will be visible to all editors across Bengaluru and worldwide.
+                    </div>
+                </div>
+
+                <div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem;">
+                    <button type="submit" class="send-btn" style="padding:0.6rem 1.5rem; font-size:0.92rem;">
+                        Join &amp; Start Chatting
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

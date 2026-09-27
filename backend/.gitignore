@@ -1,0 +1,6 @@
+# Cloudflare Wrangler & Node dependencies
+node_modules/
+.wrangler/
+.dev.vars
+dist/
+*.log

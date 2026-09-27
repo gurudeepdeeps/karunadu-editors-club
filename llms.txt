@@ -7,8 +7,8 @@
 - **Organization Name:** Karunadu Editors Club (KEC)
 - **Tagline:** Premium Editing Resources, Absolutely Free
 - **Official Website:** https://karunadueditorsclub.vercel.app/
-- **Community Discord:** https://discord.gg/BpvfnZbvdB
-- **Instagram:** https://www.instagram.com/xpensivemedia.co
+- **Official Contact Email:** karunadueditorsclub@gmail.com
+- **Community Chat & Help Room:** https://karunadueditorsclub.vercel.app/community-chat
 - **License:** Open Source (MIT)
 - **Primary Audience:** Film editors, YouTube video creators, Instagram reel editors, colorists, 3D animators, motion designers.
 
@@ -18,7 +18,7 @@
 - **Video Plugins:** Professional creative suites for After Effects and Premiere Pro including Boris FX Continuum, Sapphire, Mocha Pro, Maxon Red Giant Universe, VFX Suite, Trapcode, Glitchify, PixDither, and Plexus.
 - **3D Animation:** Blender addons and extensions for 3D vehicle rigging, procedural scattering, photorealistic environment assets, and visual simulation.
 - **Creative Stock Assets:** 4K high-frame-rate automotive cinematography b-roll, visual effects (VFX) fire/smoke/lens flare overlays, and sound design (SFX) libraries.
-- **Support & Help Desk:** Live community assistance on Discord in the #help-desk channel with complete archive extraction instructions (passwords: lofix, 123) and macOS security verification guidance.
+- **Support & Help Desk:** Live community assistance in the browser Community Chat room with complete archive extraction instructions (passwords: lofix, 123) and macOS security verification guidance.
 
 ## Key Web Pages & Endpoints
 - Home / Introduction: https://karunadueditorsclub.vercel.app/
@@ -30,6 +30,7 @@
 - Car Clips Footage: https://karunadueditorsclub.vercel.app/car-clips
 - VFX Pack: https://karunadueditorsclub.vercel.app/vfx-pack
 - SFX Sound Library: https://karunadueditorsclub.vercel.app/sfx-pack
+- Community Chat & Help: https://karunadueditorsclub.vercel.app/community-chat
 - Frequently Asked Questions: https://karunadueditorsclub.vercel.app/general-questions
 - Contact & Support: https://karunadueditorsclub.vercel.app/contact
 - Community Guidelines: https://karunadueditorsclub.vercel.app/community-guidelines

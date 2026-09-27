@@ -8,8 +8,9 @@
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=for-the-badge&logo=vercel)](https://karunadueditorsclub.vercel.app)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
-[![Discord](https://img.shields.io/badge/Discord-Join-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/BpvfnZbvdB)
-[![Instagram](https://img.shields.io/badge/Instagram-Follow-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/xpensivemedia.co)
+[![Community Chat](https://img.shields.io/badge/Community-Live_Chat-7289DA?style=for-the-badge&logo=discourse&logoColor=white)](https://karunadueditorsclub.vercel.app/community-chat)
+[![Email Support](https://img.shields.io/badge/Email-karunadueditorsclub%40gmail.com-ea4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:karunadueditorsclub@gmail.com)
+
 
 </div>
 
@@ -166,7 +167,7 @@ Found a bug or have an idea? We'd love to hear from you!
 
 - **Bug Reports:** [Open an issue](https://github.com/gurudeepdeeps/karunadu-editors-club/issues/new?template=bug_report.md)
 - **Feature Requests:** [Request a feature](https://github.com/gurudeepdeeps/karunadu-editors-club/issues/new?template=feature_request.md)
-- **Discord:** [Join our community](https://discord.gg/BpvfnZbvdB)
+- **Community Chat:** [Open live chat room](https://karunadueditorsclub.vercel.app/community-chat)
 
 ---
 
@@ -185,7 +186,7 @@ If you are the rightful owner of any material and wish to request its removal, p
 ## 🌟 Acknowledgments
 
 - **Community Contributors** - Thank you to all our members!
-- **Discord Community** - For feedback and support
+- **Community Chat Members** - For feedback and support
 - **Open Source Libraries** - Google Fonts, and all other tools we use
 
 ---
@@ -194,8 +195,9 @@ If you are the rightful owner of any material and wish to request its removal, p
 
 <div align="center">
 
-[![Discord](https://img.shields.io/badge/Discord-Join_Community-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/BpvfnZbvdB)
-[![Instagram](https://img.shields.io/badge/Instagram-@xpensivemedia.co-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/xpensivemedia.co)
+[![Community Chat](https://img.shields.io/badge/Community-Live_Chat-7289DA?style=for-the-badge&logo=discourse&logoColor=white)](https://karunadueditorsclub.vercel.app/community-chat)
+[![Email Support](https://img.shields.io/badge/Email-karunadueditorsclub%40gmail.com-ea4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:karunadueditorsclub@gmail.com)
+
 
 </div>
 

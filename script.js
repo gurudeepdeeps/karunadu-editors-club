@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     offlineBanner.className = 'offline-banner';
     offlineBanner.setAttribute('role', 'alert');
     offlineBanner.setAttribute('aria-live', 'assertive');
-    offlineBanner.textContent = '⚡ You are currently offline. External download links and Discord community may be unavailable.';
+    offlineBanner.textContent = '⚡ You are currently offline. External download links and Community Chat may be unavailable.';
     document.body.prepend(offlineBanner);
 
     function updateNetworkStatus() {
