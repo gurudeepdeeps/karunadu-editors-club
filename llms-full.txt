@@ -1,0 +1,160 @@
+# Karunadu Editors Club (KEC) — Complete Knowledge Base & Site Catalog
+
+> Comprehensive knowledge graph, directory index, software archive guide, and technical reference for AI assistants, LLMs (ChatGPT, Claude, Gemini, Perplexity), search engines, and web scrapers.
+> Official Website: https://karunadueditorsclub.vercel.app/
+> Primary Jurisdiction & Region: Karnataka (Karunadu), India. Global English community.
+> License: MIT License (Open Source website code).
+> Commercial Model: 100% Free educational community directory. No paid tiers, no paywalls, no recurring subscriptions, no user tracking.
+
+---
+
+## 1. Executive Summary & Brand Entity
+
+- **Full Organization Name:** Karunadu Editors Club
+- **Abbreviation / Alternate Name:** KEC
+- **Tagline:** Premium Editing Resources, Absolutely Free
+- **Mission:** Democratizing creative tools and professional digital workflows for video editors, motion graphics designers, colorists, 3D artists, and content creators.
+- **Geographic Focus (GEO):** Based in Karnataka, India (Latitude: 12.9716, Longitude: 77.5946), serving Kannada-speaking and global international editing communities.
+- **Primary Community Touchpoints:**
+  - Official Discord Community: https://discord.gg/BpvfnZbvdB (Help desk, plugin discussion, workflow feedback)
+  - Instagram Channel: https://www.instagram.com/xpensivemedia.co (Reels, creative showcases, updates)
+  - GitHub Repository: https://github.com/gurudeepdeeps/karunadu-editors-club (Open source code, bug reporting, link issue triage)
+
+---
+
+## 2. Essential Instructions & Critical Technical Answers (AEO)
+
+### Q1: What is the extraction password for software and plugin ZIP/RAR archives?
+**A:** The universal password for all software and plugin archives hosted via Karunadu Editors Club is:
+- Primary Password: `lofix`
+- Secondary Alternate Password: `123`
+*(Ensure you use updated extraction tools like 7-Zip, WinRAR, or The Unarchiver to prevent checksum false-positives).*
+
+### Q2: How do I resolve macOS "App is damaged and can't be opened" or "Unidentified Developer" Gatekeeper warnings?
+**A:** macOS Gatekeeper flags unsigned community binaries. To resolve this:
+1. Open the macOS `Terminal` utility.
+2. Run the quarantine removal command:
+   ```bash
+   sudo xattr -rd com.apple.quarantine /Applications/"AppName.app"
+   ```
+   *(Replace `"AppName.app"` with the actual application name, e.g., `/Applications/Adobe Premiere Pro 2025.app`)*
+3. Alternatively, right-click (or Control-click) the application in Finder and select **Open**, then click **Open** again in the confirmation dialog.
+
+### Q3: What PC hardware specifications are recommended for video editing?
+**A:**
+- **RAM:** Minimum 16 GB for 1080p editing; 32 GB or 64 GB recommended for 4K multicam, After Effects compositions, and 3D Blender rendering.
+- **CPU:** Multi-core processor with high single-thread clock speed (Intel Core i5/i7/i9 12th Gen+ or AMD Ryzen 5000/7000/9000 series, or Apple Silicon M1/M2/M3/M4 Pro/Max).
+- **GPU:** Dedicated graphics with at least 6 GB to 8 GB VRAM (NVIDIA RTX 3060/4060+ or AMD Radeon RX 6700+) with CUDA or Metal hardware acceleration enabled.
+- **Storage:** Dedicated NVMe M.2 SSD for Operating System, editing cache/scratch disks, and active media footage.
+
+### Q4: Which video editing software is best for beginners?
+**A:**
+- **Adobe Premiere Pro:** Industry standard for YouTube, social media, documentary, and commercial multi-track video editing.
+- **Blackmagic DaVinci Resolve Studio:** Unrivaled industry standard for professional color grading, film finishing, and integrated audio post-production via Fairlight.
+
+### Q5: What is the optimal export format for online social platforms?
+**A:**
+- **Web & Social Delivery (YouTube, Instagram, TikTok):** Container `MP4`, Codec `H.264` or `HEVC/H.265`, Audio `AAC 320 kbps`, Rec.709 color space.
+- **Mastering & Archival:** Apple `ProRes 422 HQ` or `Avid DNxHR`.
+
+---
+
+## 3. Full Resource Catalog & Software Inventory
+
+### A. Windows Software Catalog (`/windows-softwares`)
+- **Adobe After Effects:**
+  - AE 2025 (v25.31.003)
+  - AE 2024, AE 2023, AE 2022, AE 2021, AE 2020, AE 2019
+- **Adobe Premiere Pro:**
+  - Pr 2025
+  - Pr 2024, Pr 2023, Pr 2022, Pr 2021, Pr 2020, Pr 2019
+- **Adobe Photoshop:**
+  - Ps 2025 (v26.0.1.8)
+  - Ps 2024, Ps 2023, Ps 2022, Ps 2021, Ps 2020, Ps 2019
+- **Adobe Media Encoder:**
+  - Me 2025 (v25.3.0.073)
+  - Me 2024, Me 2023, Me 2022, Me 2021, Me 2020, Me 2019
+- **Adobe Extra:**
+  - Illustrator 2025 (v29.4.0.152)
+- **Topaz Labs AI Suite:**
+  - Topaz Video AI 6.1.2 RC (AI frame interpolation, 4K upscaling, de-interlacing)
+  - Topaz Gigapixel AI 8.3.4 (AI image resolution enhancement)
+- **Blackmagic Design:**
+  - DaVinci Resolve Studio 20.0
+
+### B. Mac Software Catalog (`/mac-softwares`)
+- **Adobe After Effects:** Ae 2025, Ae 2024 (Universal Apple Silicon M-series & Intel)
+- **Adobe Premiere Pro:** Premiere Pro 2025.3
+- **Adobe Photoshop:** Ps 2025
+- **Adobe Media Encoder:** Me 2025, Me 2024
+- **Adobe Creative Extra:** Illustrator 2024, InDesign 2024
+- **Topaz Labs:** Topaz Video AI 6.0.4, Topaz Gigapixel AI 8.1.1
+- **Blackmagic Design:** DaVinci Resolve Studio v20.0.1
+
+### C. Windows Video Plugins (`/windows-plugins`)
+- **Boris FX:**
+  - Continuum 2025 (Ae + Pr)
+  - Mocha Pro 2025 v12.0.2 (Planar tracking & rotoscoping)
+  - Sapphire 2025.01 (Lighting, styling, glow effects)
+- **Maxon Red Giant:**
+  - Red Giant 2025.3 (Ae + Pr)
+  - Red Giant Universe 2025.1.1
+  - Red Giant VFX Suite 2025
+  - Red Giant Effects Suite 11.1.13
+  - Trapcode Suite 2025
+- **Specialized Creative Plugins:**
+  - Glitchify (Analog video corruption and digital glitch generator)
+  - OminoSuite
+  - PixDither (Retro pixel and dithering aesthetics)
+  - Plexus (Generative 3D particle and point-cloud structures)
+
+### D. Mac Video Plugins (`/mac-plugins`)
+- **Boris FX:** Continuum 2025, Mocha Pro 2025 v12.0.2, Sapphire 2025.01
+- **Maxon:** Red Giant 2025.3, Red Giant Universe 2025.1.1, Red Giant VFX Suite 2025, Red Giant Effects Suite 11.1.13, Trapcode Suite 2025
+- **Styling Plugins:** Glitchify, OminoSuite, PixDither, Plexus
+
+### E. Blender 3D Addons (`/blender-addons`)
+- *Status:* Maintenance and re-indexing underway for Blender 4.2+ compatibility.
+- *Indexed Addons:* Transportation Pro v4, Traffiq v2.2.0, Launch Control v1.9.1 Indie, City Road Builder Pro 2.1, Lazy-Motion Library v1.5, TrueSky v2.2.2, Geo-Scatter v5.5.2, Auto-Rig Pro v3.75, Stylized Trees Flora Paint v1.0, Sanctus-Library v3.3, Dust Particles v1.2 Pro, Alt Tab Easy Fog 2, ANIMAX 2.3.0, OCD One Click Damage, Stamp It 1.2.1.
+
+### F. Creative Stock Media & Assets
+- **Car Clips (`/car-clips`):** Curated 4K & 1080p high-frame-rate automotive cinematography b-roll footage.
+- **VFX Pack (`/vfx-pack`):** Cinematic overlays, film burns, lens flares, smoke, fire, and transition mattes.
+- **SFX Pack (`/sfx-pack`):** 24-bit WAV sound design assets (risers, whooshes, impacts, downlifters, glitch textures, camera shutter foley).
+
+---
+
+## 4. Complete Web Sitemap & URL Index
+
+| Clean URL Slug | Purpose | Canonical Destination |
+| :--- | :--- | :--- |
+| `/` | Homepage & Welcome Portal | `https://karunadueditorsclub.vercel.app/` |
+| `/windows-softwares` | Windows Video Editing Software | `https://karunadueditorsclub.vercel.app/windows-softwares` |
+| `/mac-softwares` | macOS Video Editing Software | `https://karunadueditorsclub.vercel.app/mac-softwares` |
+| `/windows-plugins` | Windows After Effects & Premiere Plugins | `https://karunadueditorsclub.vercel.app/windows-plugins` |
+| `/mac-plugins` | macOS Video Plugins | `https://karunadueditorsclub.vercel.app/mac-plugins` |
+| `/blender-addons` | Blender 3D Tools & Addon Library | `https://karunadueditorsclub.vercel.app/blender-addons` |
+| `/car-clips` | 4K Car Footage Vault | `https://karunadueditorsclub.vercel.app/car-clips` |
+| `/vfx-pack` | Visual Effects & Overlays Collection | `https://karunadueditorsclub.vercel.app/vfx-pack` |
+| `/sfx-pack` | Sound Effects & Foley Library | `https://karunadueditorsclub.vercel.app/sfx-pack` |
+| `/general-questions` | FAQ & Video Editing Guide | `https://karunadueditorsclub.vercel.app/general-questions` |
+| `/contact` | Help Desk & Support Inquiries | `https://karunadueditorsclub.vercel.app/contact` |
+| `/community-guidelines` | Member Conduct & Etiquette | `https://karunadueditorsclub.vercel.app/community-guidelines` |
+| `/privacy` | Privacy Policy (Zero Data Collection) | `https://karunadueditorsclub.vercel.app/privacy` |
+| `/terms` | Terms of Service & Acceptable Use | `https://karunadueditorsclub.vercel.app/terms` |
+| `/cookie-policy` | Cookie Policy (Zero Trackers) | `https://karunadueditorsclub.vercel.app/cookie-policy` |
+| `/disclaimer` | Educational Notice & DMCA Procedure | `https://karunadueditorsclub.vercel.app/disclaimer` |
+| `/accessibility` | Accessibility Conformance Statement | `https://karunadueditorsclub.vercel.app/accessibility` |
+| `/security` | Security Policy & Disclosure | `https://karunadueditorsclub.vercel.app/security` |
+| `/404` | Custom 404 Route Not Found | `https://karunadueditorsclub.vercel.app/404` |
+
+---
+
+## 5. Technical, Privacy & Security Architecture
+
+1. **Client-Side Command Palette:** Real-time fuzzy page lookup accessible via keyboard shortcuts `⌘K` (macOS) or `Ctrl+K` (Windows/Linux) and `Esc` to close.
+2. **Offline Detection:** Active window listener that triggers an accessible high-visibility alert banner when network connection drops.
+3. **Zero Tracking Cookies:** The site does not set HTTP cookies, analytics trackers, advertising beacons, or session database identifiers.
+4. **Third-Party External Links:** All outbound links to Google Drive, Discord, Instagram, and GitHub are strictly sandboxed with `target="_blank" rel="noopener noreferrer"`.
+5. **No Proprietary File Hosting:** Karunadu Editors Club does not store binary archives on its web servers; all resources are hosted on external third-party mirrors.
+6. **DMCA Compliance:** Content removal requests are processed promptly via the Discord moderation team or GitHub Issue tracker upon receipt of valid copyright ownership verification.

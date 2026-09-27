@@ -656,3 +656,242 @@ button {
         pointer-events: all;
     }
 }
+
+/* Offline Banner Notification */
+.offline-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background-color: #ef4444;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    padding: 0.6rem 1rem;
+    display: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.offline-banner.active {
+    display: block;
+}
+
+/* Legal Document Styles */
+.legal-container {
+    max-width: 820px;
+    padding-bottom: 4rem;
+}
+
+.legal-section {
+    margin-bottom: 2.5rem;
+}
+
+.legal-section h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.85rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.legal-section h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 1.25rem 0 0.5rem 0;
+}
+
+.legal-section p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    font-size: 0.98rem;
+}
+
+.legal-section ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+.legal-section li {
+    margin-bottom: 0.35rem;
+}
+
+.legal-meta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.callout-box {
+    background-color: var(--bg-secondary);
+    border-left: 4px solid var(--accent-color);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+}
+
+.callout-box.warning {
+    border-left-color: #ef4444;
+}
+
+.callout-box p {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 0.92rem;
+    line-height: 1.6;
+}
+
+/* Empty State & Work-in-Progress */
+.empty-state-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: var(--bg-secondary);
+    border: 1px dashed var(--border-color);
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    margin: 2rem 0;
+    max-width: 650px;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.empty-state-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.empty-state-desc {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    max-width: 480px;
+}
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--text-primary);
+    color: var(--bg-primary);
+    padding: 0.65rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-primary:hover {
+    background-color: #e4e4e7;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 0.65rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.92rem;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.btn-secondary:hover {
+    background-color: #27272a;
+    border-color: #3f3f46;
+}
+
+/* Contact Cards Grid */
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+}
+
+.contact-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: border-color 0.2s;
+}
+
+.contact-card:hover {
+    border-color: #52525b;
+}
+
+.contact-card h4 {
+    font-size: 1.05rem;
+    color: var(--text-primary);
+}
+
+.contact-card p {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Global Structured Site Footer */
+.site-footer {
+    margin-top: 5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    max-width: 860px;
+}
+
+.footer-nav-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.footer-nav-link {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+.footer-nav-link:hover {
+    color: var(--text-primary);
+    text-decoration: underline;
+}
+
+.footer-copy {
+    color: #71717a;
+    font-size: 0.78rem;
+    line-height: 1.6;
+}

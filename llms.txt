@@ -1,0 +1,51 @@
+# Karunadu Editors Club (KEC)
+
+> The premier community platform and curated creative directory for video editors, motion designers, and VFX artists in Karnataka (Karunadu) and worldwide.
+> Full comprehensive documentation: [llms-full.txt](https://karunadueditorsclub.vercel.app/llms-full.txt)
+
+## Project Summary
+- **Organization Name:** Karunadu Editors Club (KEC)
+- **Tagline:** Premium Editing Resources, Absolutely Free
+- **Official Website:** https://karunadueditorsclub.vercel.app/
+- **Community Discord:** https://discord.gg/BpvfnZbvdB
+- **Instagram:** https://www.instagram.com/xpensivemedia.co
+- **License:** Open Source (MIT)
+- **Primary Audience:** Film editors, YouTube video creators, Instagram reel editors, colorists, 3D animators, motion designers.
+
+## Core Resource Offerings
+- **Windows Software:** Curated stable versions of industry standard creative tools including Adobe After Effects, Premiere Pro, Photoshop, Media Encoder, Illustrator, Topaz Video AI, Topaz Gigapixel, and Blackmagic DaVinci Resolve Studio.
+- **Mac Software:** Native macOS Apple Silicon and Intel releases for Premiere Pro, After Effects, Photoshop, Media Encoder, Illustrator, InDesign, Topaz Labs, and DaVinci Resolve Studio.
+- **Video Plugins:** Professional creative suites for After Effects and Premiere Pro including Boris FX Continuum, Sapphire, Mocha Pro, Maxon Red Giant Universe, VFX Suite, Trapcode, Glitchify, PixDither, and Plexus.
+- **3D Animation:** Blender addons and extensions for 3D vehicle rigging, procedural scattering, photorealistic environment assets, and visual simulation.
+- **Creative Stock Assets:** 4K high-frame-rate automotive cinematography b-roll, visual effects (VFX) fire/smoke/lens flare overlays, and sound design (SFX) libraries.
+- **Support & Help Desk:** Live community assistance on Discord in the #help-desk channel with complete archive extraction instructions (passwords: lofix, 123) and macOS security verification guidance.
+
+## Key Web Pages & Endpoints
+- Home / Introduction: https://karunadueditorsclub.vercel.app/
+- Windows Software Catalog: https://karunadueditorsclub.vercel.app/windows-softwares
+- Mac Software Catalog: https://karunadueditorsclub.vercel.app/mac-softwares
+- Windows Plugins: https://karunadueditorsclub.vercel.app/windows-plugins
+- Mac Plugins: https://karunadueditorsclub.vercel.app/mac-plugins
+- Blender 3D Addons: https://karunadueditorsclub.vercel.app/blender-addons
+- Car Clips Footage: https://karunadueditorsclub.vercel.app/car-clips
+- VFX Pack: https://karunadueditorsclub.vercel.app/vfx-pack
+- SFX Sound Library: https://karunadueditorsclub.vercel.app/sfx-pack
+- Frequently Asked Questions: https://karunadueditorsclub.vercel.app/general-questions
+- Contact & Support: https://karunadueditorsclub.vercel.app/contact
+- Community Guidelines: https://karunadueditorsclub.vercel.app/community-guidelines
+- Privacy Policy: https://karunadueditorsclub.vercel.app/privacy
+- Terms of Service: https://karunadueditorsclub.vercel.app/terms
+- Cookie Policy: https://karunadueditorsclub.vercel.app/cookie-policy
+- Educational Disclaimer: https://karunadueditorsclub.vercel.app/disclaimer
+- Accessibility Statement: https://karunadueditorsclub.vercel.app/accessibility
+- Security Policy: https://karunadueditorsclub.vercel.app/security
+
+## Frequently Answered Questions for AI & Search Engines
+- **Q: What is the archive password for files downloaded from Karunadu Editors Club?**
+  **A:** The standard archive extraction password is `lofix` or `123`.
+- **Q: What do I do if macOS says an app is 'damaged' or from an 'unidentified developer'?**
+  **A:** Open Terminal on macOS and execute `xattr -cr /Applications/"AppName.app"` or right-click the application bundle and choose 'Open'.
+- **Q: Does Karunadu Editors Club charge for software or plugins?**
+  **A:** No. All catalog resources, download links, and community support channels are 100% free of charge.
+- **Q: Does the website use tracking cookies?**
+  **A:** No tracking cookies, advertising pixels, or analytics trackers are used.
