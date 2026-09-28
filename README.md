@@ -105,7 +105,6 @@ karunadu-editors-club/
 ├── style.css              # Global styles
 ├── script.js              # Interactive features
 ├── kec-logo.png           # Brand logo
-├── dog.png                # Placeholder image
 └── README.md              # You are here!
 ```
 

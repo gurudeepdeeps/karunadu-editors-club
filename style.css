@@ -171,7 +171,7 @@ button {
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    padding: 0.4rem 0.6rem;
+    padding: 0.45rem 0.6rem;
     color: var(--text-secondary);
     font-size: 0.9rem;
     border-radius: 6px;
@@ -190,8 +190,38 @@ button {
 }
 
 .nav-link .icon {
-    font-size: 1rem;
-    opacity: 0.7;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    opacity: 0.85;
+    flex-shrink: 0;
+}
+
+.lucide-icon {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+.lucide-icon[fill="currentColor"] {
+    stroke: none;
+    fill: currentColor;
+}
+
+.lucide-icon-lg {
+    width: 40px;
+    height: 40px;
+    stroke: #ef4444;
+    stroke-width: 1.75;
 }
 
 /* Footer / User */
@@ -377,92 +407,439 @@ button {
 }
 
 /* Hero Section */
-.hero-section {
-    margin-bottom: 3rem;
-    max-width: 800px;
-    text-align: center;
-}
+/* ==========================================================================
+   SHADCN UI DESIGN SYSTEM TOKENS & COMPONENTS (https://www.shadcn.io)
+   ========================================================================== */
 
-.hero-content {
-    width: 100%;
-    position: relative;
-}
-
+/* --- Shadcn Typography (https://www.shadcn.io/text) --- */
+.shadcn-h1,
 .hero-content h1 {
-    font-size: 4rem;
-    font-weight: 900;
-    margin-bottom: 1rem;
-    line-height: 1;
-    letter-spacing: -0.02em;
-    font-style: italic;
-    text-transform: uppercase;
-    position: relative;
-    display: inline-block;
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    color: #f4f4f5;
+    margin-bottom: 0.5rem;
+    font-style: normal;
+    text-transform: none;
+    position: static;
+    display: block;
 }
 
+@media (min-width: 768px) {
+    .shadcn-h1,
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+}
+
+.shadcn-h2 {
+    font-size: 1.875rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+    color: #f4f4f5;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.shadcn-h3,
+.software-category h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.35;
+    color: #fafafa;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.shadcn-h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: #fafafa;
+}
+
+.shadcn-lead {
+    font-size: 1.25rem;
+    color: #a1a1aa;
+    line-height: 1.6;
+}
+
+.shadcn-p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: #d4d4d8;
+}
+
+.shadcn-muted {
+    font-size: 0.875rem;
+    color: #71717a;
+    line-height: 1.5;
+}
+
+.shadcn-code {
+    position: relative;
+    border-radius: 4px;
+    background-color: #27272a;
+    padding: 0.2rem 0.35rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.85em;
+    font-weight: 600;
+    color: #f4f4f5;
+}
+
+/* Redesigned Clean Gradient Highlight */
 .hero-content .highlight {
-    font-family: 'Mr Dafoe', cursive;
-    color: #ff0000;
-    background: none;
-    -webkit-text-fill-color: #ff0000;
-    font-size: 5rem;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-30%, -40%) rotate(-10deg);
-    text-transform: none;
+    font-family: inherit;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline;
+    position: static;
+    transform: none;
+    font-size: inherit;
+    text-shadow: none;
+}
+
+/* --- Shadcn Buttons (https://www.shadcn.io/button) --- */
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-outline,
+.btn-ghost,
+.btn-destructive,
+.btn-link,
+.software-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1;
     white-space: nowrap;
-    z-index: 1;
-    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    font-weight: 400;
+    transition: all 0.15s ease-in-out;
+    outline: none;
+    text-decoration: none;
+    user-select: none;
+    gap: 0.5rem;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.btn:focus-visible,
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible,
+.btn-outline:focus-visible,
+.btn-destructive:focus-visible,
+.btn-ghost:focus-visible {
+    outline: 2px solid #a1a1aa;
+    outline-offset: 2px;
+}
+
+.btn:disabled,
+.btn-primary:disabled,
+.btn-secondary:disabled,
+.btn-outline:disabled {
     pointer-events: none;
+    opacity: 0.5;
+}
+
+/* Button Variants */
+.btn-default,
+.btn-primary {
+    background-color: #f4f4f5;
+    color: #09090b;
+    border: 1px solid #f4f4f5;
+    padding: 0.5rem 1rem;
+    height: 2.25rem;
+}
+
+.btn-default:hover,
+.btn-primary:hover {
+    background-color: #e4e4e7;
+    color: #09090b;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary {
+    background-color: #27272a;
+    color: #f4f4f5;
+    border: 1px solid #3f3f46;
+    padding: 0.5rem 1rem;
+    height: 2.25rem;
+}
+
+.btn-secondary:hover {
+    background-color: #3f3f46;
+    color: #ffffff;
+}
+
+.btn-outline,
+.software-link {
+    background-color: transparent;
+    border: 1px solid #27272a;
+    color: #f4f4f5;
+    padding: 0.5rem 1rem;
+    height: 2.25rem;
+}
+
+.btn-outline:hover,
+.software-link:hover {
+    background-color: #27272a;
+    border-color: #3f3f46;
+    color: #ffffff;
+}
+
+.btn-ghost {
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: #a1a1aa;
+    padding: 0.5rem 0.75rem;
+    height: 2.25rem;
+}
+
+.btn-ghost:hover {
+    background-color: #27272a;
+    color: #f4f4f5;
+}
+
+.btn-destructive {
+    background-color: #ef4444;
+    color: #ffffff;
+    border: 1px solid #ef4444;
+    padding: 0.5rem 1rem;
+    height: 2.25rem;
+}
+
+.btn-destructive:hover {
+    background-color: #dc2626;
+}
+
+.btn-link {
+    background: transparent;
+    border: none;
+    color: #60a5fa;
+    padding: 0;
+    height: auto;
+    text-underline-offset: 4px;
+}
+
+.btn-link:hover {
+    text-decoration: underline;
+}
+
+/* Button Sizes */
+.btn-sm {
+    height: 2rem;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8125rem;
+    border-radius: 4px;
+}
+
+.btn-lg {
+    height: 2.75rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+}
+
+.btn-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+}
+
+/* --- Shadcn Badge (https://www.shadcn.io/components) --- */
+.shadcn-badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.725rem;
+    font-weight: 600;
+    line-height: 1;
+    transition: colors 0.15s ease;
+}
+
+.shadcn-badge-default {
+    background-color: #f4f4f5;
+    color: #09090b;
+}
+
+.shadcn-badge-secondary {
+    background-color: #27272a;
+    color: #a1a1aa;
+    border: 1px solid #3f3f46;
+}
+
+.shadcn-badge-outline {
+    background-color: transparent;
+    border: 1px solid #3f3f46;
+    color: #d4d4d8;
+}
+
+.shadcn-badge-destructive {
+    background-color: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
+}
+
+/* --- Shadcn Alert Component (https://www.shadcn.io/components) --- */
+.shadcn-alert {
+    position: relative;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #27272a;
+    background-color: #121214;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    margin-bottom: 2rem;
+    box-sizing: border-box;
+}
+
+.shadcn-alert-icon {
+    color: #f97316;
+    margin-top: 0.1rem;
+    flex-shrink: 0;
+}
+
+.shadcn-alert-content {
+    flex: 1;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #d4d4d8;
+}
+
+.shadcn-alert-title {
+    font-weight: 600;
+    color: #f4f4f5;
+    margin-bottom: 0.25rem;
+}
+
+/* --- Shadcn Card Component (https://www.shadcn.io/components) --- */
+.shadcn-card {
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background-color: #111113;
+    color: #f4f4f5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s ease;
+    overflow: hidden;
+}
+
+.shadcn-card:hover {
+    border-color: #3f3f46;
+}
+
+.shadcn-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1.25rem;
+}
+
+.shadcn-card-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    color: #f4f4f5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.shadcn-card-description {
+    font-size: 0.85rem;
+    color: #71717a;
+    line-height: 1.45;
+}
+
+.shadcn-card-content {
+    padding: 0 1.25rem 1.25rem 1.25rem;
+}
+
+.shadcn-card-footer {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    border-top: 1px solid #1f1f23;
+    background-color: #0c0c0e;
+    gap: 0.75rem;
+}
+
+/* Grid layout for software resource cards */
+.software-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.software-item-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1rem;
+    background-color: #141416;
+    border: 1px solid #27272a;
+    border-radius: 8px;
+    transition: all 0.15s ease;
+}
+
+.software-item-card:hover {
+    background-color: #1a1a1d;
+    border-color: #3f3f46;
+}
+
+.software-item-card .item-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.software-item-card .item-name {
+    font-size: 0.925rem;
+    font-weight: 600;
+    color: #f4f4f5;
+}
+
+.software-item-card .item-tag {
+    font-size: 0.75rem;
+    color: #71717a;
 }
 
 /* Software Page Specifics */
 .software-page-container {
-    max-width: 800px;
+    max-width: 900px;
     padding-bottom: 4rem;
 }
 
 .password-note {
-    font-style: italic;
-    margin-bottom: 3rem;
-    font-size: 1.1rem;
+    font-style: normal;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
     color: var(--text-primary);
 }
 
-.password-note a {
-    text-decoration: underline;
-}
-
 .software-category {
-    margin-bottom: 2.5rem;
-}
-
-.software-category h3 {
-    color: #ff0000;
-    /* Red color from screenshot */
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
+    margin-bottom: 2.25rem;
 }
 
 .software-list {
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
-}
-
-.software-link {
-    color: var(--text-primary);
-    text-decoration: underline;
-    font-weight: 500;
-    width: fit-content;
-    font-size: 1rem;
-}
-
-.software-link:hover {
-    color: #cc0000;
+    gap: 0.6rem;
 }
 
 .page-footer-legal {
@@ -606,21 +983,32 @@ button {
     }
 
     .top-header {
-        padding: 0 1rem;
+        padding: 0 0.75rem;
         /* Ensure header items align correctly with the new button */
         justify-content: space-between;
+        gap: 0.5rem;
+    }
+
+    .breadcrumb {
+        font-size: 0.75rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 60%;
     }
 
     .hero-section {
         overflow: visible;
         min-height: auto;
         margin-bottom: 2rem;
+        width: 100%;
     }
 
     .hero-content h1 {
-        font-size: 1.75rem;
+        font-size: 1.85rem;
         min-height: auto;
         line-height: 1.2;
+        word-break: break-word;
     }
 
     .hero-content .highlight {
@@ -628,11 +1016,43 @@ button {
     }
 
     .content-scroll {
-        padding: 5rem 1rem 2rem 1rem;
+        padding: 4.5rem 1rem 2rem 1rem;
         overflow-y: scroll !important;
         -webkit-overflow-scrolling: touch !important;
         min-height: 100vh;
         height: auto;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .search-content {
+        width: 95%;
+        max-height: 85vh;
+        margin: 1rem;
+    }
+
+    .search-header {
+        padding: 0.75rem;
+        gap: 0.5rem;
+    }
+
+    #searchInput {
+        font-size: 0.98rem;
+    }
+
+    .software-link {
+        word-break: break-word;
+    }
+
+    .empty-state-box {
+        padding: 2rem 1rem;
+        margin: 1.5rem 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .footer-nav-row {
+        gap: 0.75rem 1rem;
     }
 
     /* Overlay checks */
@@ -654,6 +1074,35 @@ button {
     .overlay.active {
         opacity: 1;
         pointer-events: all;
+    }
+}
+
+/* Extra Small Phones (<= 480px) */
+@media (max-width: 480px) {
+    .content-scroll {
+        padding: 4.25rem 0.75rem 2rem 0.75rem;
+    }
+
+    .hero-content h1 {
+        font-size: 1.6rem;
+    }
+
+    .hero-content .highlight {
+        font-size: 1.85rem;
+    }
+
+    .contact-card {
+        padding: 1.15rem;
+    }
+
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+
+    .site-footer {
+        margin-top: 3.5rem;
     }
 }
 
