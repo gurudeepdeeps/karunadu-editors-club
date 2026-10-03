@@ -120,11 +120,11 @@ async function handleGetMessages(request, env, corsHeaders) {
     return jsonResponse({ channel, messages: cleaned }, 200, corsHeaders);
 }
 
-// 2. POST MESSAGE (Enforces 30s Slowmode Restriction at the Edge)
+// 2. POST MESSAGE (Enforces 15s Slowmode Restriction at the Edge)
 async function handlePostMessage(request, env, corsHeaders) {
     const ipHash = await getClientIpHash(request);
     const now = Date.now();
-    const cooldownSec = parseInt(env.COOLDOWN_SECONDS || '30', 10);
+    const cooldownSec = parseInt(env.COOLDOWN_SECONDS || '15', 10);
     const cooldownMs = cooldownSec * 1000;
 
     // Check rate limit in D1

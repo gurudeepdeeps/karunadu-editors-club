@@ -5,7 +5,7 @@ compatibility_date = "2024-09-01"
 # CORS & Routing
 [vars]
 CORS_ALLOW_ORIGIN = "https://karunadueditorsclub.vercel.app,http://localhost:3000,http://127.0.0.1:3000"
-COOLDOWN_SECONDS = 30
+COOLDOWN_SECONDS = 15
 ATTACHMENT_RETENTION_HOURS = 24
 
 # Cloudflare D1 Database Binding
