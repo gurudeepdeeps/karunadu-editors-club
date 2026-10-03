@@ -159,7 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: 'Community Chat & Help', url: 'community-chat.html', icon: LucideIcons.messageSquare, category: 'Community' },
         { title: 'General FAQ', url: 'general-questions.html', icon: LucideIcons.helpCircle, category: 'Help' },
         { title: 'Contact & Support', url: 'contact.html', icon: LucideIcons.messageSquare, category: 'Help' },
-        { title: 'Master Admin Control Center', url: 'master-admin.html', icon: LucideIcons.shield, category: 'Admin' },
         { title: 'Privacy Policy', url: 'privacy.html', icon: LucideIcons.shield, category: 'Legal' },
         { title: 'Terms of Service', url: 'terms.html', icon: LucideIcons.fileText, category: 'Legal' },
         { title: 'Cookie Policy', url: 'cookie-policy.html', icon: LucideIcons.cookie, category: 'Legal' },
