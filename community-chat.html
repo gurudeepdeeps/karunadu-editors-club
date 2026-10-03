@@ -952,27 +952,35 @@
         }
 
         @media (max-width: 650px) {
-            .content-scroll {
-                padding: 4.25rem 0.5rem 1.5rem 0.5rem !important;
-                min-height: auto;
-                height: 100vh;
-                height: 100dvh;
-                box-sizing: border-box;
-                display: flex;
-                flex-direction: column;
-                overflow: hidden;
+            .chat-content-scroll {
+                padding: 4.5rem 0.75rem 2rem 0.75rem !important;
+                min-height: 100vh !important;
+                height: auto !important;
+                overflow-y: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                display: block !important;
             }
 
             .chat-page-container {
-                flex: 1;
-                min-height: 0;
                 display: flex;
                 flex-direction: column;
-                height: 100%;
+                width: 100%;
+                height: auto;
             }
 
             .chat-title-bar {
-                display: none; /* Hide redundant long header on mobile to maximize chat scroll viewport */
+                display: block; /* Visible so user sees title and description */
+                margin-bottom: 1rem !important;
+            }
+
+            .chat-title-bar h1 {
+                font-size: 1.4rem !important;
+                line-height: 1.25;
+            }
+
+            .chat-title-bar p {
+                font-size: 0.82rem !important;
+                line-height: 1.4;
             }
 
             .mobile-channel-toggle {
@@ -985,9 +993,9 @@
 
             .chat-app-wrapper {
                 grid-template-columns: 1fr;
-                flex: 1;
-                min-height: 0;
-                height: 100%;
+                height: 72vh;
+                height: 72dvh;
+                min-height: 480px;
                 border-radius: 8px;
             }
 
@@ -996,9 +1004,10 @@
             }
 
             .chat-main-col {
-                flex: 1;
-                min-height: 0;
+                display: flex;
+                flex-direction: column;
                 height: 100%;
+                overflow: hidden;
             }
 
             .chat-header-bar {
@@ -1065,8 +1074,14 @@
         }
 
         @media (max-width: 480px) {
-            .content-scroll {
-                padding: 3.75rem 0.35rem 0.75rem 0.35rem !important;
+            .chat-content-scroll {
+                padding: 4.25rem 0.5rem 2rem 0.5rem !important;
+            }
+
+            .chat-app-wrapper {
+                height: 75vh;
+                height: 75dvh;
+                min-height: 460px;
             }
 
             .msg-attachment-wrap {
@@ -1180,7 +1195,7 @@
             </header>
 
             <!-- Scrollable content wrapper with full vertical control -->
-            <div class="content-scroll" style="padding-top: 4.5rem; padding-bottom: 2rem;">
+            <div class="content-scroll chat-content-scroll">
                 <div class="chat-page-container">
                     <div class="chat-title-bar" style="margin-bottom: 0.75rem;">
                         <h1 style="font-size: 1.75rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem;">
