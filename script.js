@@ -89,7 +89,9 @@ document.addEventListener('DOMContentLoaded', () => {
         lock: `<svg class="lucide-icon" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
         users: `<svg class="lucide-icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
         search: `<svg class="lucide-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>`,
-        menu: `<svg class="lucide-icon" viewBox="0 0 24 24" style="width:20px;height:20px;"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>`
+        menu: `<svg class="lucide-icon" viewBox="0 0 24 24" style="width:20px;height:20px;"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>`,
+        copy: `<svg class="lucide-icon" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`,
+        check: `<svg class="lucide-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`
     };
 
     // Update search triggers in DOM to use Shadcn Search Icon
@@ -262,6 +264,82 @@ document.addEventListener('DOMContentLoaded', () => {
             link.addEventListener('click', closeSidebar);
         });
     }
+
+    // Copyable Password Chip Feature
+    function initCopyablePasswords() {
+        document.querySelectorAll('.copyable-pass').forEach(chip => {
+            if (!chip.querySelector('.copy-icon')) {
+                const iconSpan = document.createElement('span');
+                iconSpan.className = 'copy-icon';
+                iconSpan.setAttribute('aria-hidden', 'true');
+                iconSpan.innerHTML = LucideIcons.copy;
+                chip.appendChild(iconSpan);
+            }
+
+            if (!chip.getAttribute('title')) {
+                chip.setAttribute('title', 'Click to copy password');
+            }
+            if (!chip.getAttribute('role')) {
+                chip.setAttribute('role', 'button');
+                chip.setAttribute('tabindex', '0');
+            }
+        });
+    }
+
+    document.addEventListener('click', (e) => {
+        const chip = e.target.closest('.copyable-pass');
+        if (!chip) return;
+        e.preventDefault();
+
+        const passText = chip.getAttribute('data-pass') || chip.dataset.pass || chip.textContent.trim();
+        if (!passText) return;
+
+        navigator.clipboard.writeText(passText).then(() => {
+            chip.classList.add('copied');
+            const iconSpan = chip.querySelector('.copy-icon');
+            if (iconSpan) {
+                iconSpan.innerHTML = LucideIcons.check;
+            }
+            const originalTitle = chip.getAttribute('title');
+            chip.setAttribute('title', 'Copied!');
+
+            setTimeout(() => {
+                chip.classList.remove('copied');
+                if (iconSpan) {
+                    iconSpan.innerHTML = LucideIcons.copy;
+                }
+                chip.setAttribute('title', originalTitle || 'Click to copy password');
+            }, 1800);
+        }).catch(() => {
+            // Fallback for older browsers
+            const tempInput = document.createElement('input');
+            tempInput.value = passText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            chip.classList.add('copied');
+            const iconSpan = chip.querySelector('.copy-icon');
+            if (iconSpan) iconSpan.innerHTML = LucideIcons.check;
+            setTimeout(() => {
+                chip.classList.remove('copied');
+                if (iconSpan) iconSpan.innerHTML = LucideIcons.copy;
+            }, 1800);
+        });
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            const chip = document.activeElement && document.activeElement.closest('.copyable-pass');
+            if (chip) {
+                e.preventDefault();
+                chip.click();
+            }
+        }
+    });
+
+    initCopyablePasswords();
 
     // Keyboard Shortcuts
     document.addEventListener('keydown', (e) => {

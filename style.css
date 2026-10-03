@@ -616,6 +616,58 @@ button {
     box-shadow: 2px 2px 0px 0px #000;
 }
 
+/* Copyable Password Chip */
+.copyable-pass {
+    display: inline-inline-flex;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.1s ease, background-color 0.1s ease, box-shadow 0.1s ease;
+    vertical-align: middle;
+}
+
+.copyable-pass:hover {
+    background-color: #fef08a;
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0px 0px #000;
+}
+
+.copyable-pass:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px 0px #000;
+}
+
+.copyable-pass .copy-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+}
+
+.copyable-pass .copy-icon svg {
+    width: 13px;
+    height: 13px;
+    stroke: var(--neo-black);
+    stroke-width: 2.2;
+    fill: none;
+    transition: transform 0.15s ease;
+}
+
+.copyable-pass:hover .copy-icon svg {
+    transform: scale(1.15);
+}
+
+.copyable-pass.copied {
+    background-color: #86efac;
+}
+
+.copyable-pass.copied .copy-icon svg {
+    stroke: #15803d;
+}
+
 /* Neo-Brutalist Sticker Highlight */
 .hero-content .highlight {
     font-family: inherit;
