@@ -4,9 +4,10 @@ compatibility_date = "2024-09-01"
 
 # CORS & Routing
 [vars]
-CORS_ALLOW_ORIGIN = "https://karunadueditorsclub.vercel.app,http://localhost:3000,http://127.0.0.1:3000"
-COOLDOWN_SECONDS = 15
+ADMIN_USERNAME = "admin"
 ATTACHMENT_RETENTION_HOURS = 24
+COOLDOWN_SECONDS = 15
+CORS_ALLOW_ORIGIN = "https://karunadueditorsclub.vercel.app,http://localhost:3000,http://127.0.0.1:3000"
 
 # Cloudflare D1 Database Binding
 [[d1_databases]]

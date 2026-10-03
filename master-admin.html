@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" type="image/png" sizes="32x32" href="/kec-logo.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="/kec-logo.png?v=2">
+    <link rel="shortcut icon" href="/kec-logo.png?v=2" type="image/png">
+    <link rel="apple-touch-icon" href="/kec-logo.png?v=2">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Master Admin Control Center | Karunadu Editors Club</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;900&family=Mr+Dafoe&display=swap" rel="stylesheet">
+    <style>
+        .admin-page-wrap {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding-bottom: 4rem;
+        }
+
+        /* Admin Gate / Login Card */
+        .admin-auth-card {
+            max-width: 480px;
+            margin: 3rem auto;
+            background: var(--neo-white);
+            border: 4px solid var(--neo-black);
+            box-shadow: var(--neo-shadow-xl);
+            padding: 2.25rem 2rem;
+            position: relative;
+        }
+
+        .admin-auth-card::before {
+            content: "SECURITY CLEARANCE REQUIRED";
+            position: absolute;
+            top: -16px;
+            left: 20px;
+            background: var(--neo-accent);
+            color: var(--neo-white);
+            border: 2px solid var(--neo-black);
+            box-shadow: 2px 2px 0px 0px #000;
+            padding: 0.2rem 0.6rem;
+            font-size: 0.72rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .admin-field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .admin-field-group label {
+            font-size: 0.85rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--neo-black);
+        }
+
+        .admin-input,
+        .admin-select,
+        .admin-textarea {
+            width: 100%;
+            background: var(--neo-white);
+            border: 3px solid var(--neo-black);
+            padding: 0.75rem 0.9rem;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--neo-black);
+            box-shadow: var(--neo-shadow-sm);
+            outline: none;
+            box-sizing: border-box;
+            transition: all 0.1s ease;
+        }
+
+        .admin-input:focus,
+        .admin-select:focus,
+        .admin-textarea:focus {
+            background: var(--neo-secondary);
+            box-shadow: var(--neo-shadow-md);
+        }
+
+        /* Master Dashboard Toolbar */
+        .admin-dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            background: var(--neo-secondary);
+            border: 4px solid var(--neo-black);
+            box-shadow: var(--neo-shadow-md);
+            padding: 1.25rem 1.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .admin-dashboard-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .admin-dashboard-title h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            color: var(--neo-black);
+            margin: 0;
+        }
+
+        .admin-badge-live {
+            background: var(--neo-accent);
+            color: var(--neo-white);
+            border: 2px solid var(--neo-black);
+            padding: 0.2rem 0.6rem;
+            font-size: 0.72rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            box-shadow: 2px 2px 0px 0px #000;
+        }
+
+        /* Admin Tabs System */
+        .admin-tabs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            border-bottom: 4px solid var(--neo-black);
+            padding-bottom: 0.5rem;
+        }
+
+        .admin-tab-btn {
+            background: var(--neo-white);
+            border: 3px solid var(--neo-black);
+            padding: 0.65rem 1.25rem;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            box-shadow: var(--neo-shadow-sm);
+            transition: all 0.1s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .admin-tab-btn:hover {
+            background: var(--neo-secondary);
+            transform: translate(-1px, -1px);
+            box-shadow: var(--neo-shadow-md);
+        }
+
+        .admin-tab-btn.active {
+            background: var(--neo-accent);
+            color: var(--neo-white);
+            transform: translate(2px, 2px);
+            box-shadow: none;
+        }
+
+        /* Management Panes */
+        .admin-pane {
+            display: none;
+        }
+
+        .admin-pane.active {
+            display: block;
+        }
+
+        /* Stats Strip */
+        .admin-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .admin-stat-card {
+            background: var(--neo-white);
+            border: 3px solid var(--neo-black);
+            box-shadow: var(--neo-shadow-sm);
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .admin-stat-val {
+            font-size: 2.25rem;
+            font-weight: 900;
+            color: var(--neo-black);
+            line-height: 1;
+        }
+
+        .admin-stat-lbl {
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #4b5563;
+        }
+
+        /* Table & List Container */
+        .admin-table-card {
+            background: var(--neo-white);
+            border: 4px solid var(--neo-black);
+            box-shadow: var(--neo-shadow-md);
+            overflow-x: auto;
+            margin-bottom: 2rem;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .admin-table th {
+            background: var(--neo-secondary);
+            border-bottom: 3px solid var(--neo-black);
+            padding: 0.85rem 1rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--neo-black);
+            white-space: nowrap;
+        }
+
+        .admin-table td {
+            padding: 0.85rem 1rem;
+            border-bottom: 2px solid var(--neo-black);
+            color: var(--neo-black);
+            font-weight: 600;
+            vertical-align: middle;
+        }
+
+        .admin-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .admin-table tr:hover {
+            background-color: #fffbeb;
+        }
+
+        /* Quick Action Buttons */
+        .btn-action-sm {
+            padding: 0.35rem 0.65rem;
+            font-size: 0.78rem;
+            font-weight: 800;
+            border: 2px solid var(--neo-black);
+            box-shadow: 2px 2px 0px 0px #000;
+            cursor: pointer;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: all 0.08s ease;
+        }
+
+        .btn-action-sm:active {
+            transform: translate(2px, 2px);
+            box-shadow: none;
+        }
+
+        .btn-action-delete {
+            background: var(--neo-accent);
+            color: #fff;
+        }
+
+        .btn-action-edit {
+            background: var(--neo-secondary);
+            color: #000;
+        }
+
+        /* Modal Popups for Editing Catalog & Adding Items */
+        .admin-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .admin-modal-box {
+            background: var(--neo-bg);
+            border: 4px solid var(--neo-black);
+            box-shadow: var(--neo-shadow-xl);
+            max-width: 640px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .admin-dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem;
+            }
+
+            .admin-tabs {
+                gap: 0.4rem;
+            }
+
+            .admin-tab-btn {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.8rem;
+            }
+
+            .admin-table th,
+            .admin-table td {
+                padding: 0.6rem 0.65rem;
+                font-size: 0.8rem;
+            }
+
+            .admin-auth-card {
+                margin: 1.5rem 0.5rem;
+                padding: 1.5rem 1.25rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <a href="index.html">
+                    <img src="kec-logo.png" alt="Karunadu Editors Club Logo" class="logo-icon">
+                    <h2>Karunadu Editors <span class="brand-signature">Club</span></h2>
+                </a>
+            </div>
+
+            <nav class="nav-menu">
+                <div class="nav-item search-trigger">
+                    <span class="icon">🔍</span>
+                    <span>Search...</span>
+                    <span class="shortcut">⌘K</span>
+                </div>
+
+                <div class="nav-group">
+                    <h3>Start Here</h3>
+                    <a href="index.html" class="nav-link">
+                        <span class="icon">🏠</span>
+                        Introduction
+                    </a>
+                </div>
+
+                <div class="nav-group">
+                    <h3>Softwares</h3>
+                    <a href="windows-softwares.html" class="nav-link">Windows-Softwares</a>
+                    <a href="mac-softwares.html" class="nav-link">Mac-Softwares</a>
+                </div>
+
+                <div class="nav-group">
+                    <h3>Plugins</h3>
+                    <a href="windows-plugins.html" class="nav-link">Windows plug-ins</a>
+                    <a href="mac-plugins.html" class="nav-link">Mac plug-ins</a>
+                    <a href="blender-addons.html" class="nav-link">Blender addons</a>
+                </div>
+
+                <div class="nav-group">
+                    <h3>Assets</h3>
+                    <a href="car-clips.html" class="nav-link">Car clips</a>
+                    <a href="vfx-pack.html" class="nav-link">VFX Pack</a>
+                    <a href="sfx-pack.html" class="nav-link">SFX Pack</a>
+                </div>
+
+                <div class="nav-group">
+                    <h3>Help &amp; Community</h3>
+                    <a href="community-chat.html" class="nav-link">
+                        <span class="icon">💬</span>
+                        Community Chat &amp; Help
+                    </a>
+                    <a href="general-questions.html" class="nav-link">General Questions</a>
+                    <a href="contact.html" class="nav-link">Contact &amp; Support</a>
+                    <a href="community-guidelines.html" class="nav-link">Community Guidelines</a>
+                </div>
+
+                <div class="nav-group">
+                    <h3>Administration</h3>
+                    <a href="master-admin.html" class="nav-link active">
+                        <span class="icon">🛡️</span>
+                        Master Admin
+                    </a>
+                </div>
+
+                <div class="nav-group">
+                    <h3>Legal</h3>
+                    <a href="privacy.html" class="nav-link">Privacy Policy</a>
+                    <a href="terms.html" class="nav-link">Terms of Service</a>
+                    <a href="cookie-policy.html" class="nav-link">Cookie Policy</a>
+                    <a href="disclaimer.html" class="nav-link">Disclaimer</a>
+                    <a href="accessibility.html" class="nav-link">Accessibility</a>
+                    <a href="security.html" class="nav-link">Security</a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <ol style="display:inline-flex;list-style:none;padding:0;margin:0;gap:0.4rem;">
+                        <li><a href="index.html" style="color:var(--neo-black);text-decoration:underline;">Home</a></li>
+                        <li><span>/</span></li>
+                        <li><span>Master Admin</span></li>
+                    </ol>
+                </nav>
+                <div class="header-actions">
+                    <a href="community-chat.html" aria-label="Community Chat & Help Room" class="social-link" title="Community Chat & Help Room">
+                        <svg class="social-icon" aria-hidden="true" viewBox="0 0 24 24">
+                            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+                        </svg>
+                    </a>
+                </div>
+            </header>
+
+            <div class="content-scroll">
+                <div class="admin-page-wrap">
+                    
+                    <!-- 1. LOGIN GATE (Shown when not authenticated) -->
+                    <div id="adminLoginGateSection">
+                        <div class="admin-auth-card">
+                            <h2 style="font-size: 1.85rem; font-weight: 900; text-transform: uppercase; margin-bottom: 0.5rem; color: var(--neo-black);">
+                                Master <span class="highlight">Admin</span>
+                            </h2>
+                            <p style="font-size: 0.95rem; font-weight: 600; color: #1a1a1a; margin-bottom: 1.5rem; line-height: 1.4;">
+                                Enter your master administrator credentials to access real-time moderation, catalog database controller, and emergency broadcast alerts.
+                            </p>
+
+                            <div id="adminLoginAlert" style="display:none; margin-bottom:1rem;" class="shadcn-alert">
+                                <div class="shadcn-alert-content" id="adminLoginAlertMsg" style="font-weight:700;"></div>
+                            </div>
+
+                            <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+                                <div class="admin-field-group">
+                                    <label for="adminUsernameInput">Administrator Username</label>
+                                    <input type="text" id="adminUsernameInput" class="admin-input" required autocomplete="username" placeholder="e.g. admin">
+                                </div>
+
+                                <div class="admin-field-group">
+                                    <label for="adminPasswordInput">Master Key / Passphrase</label>
+                                    <input type="password" id="adminPasswordInput" class="admin-input" required autocomplete="current-password" placeholder="••••••••••••••••">
+                                </div>
+
+                                <button type="submit" id="adminLoginBtn" class="btn btn-primary" style="width: 100%; height: 3rem; margin-top: 0.75rem;">
+                                    Authenticate &amp; Open Control Center
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- 2. DASHBOARD SECTION (Shown when authenticated) -->
+                    <div id="adminDashboardSection" style="display: none;">
+                        <div class="admin-dashboard-header">
+                            <div class="admin-dashboard-title">
+                                <h2>Master Control Center</h2>
+                                <span class="admin-badge-live">Live D1 Database</span>
+                            </div>
+                            <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+                                <span id="adminSessionUserBadge" style="font-weight: 900; text-transform: uppercase; font-size: 0.85rem; background: var(--neo-white); border: 2px solid var(--neo-black); padding: 0.35rem 0.65rem;">
+                                    Admin: <span id="currentAdminName">master</span>
+                                </span>
+                                <button type="button" onclick="handleAdminLogout()" class="btn btn-sm btn-destructive">
+                                    Log Out
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Statistics Strip -->
+                        <div class="admin-stats-grid">
+                            <div class="admin-stat-card">
+                                <span class="admin-stat-val" id="statMessageCount">--</span>
+                                <span class="admin-stat-lbl">Live Chat Messages</span>
+                            </div>
+                            <div class="admin-stat-card">
+                                <span class="admin-stat-val" id="statCatalogCount">--</span>
+                                <span class="admin-stat-lbl">Catalog Software &amp; Plugins</span>
+                            </div>
+                            <div class="admin-stat-card">
+                                <span class="admin-stat-val" id="statNoticeStatus">Active</span>
+                                <span class="admin-stat-lbl">Global Notice Status</span>
+                            </div>
+                        </div>
+
+                        <!-- Navigation Tabs -->
+                        <div class="admin-tabs" role="tablist">
+                            <button type="button" class="admin-tab-btn active" onclick="switchAdminTab('chatModeration')">
+                                💬 Chat Moderation
+                            </button>
+                            <button type="button" class="admin-tab-btn" onclick="switchAdminTab('catalogManager')">
+                                📦 Software &amp; Plugins
+                            </button>
+                            <button type="button" class="admin-tab-btn" onclick="switchAdminTab('broadcastSettings')">
+                                📢 Broadcast Notice
+                            </button>
+                        </div>
+
+                        <!-- PANE 1: Chat Moderation -->
+                        <div id="pane-chatModeration" class="admin-pane active">
+                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+                                <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+                                    <label style="font-weight: 900; font-size: 0.85rem; text-transform: uppercase;">Filter Channel:</label>
+                                    <select id="chatChannelFilter" class="admin-select" style="width: auto; padding: 0.4rem 0.75rem;" onchange="loadAdminMessages()">
+                                        <option value="">All Channels</option>
+                                        <option value="general-chat"># general-chat</option>
+                                        <option value="editing-help"># editing-help</option>
+                                        <option value="announcements">📢 announcements</option>
+                                        <option value="rules">📜 rules-and-faq</option>
+                                    </select>
+                                    <button type="button" class="btn btn-sm btn-outline" onclick="loadAdminMessages()">
+                                        ↻ Refresh Messages
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-sm btn-destructive" onclick="promptPurgeChannel()">
+                                        ⚠️ Purge Selected Channel
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="admin-table-card">
+                                <table class="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                            <th>Channel</th>
+                                            <th>User / Role</th>
+                                            <th>IP Hash</th>
+                                            <th>Message Text</th>
+                                            <th>Attachment</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="adminMessagesTbody">
+                                        <tr>
+                                            <td colspan="7" style="text-align:center; padding:2rem; font-weight:700;">Loading live messages from Cloudflare D1...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- PANE 2: Catalog Management -->
+                        <div id="pane-catalogManager" class="admin-pane">
+                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+                                <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+                                    <label style="font-weight: 900; font-size: 0.85rem; text-transform: uppercase;">Filter Category:</label>
+                                    <select id="catalogCategoryFilter" class="admin-select" style="width: auto; padding: 0.4rem 0.75rem;" onchange="renderCatalogTable()">
+                                        <option value="">All Categories</option>
+                                        <option value="windows-softwares">Windows Software</option>
+                                        <option value="mac-softwares">Mac Software</option>
+                                        <option value="windows-plugins">Windows Plugins</option>
+                                        <option value="mac-plugins">Mac Plugins</option>
+                                        <option value="blender-addons">Blender Addons</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-sm btn-primary" onclick="openNewCatalogModal()">
+                                        + Add Software / Plugin
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="admin-table-card">
+                                <table class="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Category</th>
+                                            <th>Title</th>
+                                            <th>Item / Version</th>
+                                            <th>Badge</th>
+                                            <th>Password</th>
+                                            <th>Download URL</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="adminCatalogTbody">
+                                        <tr>
+                                            <td colspan="7" style="text-align:center; padding:2rem; font-weight:700;">Loading catalog items from Cloudflare D1...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- PANE 3: Broadcast Notice Settings -->
+                        <div id="pane-broadcastSettings" class="admin-pane">
+                            <div class="shadcn-card" style="padding: 1.75rem; margin-bottom: 2rem;">
+                                <h3 style="font-size: 1.25rem; font-weight: 900; text-transform: uppercase; margin-bottom: 0.5rem;">
+                                    Global Site Banner &amp; Alert Controller
+                                </h3>
+                                <p style="font-size: 0.95rem; font-weight: 600; color: #374151; margin-bottom: 1.5rem;">
+                                    Publish emergency alerts, new version drops, or server maintenance announcements directly to all website visitors in real-time.
+                                </p>
+
+                                <form id="broadcastNoticeForm" onsubmit="handleSaveBroadcastNotice(event)">
+                                    <div class="admin-field-group">
+                                        <label for="noticeStatusSelect">Banner Visibility</label>
+                                        <select id="noticeStatusSelect" class="admin-select">
+                                            <option value="enabled">Active / Visible Across All Pages</option>
+                                            <option value="disabled">Disabled / Hidden</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="admin-field-group">
+                                        <label for="noticeTextInput">Notice Text (Markdown / Text)</label>
+                                        <textarea id="noticeTextInput" class="admin-textarea" rows="4" placeholder="e.g. ⚡ Premiere Pro 2025 v25.31.003 and BorisFX Continuum are now verified and ready in the catalog."></textarea>
+                                    </div>
+
+                                    <div class="admin-field-group">
+                                        <label for="noticeTypeSelect">Banner Style</label>
+                                        <select id="noticeTypeSelect" class="admin-select">
+                                            <option value="accent">Hot Red (High-Priority Alert)</option>
+                                            <option value="secondary">Vivid Yellow (Standard Announcement)</option>
+                                            <option value="muted">Soft Violet (Maintenance / Notice)</option>
+                                        </select>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary" style="height: 2.8rem; margin-top: 0.5rem;">
+                                        Save &amp; Broadcast Announcement
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL: Add/Edit Catalog Item -->
+    <div id="catalogModal" class="admin-modal-overlay">
+        <div class="admin-modal-box">
+            <h3 id="catalogModalTitle" style="font-size: 1.35rem; font-weight: 900; text-transform: uppercase; margin-bottom: 1.25rem;">
+                Add Software Item
+            </h3>
+
+            <form id="catalogItemForm" onsubmit="handleSaveCatalogItem(event)">
+                <input type="hidden" id="catalogModalItemId">
+
+                <div class="admin-field-group">
+                    <label for="itemCategoryInput">Category</label>
+                    <select id="itemCategoryInput" class="admin-select" required>
+                        <option value="windows-softwares">Windows Software</option>
+                        <option value="mac-softwares">Mac Software</option>
+                        <option value="windows-plugins">Windows Plugins</option>
+                        <option value="mac-plugins">Mac Plugins</option>
+                        <option value="blender-addons">Blender Addons</option>
+                    </select>
+                </div>
+
+                <div class="admin-field-group">
+                    <label for="itemTitleInput">Main Title</label>
+                    <input type="text" id="itemTitleInput" class="admin-input" placeholder="e.g. Adobe After Effects" required>
+                </div>
+
+                <div class="admin-field-group">
+                    <label for="itemNameInput">Item / Version Title</label>
+                    <input type="text" id="itemNameInput" class="admin-input" placeholder="e.g. AE 2025" required>
+                </div>
+
+                <div class="admin-field-group">
+                    <label for="itemTagInput">Item Tag</label>
+                    <input type="text" id="itemTagInput" class="admin-input" placeholder="e.g. v25.31.003 • Latest">
+                </div>
+
+                <div class="admin-field-group">
+                    <label for="itemBadgeInput">Badge</label>
+                    <input type="text" id="itemBadgeInput" class="admin-input" placeholder="e.g. Free or Windows x64">
+                </div>
+
+                <div class="admin-field-group">
+                    <label for="itemDownloadUrlInput">Download URL</label>
+                    <input type="url" id="itemDownloadUrlInput" class="admin-input" placeholder="https://drive.google.com/..." required>
+                </div>
+
+                <div class="admin-field-group">
+                    <label for="itemArchivePassInput">Archive Password</label>
+                    <input type="text" id="itemArchivePassInput" class="admin-input" placeholder="lofix or 123" value="lofix">
+                </div>
+
+                <div class="admin-field-group">
+                    <label for="itemDescriptionInput">Description (Optional)</label>
+                    <textarea id="itemDescriptionInput" class="admin-textarea" rows="2" placeholder="Brief tool description"></textarea>
+                </div>
+
+                <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem;">
+                    <button type="button" class="btn btn-outline" onclick="closeCatalogModal()">
+                        Cancel
+                    </button>
+                    <button type="submit" id="saveCatalogItemBtn" class="btn btn-primary">
+                        Save Item
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.min.js" defer></script>
+    <script>
+        // API Base configuration
+        const API_URL = 'https://kec-community-chat-api.karunadueditorsclub.workers.dev';
+        const STORAGE_KEY_ADMIN_TOKEN = 'kec_admin_session_token';
+
+        let adminToken = localStorage.getItem(STORAGE_KEY_ADMIN_TOKEN) || '';
+        let allCatalogItems = [];
+        let allMessages = [];
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (adminToken) {
+                const isValid = await verifyCurrentSession();
+                if (isValid) {
+                    showDashboard();
+                } else {
+                    showLoginGate();
+                }
+            } else {
+                showLoginGate();
+            }
+        });
+
+        // 1. Session Verification
+        async function verifyCurrentSession() {
+            try {
+                const res = await fetch(`${API_URL}/api/admin/verify`, {
+                    headers: { 'X-Admin-Token': adminToken }
+                });
+                return res.ok;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function showLoginGate() {
+            document.getElementById('adminLoginGateSection').style.display = 'block';
+            document.getElementById('adminDashboardSection').style.display = 'none';
+        }
+
+        function showDashboard() {
+            document.getElementById('adminLoginGateSection').style.display = 'none';
+            document.getElementById('adminDashboardSection').style.display = 'block';
+            loadAdminMessages();
+            loadAdminCatalog();
+            loadAdminSettings();
+        }
+
+        // 2. Admin Authentication
+        async function handleAdminLogin(e) {
+            e.preventDefault();
+            const userInp = document.getElementById('adminUsernameInput');
+            const passInp = document.getElementById('adminPasswordInput');
+            const btn = document.getElementById('adminLoginBtn');
+            const alertBox = document.getElementById('adminLoginAlert');
+            const alertMsg = document.getElementById('adminLoginAlertMsg');
+
+            btn.disabled = true;
+            btn.textContent = 'Verifying Security Clearance...';
+            alertBox.style.display = 'none';
+
+            try {
+                const res = await fetch(`${API_URL}/api/admin/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: userInp.value.trim(),
+                        password: passInp.value.trim()
+                    })
+                });
+
+                const data = await res.json();
+                if (!res.ok) {
+                    throw new Error(data.error || 'Authentication rejected');
+                }
+
+                adminToken = data.token;
+                localStorage.setItem(STORAGE_KEY_ADMIN_TOKEN, adminToken);
+                document.getElementById('currentAdminName').textContent = data.username || 'master';
+                showDashboard();
+            } catch (err) {
+                alertBox.style.display = 'flex';
+                alertMsg.textContent = '⚠️ ' + err.message;
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Authenticate & Open Control Center';
+            }
+        }
+
+        async function handleAdminLogout() {
+            if (!confirm('Log out of Master Control Center?')) return;
+            try {
+                await fetch(`${API_URL}/api/admin/logout`, {
+                    method: 'POST',
+                    headers: { 'X-Admin-Token': adminToken }
+                });
+            } catch (e) {}
+            localStorage.removeItem(STORAGE_KEY_ADMIN_TOKEN);
+            adminToken = '';
+            showLoginGate();
+        }
+
+        // 3. Tab Switching
+        function switchAdminTab(paneName) {
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('onclick').includes(paneName));
+            });
+            document.querySelectorAll('.admin-pane').forEach(pane => {
+                pane.classList.toggle('active', pane.id === 'pane-' + paneName);
+            });
+        }
+
+        // 4. Chat Moderation Handlers
+        async function loadAdminMessages() {
+            const tbody = document.getElementById('adminMessagesTbody');
+            const channel = document.getElementById('chatChannelFilter').value;
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:1.5rem;">Fetching live messages...</td></tr>`;
+
+            try {
+                const url = channel ? `${API_URL}/api/admin/messages?channel=${encodeURIComponent(channel)}` : `${API_URL}/api/admin/messages`;
+                const res = await fetch(url, {
+                    headers: { 'X-Admin-Token': adminToken }
+                });
+
+                if (!res.ok) throw new Error('Failed to load messages');
+                const data = await res.json();
+                allMessages = data.messages || [];
+
+                document.getElementById('statMessageCount').textContent = allMessages.length;
+
+                if (allMessages.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:1.5rem; color:#6b7280;">No messages found in this room.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = allMessages.map(m => {
+                    const dateStr = new Date(m.timestamp).toLocaleString();
+                    const attachmentLink = m.attachment ? 
+                        `<a href="${m.attachment}" target="_blank" style="text-decoration:underline; font-weight:800; color:var(--neo-black);">📎 File</a>` : 
+                        '<span style="color:#9ca3af;">None</span>';
+
+                    return `
+                        <tr>
+                            <td style="white-space:nowrap; font-size:0.8rem;">${dateStr}</td>
+                            <td><span class="shadcn-badge shadcn-badge-outline">${escapeHtml(m.channel)}</span></td>
+                            <td><strong>${escapeHtml(m.name)}</strong><br><span style="font-size:0.75rem; color:#6b7280;">${escapeHtml(m.role || 'Member')}</span></td>
+                            <td><code class="shadcn-code" style="font-size:0.72rem;">${escapeHtml(m.ipHash || 'N/A')}</code></td>
+                            <td style="max-width:320px; word-break:break-word;">${escapeHtml(m.text || '')}</td>
+                            <td>${attachmentLink}</td>
+                            <td>
+                                <button type="button" class="btn-action-sm btn-action-delete" onclick="deleteChatMessage('${m.id}')">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            } catch (err) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:#ef4444; padding:1.5rem;">Error: ${err.message}</td></tr>`;
+            }
+        }
+
+        async function deleteChatMessage(id) {
+            if (!confirm(`Permanently delete message ${id}? This will also delete any attached file from Cloudflare R2.`)) return;
+
+            try {
+                const res = await fetch(`${API_URL}/api/admin/messages/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'X-Admin-Token': adminToken }
+                });
+
+                if (!res.ok) throw new Error('Failed to delete message');
+                loadAdminMessages();
+            } catch (err) {
+                alert('Deletion error: ' + err.message);
+            }
+        }
+
+        async function promptPurgeChannel() {
+            const channel = document.getElementById('chatChannelFilter').value;
+            if (!channel) {
+                alert('Please select a specific channel from the dropdown filter to purge.');
+                return;
+            }
+
+            if (!confirm(`DANGER: Are you sure you want to permanently purge ALL messages in #${channel}?`)) return;
+
+            try {
+                const res = await fetch(`${API_URL}/api/admin/messages/purge-channel`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Admin-Token': adminToken
+                    },
+                    body: JSON.stringify({ channel })
+                });
+
+                if (!res.ok) throw new Error('Failed to purge channel');
+                alert(`Channel #${channel} purged successfully.`);
+                loadAdminMessages();
+            } catch (err) {
+                alert('Purge error: ' + err.message);
+            }
+        }
+
+        // 5. Catalog Management Handlers
+        async function loadAdminCatalog() {
+            const tbody = document.getElementById('adminCatalogTbody');
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:1.5rem;">Fetching catalog from D1...</td></tr>`;
+
+            try {
+                const res = await fetch(`${API_URL}/api/admin/catalog`, {
+                    headers: { 'X-Admin-Token': adminToken }
+                });
+
+                if (!res.ok) throw new Error('Failed to fetch catalog');
+                const data = await res.json();
+                allCatalogItems = data.items || [];
+
+                document.getElementById('statCatalogCount').textContent = allCatalogItems.length;
+                renderCatalogTable();
+            } catch (err) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:#ef4444; padding:1.5rem;">Error: ${err.message}</td></tr>`;
+            }
+        }
+
+        function renderCatalogTable() {
+            const tbody = document.getElementById('adminCatalogTbody');
+            const categoryFilter = document.getElementById('catalogCategoryFilter').value;
+
+            const filtered = categoryFilter ? 
+                allCatalogItems.filter(item => item.category === categoryFilter) : 
+                allCatalogItems;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:1.5rem; color:#6b7280;">No catalog entries found. Click "+ Add Software / Plugin" to create one.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(item => `
+                <tr>
+                    <td><span class="shadcn-badge shadcn-badge-secondary">${escapeHtml(item.category)}</span></td>
+                    <td><strong>${escapeHtml(item.title)}</strong></td>
+                    <td>${escapeHtml(item.item_name)} <span style="font-size:0.75rem; color:#6b7280;">(${escapeHtml(item.item_tag || 'Stable')})</span></td>
+                    <td><span class="shadcn-badge shadcn-badge-outline">${escapeHtml(item.badge || 'Free')}</span></td>
+                    <td><code class="shadcn-code">${escapeHtml(item.archive_password || 'lofix')}</code></td>
+                    <td><a href="${item.download_url}" target="_blank" style="color:var(--neo-black); text-decoration:underline; font-weight:700;">Open Link</a></td>
+                    <td>
+                        <div style="display:flex; gap:0.4rem;">
+                            <button type="button" class="btn-action-sm btn-action-edit" onclick="openEditCatalogModal('${item.id}')">Edit</button>
+                            <button type="button" class="btn-action-sm btn-action-delete" onclick="deleteCatalogItem('${item.id}')">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openNewCatalogModal() {
+            document.getElementById('catalogModalTitle').textContent = 'Add Software / Plugin';
+            document.getElementById('catalogModalItemId').value = '';
+            document.getElementById('itemTitleInput').value = '';
+            document.getElementById('itemNameInput').value = '';
+            document.getElementById('itemTagInput').value = 'v2025 • Stable';
+            document.getElementById('itemBadgeInput').value = 'Free';
+            document.getElementById('itemDownloadUrlInput').value = '';
+            document.getElementById('itemArchivePassInput').value = 'lofix';
+            document.getElementById('itemDescriptionInput').value = '';
+            document.getElementById('catalogModal').style.display = 'flex';
+        }
+
+        function openEditCatalogModal(id) {
+            const item = allCatalogItems.find(it => it.id === id);
+            if (!item) return;
+
+            document.getElementById('catalogModalTitle').textContent = 'Edit Software Item';
+            document.getElementById('catalogModalItemId').value = item.id;
+            document.getElementById('itemCategoryInput').value = item.category;
+            document.getElementById('itemTitleInput').value = item.title;
+            document.getElementById('itemNameInput').value = item.item_name;
+            document.getElementById('itemTagInput').value = item.item_tag || '';
+            document.getElementById('itemBadgeInput').value = item.badge || 'Free';
+            document.getElementById('itemDownloadUrlInput').value = item.download_url;
+            document.getElementById('itemArchivePassInput').value = item.archive_password || 'lofix';
+            document.getElementById('itemDescriptionInput').value = item.description || '';
+            document.getElementById('catalogModal').style.display = 'flex';
+        }
+
+        function closeCatalogModal() {
+            document.getElementById('catalogModal').style.display = 'none';
+        }
+
+        async function handleSaveCatalogItem(e) {
+            e.preventDefault();
+            const id = document.getElementById('catalogModalItemId').value;
+            const payload = {
+                category: document.getElementById('itemCategoryInput').value,
+                title: document.getElementById('itemTitleInput').value.trim(),
+                itemName: document.getElementById('itemNameInput').value.trim(),
+                itemTag: document.getElementById('itemTagInput').value.trim(),
+                badge: document.getElementById('itemBadgeInput').value.trim(),
+                downloadUrl: document.getElementById('itemDownloadUrlInput').value.trim(),
+                archivePassword: document.getElementById('itemArchivePassInput').value.trim(),
+                description: document.getElementById('itemDescriptionInput').value.trim()
+            };
+
+            const btn = document.getElementById('saveCatalogItemBtn');
+            btn.disabled = true;
+            btn.textContent = 'Saving...';
+
+            try {
+                const method = id ? 'PUT' : 'POST';
+                const url = id ? `${API_URL}/api/admin/catalog/${id}` : `${API_URL}/api/admin/catalog`;
+
+                const res = await fetch(url, {
+                    method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Admin-Token': adminToken
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!res.ok) throw new Error('Failed to save item');
+                closeCatalogModal();
+                loadAdminCatalog();
+            } catch (err) {
+                alert('Catalog save error: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Save Item';
+            }
+        }
+
+        async function deleteCatalogItem(id) {
+            if (!confirm(`Delete catalog item ${id}?`)) return;
+
+            try {
+                const res = await fetch(`${API_URL}/api/admin/catalog/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'X-Admin-Token': adminToken }
+                });
+
+                if (!res.ok) throw new Error('Failed to delete item');
+                loadAdminCatalog();
+            } catch (err) {
+                alert('Catalog deletion error: ' + err.message);
+            }
+        }
+
+        // 6. Broadcast Notice Settings
+        async function loadAdminSettings() {
+            try {
+                const res = await fetch(`${API_URL}/api/settings`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const settings = data.settings || {};
+                    if (settings.broadcast_notice) {
+                        const parsed = typeof settings.broadcast_notice === 'string' ? JSON.parse(settings.broadcast_notice) : settings.broadcast_notice;
+                        document.getElementById('noticeStatusSelect').value = parsed.enabled ? 'enabled' : 'disabled';
+                        document.getElementById('noticeTextInput').value = parsed.text || '';
+                        document.getElementById('noticeTypeSelect').value = parsed.type || 'accent';
+                        document.getElementById('statNoticeStatus').textContent = parsed.enabled ? 'Active' : 'Off';
+                    }
+                }
+            } catch (e) {}
+        }
+
+        async function handleSaveBroadcastNotice(e) {
+            e.preventDefault();
+            const enabled = document.getElementById('noticeStatusSelect').value === 'enabled';
+            const text = document.getElementById('noticeTextInput').value.trim();
+            const type = document.getElementById('noticeTypeSelect').value;
+
+            try {
+                const res = await fetch(`${API_URL}/api/admin/settings`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Admin-Token': adminToken
+                    },
+                    body: JSON.stringify({
+                        key: 'broadcast_notice',
+                        value: { enabled, text, type, updatedAt: Date.now() }
+                    })
+                });
+
+                if (!res.ok) throw new Error('Failed to save notice setting');
+                alert('Global broadcast notice published successfully!');
+                document.getElementById('statNoticeStatus').textContent = enabled ? 'Active' : 'Off';
+            } catch (err) {
+                alert('Notice save error: ' + err.message);
+            }
+        }
+
+        function escapeHtml(str) {
+            return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+    </script>
+</body>
+
+</html>

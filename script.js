@@ -19,6 +19,33 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('offline', updateNetworkStatus);
     updateNetworkStatus();
 
+    // Global Broadcast Notice Controller (Managed via Master Admin)
+    const broadcastBanner = document.createElement('div');
+    broadcastBanner.className = 'broadcast-banner';
+    broadcastBanner.style.display = 'none';
+    document.body.prepend(broadcastBanner);
+
+    async function checkGlobalBroadcastNotice() {
+        try {
+            const res = await fetch('https://kec-community-chat-api.karunadueditorsclub.workers.dev/api/settings');
+            if (res.ok) {
+                const data = await res.json();
+                const settings = data.settings || {};
+                if (settings.broadcast_notice) {
+                    const notice = typeof settings.broadcast_notice === 'string' ? JSON.parse(settings.broadcast_notice) : settings.broadcast_notice;
+                    if (notice && notice.enabled && notice.text) {
+                        broadcastBanner.textContent = notice.text;
+                        broadcastBanner.style.display = 'block';
+                        broadcastBanner.className = `broadcast-banner broadcast-${notice.type || 'accent'}`;
+                    } else {
+                        broadcastBanner.style.display = 'none';
+                    }
+                }
+            }
+        } catch (e) {}
+    }
+    checkGlobalBroadcastNotice();
+
     // Search Functionality
     const searchTrigger = document.querySelector('.search-trigger');
     const searchModal = document.createElement('div');
@@ -97,7 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'cookie-policy.html': LucideIcons.cookie,
         'disclaimer.html': LucideIcons.scale,
         'accessibility.html': LucideIcons.eye,
-        'security.html': LucideIcons.lock
+        'security.html': LucideIcons.lock,
+        'master-admin.html': LucideIcons.shield
     };
 
     document.querySelectorAll('.nav-link').forEach(link => {
@@ -130,8 +158,10 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: 'Car Clips', url: 'car-clips.html', icon: LucideIcons.film, category: 'Assets' },
         { title: 'VFX Pack', url: 'vfx-pack.html', icon: LucideIcons.flame, category: 'Assets' },
         { title: 'SFX Pack', url: 'sfx-pack.html', icon: LucideIcons.volume, category: 'Assets' },
+        { title: 'Community Chat & Help', url: 'community-chat.html', icon: LucideIcons.messageSquare, category: 'Community' },
         { title: 'General FAQ', url: 'general-questions.html', icon: LucideIcons.helpCircle, category: 'Help' },
         { title: 'Contact & Support', url: 'contact.html', icon: LucideIcons.messageSquare, category: 'Help' },
+        { title: 'Master Admin Control Center', url: 'master-admin.html', icon: LucideIcons.shield, category: 'Admin' },
         { title: 'Privacy Policy', url: 'privacy.html', icon: LucideIcons.shield, category: 'Legal' },
         { title: 'Terms of Service', url: 'terms.html', icon: LucideIcons.fileText, category: 'Legal' },
         { title: 'Cookie Policy', url: 'cookie-policy.html', icon: LucideIcons.cookie, category: 'Legal' },

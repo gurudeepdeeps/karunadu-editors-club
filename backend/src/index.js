@@ -1,13 +1,27 @@
 /**
- * Karunadu Editors Club (KEC) Community Chat Backend
+ * Karunadu Editors Club (KEC) Community Chat & Master Admin Backend
  * Powered by Cloudflare Workers, Cloudflare D1 (SQL), and Cloudflare R2 (Object Storage)
  * 
  * Features:
- * - GET  /api/messages?channel={channel}  -> Fetches channel messages (with 24h attachment purge check)
- * - POST /api/messages                    -> Posts message with 30-second restriction enforced at edge
- * - POST /api/upload                      -> Uploads screenshot to R2 with 24-hour expiration metadata
- * - GET  /api/attachments/:key            -> Serves attachment (or 404 if expired > 24h)
- * - GET  /api/health                      -> Healthcheck and server stats
+ * - GET  /api/health                       -> Healthcheck and server stats
+ * - GET  /api/messages?channel={channel}   -> Fetches channel messages
+ * - POST /api/messages                     -> Posts message with 15-second restriction enforced at edge
+ * - POST /api/upload                       -> Uploads screenshot to R2 with 24-hour expiration metadata
+ * - GET  /api/attachments/:key             -> Serves attachment (or 404 if expired > 24h)
+ * 
+ * Master Admin API (Securely Protected):
+ * - POST /api/admin/login                  -> Verifies SHA-256 hashed password, generates cryptographically random token
+ * - GET  /api/admin/verify                 -> Verifies current admin session token
+ * - POST /api/admin/logout                 -> Revokes admin session token
+ * - GET  /api/admin/messages               -> List recent messages across all channels with sender IP hash
+ * - DELETE /api/admin/messages/:id         -> Deletes specific message & removes attachment from R2
+ * - POST /api/admin/messages/purge-channel -> Purges all messages in a specific channel
+ * - GET  /api/admin/catalog                -> Fetches all catalog software/plugin items
+ * - POST /api/admin/catalog                -> Adds new software/plugin item
+ * - PUT  /api/admin/catalog/:id            -> Updates existing software/plugin item
+ * - DELETE /api/admin/catalog/:id         -> Deletes software/plugin item
+ * - GET  /api/settings                     -> Public endpoint for global announcement banner & settings
+ * - POST /api/admin/settings               -> Admin endpoint to update global announcement banner
  */
 
 export default {
@@ -18,8 +32,8 @@ export default {
         // CORS headers
         const corsHeaders = {
             'Access-Control-Allow-Origin': origin || '*',
-            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Admin-Token',
             'Access-Control-Max-Age': '86400',
         };
 
@@ -28,9 +42,14 @@ export default {
         }
 
         try {
-            // Router
+            // Public Router
             if (url.pathname === '/api/health') {
                 return jsonResponse({ status: 'ok', time: new Date().toISOString() }, 200, corsHeaders);
+            }
+
+            // Public Settings (e.g. Broadcast Announcements)
+            if (url.pathname === '/api/settings' && request.method === 'GET') {
+                return await handleGetPublicSettings(env, corsHeaders);
             }
 
             if (url.pathname === '/api/messages') {
@@ -48,6 +67,61 @@ export default {
             if (url.pathname.startsWith('/api/attachments/')) {
                 const key = url.pathname.replace('/api/attachments/', '');
                 return await handleServeAttachment(key, env, corsHeaders);
+            }
+
+            // ================= MASTER ADMIN ROUTING =================
+            if (url.pathname === '/api/admin/login' && request.method === 'POST') {
+                return await handleAdminLogin(request, env, corsHeaders);
+            }
+
+            if (url.pathname === '/api/admin/verify' && request.method === 'GET') {
+                return await handleAdminVerify(request, env, corsHeaders);
+            }
+
+            if (url.pathname === '/api/admin/logout' && request.method === 'POST') {
+                return await handleAdminLogout(request, env, corsHeaders);
+            }
+
+            // Protected Admin Endpoints (Require valid X-Admin-Token or Authorization Bearer)
+            if (url.pathname.startsWith('/api/admin/')) {
+                const isAuthed = await verifyAdminSession(request, env);
+                if (!isAuthed) {
+                    return jsonResponse({ error: 'Unauthorized: Invalid or expired admin session token' }, 401, corsHeaders);
+                }
+
+                // Chat Moderation
+                if (url.pathname === '/api/admin/messages' && request.method === 'GET') {
+                    return await handleAdminGetMessages(request, env, corsHeaders);
+                }
+                if (url.pathname.startsWith('/api/admin/messages/') && request.method === 'DELETE') {
+                    const msgId = url.pathname.replace('/api/admin/messages/', '');
+                    return await handleAdminDeleteMessage(msgId, env, corsHeaders);
+                }
+                if (url.pathname === '/api/admin/messages/purge-channel' && request.method === 'POST') {
+                    return await handleAdminPurgeChannel(request, env, corsHeaders);
+                }
+
+                // Catalog Management
+                if (url.pathname === '/api/admin/catalog') {
+                    if (request.method === 'GET') {
+                        return await handleAdminGetCatalog(request, env, corsHeaders);
+                    } else if (request.method === 'POST') {
+                        return await handleAdminCreateCatalogItem(request, env, corsHeaders);
+                    }
+                }
+                if (url.pathname.startsWith('/api/admin/catalog/')) {
+                    const itemId = url.pathname.replace('/api/admin/catalog/', '');
+                    if (request.method === 'PUT') {
+                        return await handleAdminUpdateCatalogItem(itemId, request, env, corsHeaders);
+                    } else if (request.method === 'DELETE') {
+                        return await handleAdminDeleteCatalogItem(itemId, env, corsHeaders);
+                    }
+                }
+
+                // Global Settings / Announcements
+                if (url.pathname === '/api/admin/settings' && request.method === 'POST') {
+                    return await handleAdminUpdateSettings(request, env, corsHeaders);
+                }
             }
 
             return jsonResponse({ error: 'Endpoint not found' }, 404, corsHeaders);
@@ -69,7 +143,14 @@ function jsonResponse(data, status = 200, headers = {}) {
     });
 }
 
-// Hash Client IP for privacy-friendly 30s rate limiting
+// Compute SHA-256 Hash of string
+async function sha256(str) {
+    const buf = new TextEncoder().encode(str);
+    const hash = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Hash Client IP for privacy-friendly 15s rate limiting
 async function getClientIpHash(request) {
     const ip = request.headers.get('CF-Connecting-IP') || '127.0.0.1';
     const msgBuffer = new TextEncoder().encode(ip + '_kec_salt');
@@ -77,6 +158,330 @@ async function getClientIpHash(request) {
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 24);
 }
+
+// ================= ADMIN AUTHENTICATION UTILS =================
+
+function getAdminToken(request) {
+    const headerToken = request.headers.get('X-Admin-Token');
+    if (headerToken) return headerToken.trim();
+
+    const auth = request.headers.get('Authorization') || '';
+    if (auth.startsWith('Bearer ')) {
+        return auth.substring(7).trim();
+    }
+    return null;
+}
+
+async function verifyAdminSession(request, env) {
+    const token = getAdminToken(request);
+    if (!token) return false;
+
+    const now = Date.now();
+    try {
+        const session = await env.DB.prepare(`
+            SELECT token, expires_at FROM admin_sessions WHERE token = ?
+        `).bind(token).first();
+
+        if (!session) return false;
+        if (now > session.expires_at) {
+            // Delete expired session
+            await env.DB.prepare(`DELETE FROM admin_sessions WHERE token = ?`).bind(token).run();
+            return false;
+        }
+        return true;
+    } catch (e) {
+        console.error('Session verify error:', e);
+        return false;
+    }
+}
+
+// POST /api/admin/login
+async function handleAdminLogin(request, env, corsHeaders) {
+    const body = await request.json().catch(() => ({}));
+    const username = (body.username || '').trim();
+    const password = (body.password || '').trim();
+
+    // Environment configured credentials strictly from Cloudflare Secrets
+    const expectedUsername = (env.ADMIN_USERNAME || 'admin').trim();
+    
+    // Require ADMIN_PASSWORD or ADMIN_PASSWORD_HASH to be explicitly set in Cloudflare Secrets
+    const secretPassword = env.ADMIN_PASSWORD;
+    const secretHash = env.ADMIN_PASSWORD_HASH;
+
+    if (!secretPassword && !secretHash) {
+        return jsonResponse({ 
+            error: 'Server configuration error: ADMIN_PASSWORD is not configured in Cloudflare Secrets.' 
+        }, 500, corsHeaders);
+    }
+
+    const expectedPassHash = secretHash || await sha256(secretPassword);
+    const providedHash = await sha256(password);
+
+    if (username !== expectedUsername || providedHash !== expectedPassHash) {
+        return jsonResponse({ error: 'Invalid admin username or master password' }, 401, corsHeaders);
+    }
+
+    // Generate secure random session token (64 hex characters)
+    const randomBytes = new Uint8Array(32);
+    crypto.getRandomValues(randomBytes);
+    const token = Array.from(randomBytes).map(b => b.toString(16).padStart(2, '0')).join('');
+
+    const now = Date.now();
+    const expiresAt = now + (7 * 24 * 60 * 60 * 1000); // 7-day session
+
+    // Ensure admin_sessions table exists
+    await env.DB.prepare(`
+        CREATE TABLE IF NOT EXISTS admin_sessions (
+            token TEXT PRIMARY KEY,
+            created_at INTEGER NOT NULL,
+            expires_at INTEGER NOT NULL
+        )
+    `).run().catch(() => {});
+
+    await env.DB.prepare(`
+        INSERT INTO admin_sessions (token, created_at, expires_at)
+        VALUES (?, ?, ?)
+    `).bind(token, now, expiresAt).run();
+
+    return jsonResponse({
+        success: true,
+        token,
+        username,
+        expiresAt
+    }, 200, corsHeaders);
+}
+
+// GET /api/admin/verify
+async function handleAdminVerify(request, env, corsHeaders) {
+    const isAuthed = await verifyAdminSession(request, env);
+    if (!isAuthed) {
+        return jsonResponse({ authenticated: false }, 401, corsHeaders);
+    }
+    return jsonResponse({ authenticated: true }, 200, corsHeaders);
+}
+
+// POST /api/admin/logout
+async function handleAdminLogout(request, env, corsHeaders) {
+    const token = getAdminToken(request);
+    if (token) {
+        await env.DB.prepare(`DELETE FROM admin_sessions WHERE token = ?`).bind(token).run().catch(() => {});
+    }
+    return jsonResponse({ success: true, message: 'Logged out successfully' }, 200, corsHeaders);
+}
+
+// ================= CHAT ROOM MODERATION =================
+
+// GET /api/admin/messages?channel={channel}&limit={limit}
+async function handleAdminGetMessages(request, env, corsHeaders) {
+    const url = new URL(request.url);
+    const channel = url.searchParams.get('channel') || '';
+    const limit = parseInt(url.searchParams.get('limit') || '100', 10);
+
+    let query = `
+        SELECT id, channel, user_name as name, user_role as role, user_role_class as roleClass,
+               avatar, avatar_color as avatarColor, text, attachment_url as attachment,
+               attachment_name as attachmentName, attachment_key as attachmentKey,
+               sender_ip_hash as ipHash, created_at as timestamp
+        FROM messages
+    `;
+    const params = [];
+    if (channel) {
+        query += ` WHERE channel = ? `;
+        params.push(channel);
+    }
+    query += ` ORDER BY created_at DESC LIMIT ? `;
+    params.push(limit);
+
+    const stmt = env.DB.prepare(query);
+    const { results } = await stmt.bind(...params).all();
+
+    return jsonResponse({ messages: results || [] }, 200, corsHeaders);
+}
+
+// DELETE /api/admin/messages/:id
+async function handleAdminDeleteMessage(msgId, env, corsHeaders) {
+    if (!msgId) {
+        return jsonResponse({ error: 'Message ID is required' }, 400, corsHeaders);
+    }
+
+    // Check if message has an attachment to delete from R2
+    const msg = await env.DB.prepare(`SELECT attachment_key FROM messages WHERE id = ?`).bind(msgId).first();
+    if (msg && msg.attachment_key && env.BUCKET) {
+        await env.BUCKET.delete(msg.attachment_key).catch(() => {});
+    }
+
+    await env.DB.prepare(`DELETE FROM messages WHERE id = ?`).bind(msgId).run();
+
+    return jsonResponse({ success: true, message: `Message ${msgId} deleted` }, 200, corsHeaders);
+}
+
+// POST /api/admin/messages/purge-channel
+async function handleAdminPurgeChannel(request, env, corsHeaders) {
+    const body = await request.json().catch(() => ({}));
+    const channel = (body.channel || '').trim();
+
+    if (!channel) {
+        return jsonResponse({ error: 'Channel name is required' }, 400, corsHeaders);
+    }
+
+    // Fetch all attachment keys for the channel to remove from R2
+    const { results } = await env.DB.prepare(`
+        SELECT attachment_key FROM messages WHERE channel = ? AND attachment_key IS NOT NULL
+    `).bind(channel).all();
+
+    if (results && results.length > 0 && env.BUCKET) {
+        for (const row of results) {
+            if (row.attachment_key) {
+                await env.BUCKET.delete(row.attachment_key).catch(() => {});
+            }
+        }
+    }
+
+    await env.DB.prepare(`DELETE FROM messages WHERE channel = ?`).bind(channel).run();
+
+    return jsonResponse({ success: true, message: `Channel ${channel} purged successfully` }, 200, corsHeaders);
+}
+
+// ================= CATALOG MANAGEMENT =================
+
+// GET /api/admin/catalog
+async function handleAdminGetCatalog(request, env, corsHeaders) {
+    await env.DB.prepare(`
+        CREATE TABLE IF NOT EXISTS catalog_items (
+            id TEXT PRIMARY KEY,
+            category TEXT NOT NULL,
+            title TEXT NOT NULL,
+            badge TEXT DEFAULT 'Free',
+            badge_variant TEXT DEFAULT 'secondary',
+            description TEXT,
+            item_name TEXT NOT NULL,
+            item_tag TEXT,
+            download_url TEXT NOT NULL,
+            archive_password TEXT DEFAULT 'lofix',
+            sort_order INTEGER DEFAULT 0,
+            created_at INTEGER NOT NULL
+        )
+    `).run().catch(() => {});
+
+    const { results } = await env.DB.prepare(`
+        SELECT * FROM catalog_items ORDER BY category ASC, sort_order ASC, created_at DESC
+    `).all();
+
+    return jsonResponse({ items: results || [] }, 200, corsHeaders);
+}
+
+// POST /api/admin/catalog
+async function handleAdminCreateCatalogItem(request, env, corsHeaders) {
+    const body = await request.json().catch(() => ({}));
+    const category = (body.category || 'windows-softwares').trim();
+    const title = (body.title || '').trim();
+    const itemName = (body.itemName || '').trim();
+    const downloadUrl = (body.downloadUrl || '').trim();
+
+    if (!title || !itemName || !downloadUrl) {
+        return jsonResponse({ error: 'Title, Item Name, and Download URL are required' }, 400, corsHeaders);
+    }
+
+    const id = 'item_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6);
+    const badge = body.badge || 'Free';
+    const badgeVariant = body.badgeVariant || 'secondary';
+    const description = body.description || '';
+    const itemTag = body.itemTag || 'Stable';
+    const archivePassword = body.archivePassword || 'lofix';
+    const sortOrder = parseInt(body.sortOrder || '0', 10);
+    const now = Date.now();
+
+    await env.DB.prepare(`
+        INSERT INTO catalog_items (
+            id, category, title, badge, badge_variant, description,
+            item_name, item_tag, download_url, archive_password, sort_order, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+        id, category, title, badge, badgeVariant, description,
+        itemName, itemTag, downloadUrl, archivePassword, sortOrder, now
+    ).run();
+
+    return jsonResponse({ success: true, item: { id, category, title, itemName, downloadUrl } }, 201, corsHeaders);
+}
+
+// PUT /api/admin/catalog/:id
+async function handleAdminUpdateCatalogItem(itemId, request, env, corsHeaders) {
+    const body = await request.json().catch(() => ({}));
+    const category = body.category;
+    const title = body.title;
+    const itemName = body.itemName;
+    const downloadUrl = body.downloadUrl;
+    const badge = body.badge;
+    const badgeVariant = body.badgeVariant;
+    const description = body.description;
+    const itemTag = body.itemTag;
+    const archivePassword = body.archivePassword;
+    const sortOrder = parseInt(body.sortOrder || '0', 10);
+
+    await env.DB.prepare(`
+        UPDATE catalog_items
+        SET category = COALESCE(?, category),
+            title = COALESCE(?, title),
+            item_name = COALESCE(?, item_name),
+            download_url = COALESCE(?, download_url),
+            badge = COALESCE(?, badge),
+            badge_variant = COALESCE(?, badge_variant),
+            description = COALESCE(?, description),
+            item_tag = COALESCE(?, item_tag),
+            archive_password = COALESCE(?, archive_password),
+            sort_order = COALESCE(?, sort_order)
+        WHERE id = ?
+    `).bind(
+        category, title, itemName, downloadUrl, badge, badgeVariant, description, itemTag, archivePassword, sortOrder, itemId
+    ).run();
+
+    return jsonResponse({ success: true, message: `Item ${itemId} updated` }, 200, corsHeaders);
+}
+
+// DELETE /api/admin/catalog/:id
+async function handleAdminDeleteCatalogItem(itemId, env, corsHeaders) {
+    await env.DB.prepare(`DELETE FROM catalog_items WHERE id = ?`).bind(itemId).run();
+    return jsonResponse({ success: true, message: `Item ${itemId} deleted` }, 200, corsHeaders);
+}
+
+// ================= SITE SETTINGS & BROADCAST NOTICES =================
+
+async function handleGetPublicSettings(env, corsHeaders) {
+    await env.DB.prepare(`
+        CREATE TABLE IF NOT EXISTS site_settings (
+            key TEXT PRIMARY KEY,
+            value TEXT NOT NULL,
+            updated_at INTEGER NOT NULL
+        )
+    `).run().catch(() => {});
+
+    const { results } = await env.DB.prepare(`SELECT key, value, updated_at FROM site_settings`).all();
+    const settings = {};
+    (results || []).forEach(r => { settings[r.key] = r.value; });
+
+    return jsonResponse({ settings }, 200, corsHeaders);
+}
+
+async function handleAdminUpdateSettings(request, env, corsHeaders) {
+    const body = await request.json().catch(() => ({}));
+    const key = (body.key || '').trim();
+    const value = typeof body.value === 'string' ? body.value : JSON.stringify(body.value);
+    const now = Date.now();
+
+    if (!key) {
+        return jsonResponse({ error: 'Setting key is required' }, 400, corsHeaders);
+    }
+
+    await env.DB.prepare(`
+        INSERT INTO site_settings (key, value, updated_at)
+        VALUES (?, ?, ?)
+        ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at
+    `).bind(key, value, now).run();
+
+    return jsonResponse({ success: true, key, value, updated_at: now }, 200, corsHeaders);
+}
+
+// ================= PUBLIC CHAT API HANDLERS =================
 
 // 1. GET MESSAGES (Channel-specific, with 24h purge filter)
 async function handleGetMessages(request, env, corsHeaders) {
@@ -96,7 +501,7 @@ async function handleGetMessages(request, env, corsHeaders) {
     `).bind(channel).all();
 
     // Check 24-hour expiration for attachments
-    const cleaned = results.map(row => {
+    const cleaned = (results || []).map(row => {
         let hasExpired = false;
         if (row.attachment_expires_at && now > row.attachment_expires_at) {
             hasExpired = true;
@@ -143,7 +548,7 @@ async function handlePostMessage(request, env, corsHeaders) {
         }
     }
 
-    const body = await request.json();
+    const body = await request.json().catch(() => ({}));
     const text = (body.text || '').trim();
     const channel = body.channel || 'general-chat';
     const attachmentUrl = body.attachment || null;
@@ -254,10 +659,8 @@ async function handleServeAttachment(key, env, corsHeaders) {
         return new Response('Attachment expired or not found', { status: 404, headers: corsHeaders });
     }
 
-    // Check expiration from metadata
     const expiresAt = parseInt(object.customMetadata?.expiresAt || '0', 10);
     if (expiresAt && Date.now() > expiresAt) {
-        // Automatically delete from R2 bucket
         await env.BUCKET.delete(key);
         return new Response('Attachment has expired (24-hour retention period reached)', { status: 410, headers: corsHeaders });
     }
