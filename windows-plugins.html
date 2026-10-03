@@ -127,7 +127,6 @@
                     <h3>Plugins</h3>
                     <a href="windows-plugins.html" class="nav-link active">Windows plug-ins</a>
                     <a href="mac-plugins.html" class="nav-link">Mac plug-ins</a>
-                    <a href="blender-addons.html" class="nav-link">Blender addons</a>
                 </div>
                 <div class="nav-group">
                     <h3>Assets</h3>
@@ -189,125 +188,86 @@
                         </div>
                     </div>
 
-                    <h3 class="section-header">Adobe After Effects</h3>
-
-                    <div class="software-category">
-                        <h3>BorisFX</h3>
-                        <div class="software-list">
-                            <div class="list-item">
-                                <a href="https://drive.google.com/file/d/1wLttD_dxypUwheqOWUSPrv2iQK2phqzu/view" target="_blank" class="software-link">Boris FX Continuum 2025</a>
-                                <span class="plugin-tag">(Ae + Pr)</span>
-                            </div>
-                            <div class="list-item">
-                                <a href="https://drive.google.com/file/d/1FKYFlaOchc6pGM0knHthVpKvhvEeQqgI/view" target="_blank" class="software-link">Boris FX Mocha Pro 2025 v12.0.2</a>
-                                <span class="plugin-tag">(Ae + Pr)</span>
-                            </div>
-                            <div class="list-item">
-                                <a href="https://drive.google.com/file/d/1e0Fvl0jCXUy3xp6KdSBU2h3QXP836kXn/view" target="_blank" class="software-link">Boris FX Sapphire 2025.01</a>
-                                <span class="plugin-tag">(Ae + Pr)</span>
-                            </div>
-                        </div>
+                    <!-- Dynamic Software & Plugin Catalog (Connected to Live Database) -->
+                    <div id="softwareCatalogContainer" class="software-catalog-list">
+                        <!-- Dynamic Cards Rendered from Cloudflare D1 -->
                     </div>
 
-                    <div class="software-category">
-                        <h3>Maxon</h3>
-                        <div class="software-list">
-                            <div class="list-item">
-                                <a href="https://drive.google.com/file/d/1v2Ks9gwkdjLoy6vPhHWYlVtcX17CtMFI/view" target="_blank" class="software-link">Maxon Red Giant 2025.3</a>
-                                <span class="plugin-tag">(Ae + Pr)</span>
-                            </div>
-                            <div class="list-item">
-                                <a href="https://drive.google.com/file/d/1UeXLtkJm60Q8bvkRXvymhf6VXRrN6U4m/view" target="_blank" class="software-link">Red Giant Universe 2025.1.1</a>
-                                <span class="plugin-tag">(Ae + Pr)</span>
-                            </div>
-                            <div class="list-item">
-                                <a href="https://drive.google.com/file/d/1nYCEazZURY8EmOfZVugcz8TTZPsTXH7e/view" target="_blank" class="software-link">Red Giant VFX Suite 2025</a>
-                                <span class="plugin-tag">(Ae + Pr)</span>
-                            </div>
-                            <div class="list-item">
-                                <a href="https://drive.google.com/file/d/1nYCEazZURY8EmOfZVugcz8TTZPsTXH7e/view" target="_blank" class="software-link">Red Giant Effects Suite 11.1.13</a>
-                                <span class="plugin-tag">(Ae + Pr)</span>
-                            </div>
-                            <div class="list-item">
-                                <a href="https://drive.google.com/file/d/1pHtanfreS6BIdCWUGyfF84Iid-_a1pdo/view" target="_blank" class="software-link">Red Giant Trapcode Suite 2025</a>
-                                <span class="plugin-tag">(Ae + Pr)</span>
-                            </div>
-                            <div class="list-item">
-                                <a href="https://drive.google.com/file/d/1P5cC9WgRb2WDJWxUWIrSwvHe185u0Af1/view" target="_blank" class="software-link">Trapcode Particular</a>
-                            </div>
-                            <div class="list-item">
-                                <a href="https://drive.google.com/file/d/1wQfL6caByXd8eVky85shFgFigovvnDeW/view" target="_blank" class="software-link">Instant 4k</a>
-                            </div>
-                        </div>
-                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', async () => {
+                            const container = document.getElementById('softwareCatalogContainer');
+                            container.innerHTML = '<div style="display:flex; align-items:center; justify-content:center; padding:3rem; font-weight:700; color:var(--neo-black);">Loading directory from database...</div>';
 
-                    <div class="software-category">
-                        <h3>Video Copilot</h3>
-                        <div class="software-list">
-                            <div class="list-item">
-                                <a href="https://drive.google.com/file/d/13p7eqVJ4tYZ4mSdkLMbMjvuMzOtIX5Ba/view" target="_blank" class="software-link">Element 3D 2.2.3 (2192)</a>
-                            </div>
-                            <div class="list-item">
-                                <a href="https://drive.google.com/file/d/1lpYZQ0ZNAVE-mImt7o2WYV7Pqdk2Fbvz/view" target="_blank" class="software-link">Optical Flares v1.3.8 (170)</a>
-                            </div>
-                            <div class="list-item">
-                                <a href="https://drive.google.com/file/d/18VlkxoPD-QVWbukY6If6o9PrM6VyYpke/view" target="_blank" class="software-link">Twitch</a>
-                            </div>
-                            <div class="list-item">
-                                <a href="https://drive.google.com/file/d/1A5nbYCRj988hMO74VVbd_SWS061TKcUt/view" target="_blank" class="software-link">Saber</a>
-                            </div>
-                        </div>
-                    </div>
+                            try {
+                                const res = await fetch('https://kec-community-chat-api.karunadueditorsclub.workers.dev/api/catalog?category=windows-plugins');
+                                if (res.ok) {
+                                    const data = await res.json();
+                                    const items = data.items || [];
+                                    if (items.length > 0) {
+                                        const grouped = {};
+                                        items.forEach(it => {
+                                            if (!grouped[it.title]) grouped[it.title] = [];
+                                            grouped[it.title].push(it);
+                                        });
 
-                    <div class="software-category">
-                        <h3>RE:Vision FX</h3>
-                        <div class="software-list">
-                            <div class="list-item"><a href="https://drive.google.com/file/d/11QDEZSSv4dpjFuad8o5aEW4k__kdfCmC/view" target="_blank" class="software-link">RSMB</a></div>
-                            <div class="list-item"><a href="https://drive.google.com/file/d/1uMxBuu2vm-WCLxGe3VyLZ49ur0tHivPP/view" target="_blank" class="software-link">Twixtor</a></div>
-                        </div>
-                    </div>
+                                        container.innerHTML = Object.keys(grouped).map(title => {
+                                            const subItems = grouped[title];
+                                            const first = subItems[0];
+                                            return `
+                                                <div class="software-category">
+                                                    <div class="shadcn-card">
+                                                        <div class="shadcn-card-header">
+                                                            <div class="shadcn-card-title">
+                                                                <span>${escapeHtml(title)}</span>
+                                                                <span class="shadcn-badge shadcn-badge-${first.badge_variant || 'secondary'}">${escapeHtml(first.badge || 'Windows Plugins')}</span>
+                                                            </div>
+                                                            ${first.description ? `<p class="shadcn-card-description">${escapeHtml(first.description)}</p>` : ''}
+                                                        </div>
+                                                        <div class="shadcn-card-content">
+                                                            <div class="software-cards-grid">
+                                                                ${subItems.map(it => `
+                                                                    <div class="software-item-card">
+                                                                        <div class="item-meta">
+                                                                            <span class="item-name">${escapeHtml(it.item_name)}</span>
+                                                                            <span class="item-tag">${escapeHtml(it.item_tag || 'Verified Package')}</span>
+                                                                        </div>
+                                                                        <a href="${it.download_url}" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm">
+                                                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                                                                            Download
+                                                                        </a>
+                                                                    </div>
+                                                                `).join('')}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            `;
+                                        }).join('');
+                                        return;
+                                    }
+                                }
+                            } catch (e) {
+                                console.warn('Catalog load error:', e);
+                            }
 
-                    <div class="software-category">
-                        <h3>Plug-ins</h3>
-                        <div class="software-list">
-                            <div class="list-item"><a href="https://drive.google.com/drive/folders/1kwW-rTtB332FLrgmHSurJiMFZkMlLcIx" target="_blank" class="software-link">Deep Glow 2</a></div>
-                            <div class="list-item"><a href="https://drive.google.com/file/d/1VD0x9SLZ0CuIWINbBDzyl5eET5QZSaZL/view" target="_blank" class="software-link">Deep Glow</a></div>
-                            <div class="list-item"><a href="#" class="software-link">Shadow_Studio_3_V1.0.8</a></div>
-                            <div class="list-item"><a href="https://drive.google.com/file/d/1kQ3O3aCBe8RgBur6rwFT8fiv6ptiiz_h/view" target="_blank" class="software-link">Animation Composer 3</a></div>
-                            <div class="list-item"><a href="https://drive.google.com/file/d/1KM7dikDyD34Z612c1ZVCH7Pq3_MPFZID/view" target="_blank" class="software-link">FXConsole 1.0.5</a></div>
-                            <div class="list-item"><a href="https://drive.google.com/file/d/1rEzYgG8icY-zLGkN_uBHBCVX-SYa-cMX/view" target="_blank" class="software-link">Excalibur_v1.2.9</a>
-                                <span class="plugin-tag">(Pr)</span>
-                            </div>
-                        </div>
-                    </div>
+                            container.innerHTML = `
+                                <div class="empty-state-box" style="margin:2rem auto;">
+                                    <div class="empty-state-icon">📦</div>
+                                    <h2 class="empty-state-title">No Windows Plugins in Directory</h2>
+                                    <p class="empty-state-desc">
+                                        All mock packages have been cleared. Manage verified packages via the <a href="master-admin.html" style="color:var(--neo-black); font-weight:800; text-decoration:underline;">Master Admin Control Center</a>.
+                                    </p>
+                                    <a href="master-admin.html" class="btn btn-primary">
+                                        Open Master Admin
+                                    </a>
+                                </div>
+                            `;
+                        });
 
-                    <div class="software-category">
-                        <h3>Extensions</h3>
-                        <p style="color: #ff4500; font-style: italic; margin-bottom: 1rem;">Extensions and plugins work
-                            on both Mac and Windows</p>
-                        <div class="software-list">
-                            <div class="list-item"><a href="https://drive.google.com/file/d/1Opr1xaYppyxZbM5zi7QsTzjhkbBCt-pD/view" target="_blank" class="software-link">Flow</a></div>
-                            <div class="list-item"><a href="https://www.mediafire.com/file/5yvuc5uww8lulpj/JryMedia.JerryFlow.V2.v2.3.1.rar/file" target="_blank" class="software-link">JryMedia.JerryFlow.V2.v2.3.1</a></div>
-                            <div class="list-item"><a href="https://www.mediafire.com/file/l9isn15u89si5st/JerrySFX_By_editors_Club.v1.0.1.rar/file" target="_blank" class="software-link">JerrySFX</a></div>
-                            <div class="list-item"><a href="https://drive.google.com/file/d/1SdRDSJ39R_jAHuLLvWxeU4TYyquBVur2/view" target="_blank" class="software-link">Shake Sauce</a></div>
-                            <div class="list-item"><a href="#" class="software-link">TrueCompDuplicator3.9.11</a></div>
-                            <div class="list-item"><a href="#" class="software-link">Swiss_Knife_v1.2.2</a></div>
-                            <div class="list-item"><a href="#" class="software-link">Shadow_Studio_3_V1.0.8</a></div>
-                            <div class="list-item"><a href="#" class="software-link">Super_Morphings_v1.0.5</a></div>
-                            <div class="list-item"><a href="https://drive.google.com/file/d/1bFZx71p6UqV3CWkLzOlfbcofxB3lYgJj/view" target="_blank" class="software-link">Light Patterns</a></div>
-                            <div class="list-item"><a href="https://drive.google.com/file/d/1DJryfvc1De8VsgFj7OEjL16eg9NXB1su/view" target="_blank" class="software-link">Coco Color CoWorker</a></div>
-                            <div class="list-item"><a href="https://drive.google.com/file/d/1zBe6je1gyHGsmwDjpuKeZfb3PVc06Dzy/view" target="_blank" class="software-link">3D Extruder</a></div>
-                            <div class="list-item"><a href="https://drive.google.com/file/d/1gjo91WHEQz8fpKkOmJ5rWKZiSBszSwd8/view" target="_blank" class="software-link">Signal</a></div>
-                            <div class="list-item"><a href="https://drive.google.com/file/d/1emvjRdK9nLi3UvtpQQTuHULP0fxZge-6/view" target="_blank" class="software-link">Trim-Pack</a></div>
-                            <div class="list-item"><a href="https://drive.google.com/file/d/1YtDCIEf6f7GamMobi0URVAQ2lDZ-Pg7a/view" target="_blank" class="software-link">EZ TOOLS</a></div>
-                            <div class="list-item"><a href="https://drive.google.com/file/d/1fDBlYDBvE5xSr7KSUJh344v_-oHc__VC/view" target="_blank" class="software-link">Auto_Motion_Tracker_For_Objects_v1.2.1</a></div>
-                            <div class="list-item"><a href="https://drive.google.com/file/d/1VXVqpNwaIaO-RrcFP70akvSxnhzPvxze/view" target="_blank" class="software-link">PrimeTools_By_Naughtyyjuan</a></div>
-                            <div class="list-item"><a href="https://drive.google.com/file/d/1FAdpUP51U2rQWOry_IsvC2Rplsl3QjIr/view" target="_blank" class="software-link">Glitchify</a></div>
-                            <div class="list-item"><a href="https://drive.google.com/file/d/1xVyuBwJH7RzofYU4xxyk2PCg6IJVDhQ0/view" target="_blank" class="software-link">OminoSuite</a></div>
-                            <div class="list-item"><a href="https://drive.google.com/file/d/1grdb5Q7usgKHm1tanLh4o4KttQZIsvnI/view" target="_blank" class="software-link">PixDither</a></div>
-                            <div class="list-item"><a href="https://drive.google.com/file/d/1IkTZcQNWDdBuklApG3Ss__s4t89JaqDK/view" target="_blank" class="software-link">Plexus</a></div>
-                        </div>
-                    </div>
+                        function escapeHtml(str) {
+                            return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                        }
+                    </script>
 
                     <footer class="site-footer">
                         <nav class="footer-nav-row" aria-label="Footer Legal Links">

@@ -52,6 +52,11 @@ export default {
                 return await handleGetPublicSettings(env, corsHeaders);
             }
 
+            // Public Catalog Items (For Windows/Mac Software & Plugins pages)
+            if (url.pathname === '/api/catalog' && request.method === 'GET') {
+                return await handleGetPublicCatalog(request, env, corsHeaders);
+            }
+
             if (url.pathname === '/api/messages') {
                 if (request.method === 'GET') {
                     return await handleGetMessages(request, env, corsHeaders);
@@ -367,6 +372,40 @@ async function handleAdminGetCatalog(request, env, corsHeaders) {
         SELECT * FROM catalog_items ORDER BY category ASC, sort_order ASC, created_at DESC
     `).all();
 
+    return jsonResponse({ items: results || [] }, 200, corsHeaders);
+}
+
+// GET /api/catalog?category={category} (Public)
+async function handleGetPublicCatalog(request, env, corsHeaders) {
+    const url = new URL(request.url);
+    const category = url.searchParams.get('category') || '';
+
+    await env.DB.prepare(`
+        CREATE TABLE IF NOT EXISTS catalog_items (
+            id TEXT PRIMARY KEY,
+            category TEXT NOT NULL,
+            title TEXT NOT NULL,
+            badge TEXT DEFAULT 'Free',
+            badge_variant TEXT DEFAULT 'secondary',
+            description TEXT,
+            item_name TEXT NOT NULL,
+            item_tag TEXT,
+            download_url TEXT NOT NULL,
+            archive_password TEXT DEFAULT 'lofix',
+            sort_order INTEGER DEFAULT 0,
+            created_at INTEGER NOT NULL
+        )
+    `).run().catch(() => {});
+
+    let query = `SELECT * FROM catalog_items`;
+    const params = [];
+    if (category) {
+        query += ` WHERE category = ?`;
+        params.push(category);
+    }
+    query += ` ORDER BY sort_order ASC, created_at DESC`;
+
+    const { results } = await env.DB.prepare(query).bind(...params).all();
     return jsonResponse({ items: results || [] }, 200, corsHeaders);
 }
 

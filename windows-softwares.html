@@ -111,7 +111,6 @@
                     <h3>Plugins</h3>
                     <a href="windows-plugins.html" class="nav-link">Windows plug-ins</a>
                     <a href="mac-plugins.html" class="nav-link">Mac plug-ins</a>
-                    <a href="blender-addons.html" class="nav-link">Blender addons</a>
                 </div>
                 <div class="nav-group">
                     <h3>Assets</h3>
@@ -173,268 +172,86 @@
                         </div>
                     </div>
 
-                    <!-- Software Catalog in Shadcn Cards -->
-                    <div class="software-category">
-                        <div class="shadcn-card">
-                            <div class="shadcn-card-header">
-                                <div class="shadcn-card-title">
-                                    <span>Adobe After Effects</span>
-                                    <span class="shadcn-badge shadcn-badge-secondary">Windows x64</span>
-                                </div>
-                                <p class="shadcn-card-description">Industry-standard motion graphics, visual effects, and cinematic compositing suite.</p>
-                            </div>
-                            <div class="shadcn-card-content">
-                                <div class="software-cards-grid">
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">AE 2025</span>
-                                            <span class="item-tag">v25.31.003 • Latest</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1elhq2i2selsmE8QPK3_kvpPdANOTgWQU/view" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">AE 2024</span>
-                                            <span class="item-tag">Stable • High Performance</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1Al0hSeVOW9RPssSeoNNgx8TDCjdbwpFK/view" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">AE 2023</span>
-                                            <span class="item-tag">Legacy Stable Build</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1QyuG62Wjvvl5TYfNkXUsBqcKGmHjpRCv/view" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">AE 2022 – 2019</span>
-                                            <span class="item-tag">Classic Editions</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1PY1xPXFJirRuZxmqQ_bXQfevXArnz5jA/view" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<!-- Dynamic Software & Plugin Catalog (Connected to Live Database) -->
+                    <div id="softwareCatalogContainer" class="software-catalog-list">
+                        <!-- Dynamic Cards Rendered from Cloudflare D1 -->
                     </div>
 
-                    <div class="software-category">
-                        <div class="shadcn-card">
-                            <div class="shadcn-card-header">
-                                <div class="shadcn-card-title">
-                                    <span>Adobe Premiere Pro</span>
-                                    <span class="shadcn-badge shadcn-badge-secondary">Windows x64 NVENC</span>
-                                </div>
-                                <p class="shadcn-card-description">Timeline-based video editing software for content creators, YouTube, and films.</p>
-                            </div>
-                            <div class="shadcn-card-content">
-                                <div class="software-cards-grid">
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">Premiere Pro 2025</span>
-                                            <span class="item-tag">Latest Windows Release</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1o_A0hsGG-2TPFDusQ6VROchYlG18YkUI/view" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">Premiere Pro 2024</span>
-                                            <span class="item-tag">Stable • Fast Rendering</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1fJfrsVyK4CqzwICQxd0RCckgA7jfgyCr/view" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">Premiere Pro 2023</span>
-                                            <span class="item-tag">Legacy Stable Build</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1BM6XnuD1I8Zil4OFjLc1JBAei2xoZmVl/view" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', async () => {
+                            const container = document.getElementById('softwareCatalogContainer');
+                            container.innerHTML = '<div style="display:flex; align-items:center; justify-content:center; padding:3rem; font-weight:700; color:var(--neo-black);">Loading directory from database...</div>';
 
-                    <div class="software-category">
-                        <div class="shadcn-card">
-                            <div class="shadcn-card-header">
-                                <div class="shadcn-card-title">
-                                    <span>Adobe Photoshop</span>
-                                    <span class="shadcn-badge shadcn-badge-secondary">Windows x64</span>
-                                </div>
-                                <p class="shadcn-card-description">Leading raster graphic design, photo manipulation, and thumbnail editing studio.</p>
-                            </div>
-                            <div class="shadcn-card-content">
-                                <div class="software-cards-grid">
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">Photoshop 2025</span>
-                                            <span class="item-tag">v26.0.1.8 • Generative Ready</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1nmwL5mz0qZWm3lbNCPsG6YrtvDwE5YI4/view" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">Photoshop 2024</span>
-                                            <span class="item-tag">Stable • High Efficiency</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1HHqoYxTjb324wCBi1pNMPkXAJHohgbUT/view" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            try {
+                                const res = await fetch('https://kec-community-chat-api.karunadueditorsclub.workers.dev/api/catalog?category=windows-softwares');
+                                if (res.ok) {
+                                    const data = await res.json();
+                                    const items = data.items || [];
+                                    if (items.length > 0) {
+                                        const grouped = {};
+                                        items.forEach(it => {
+                                            if (!grouped[it.title]) grouped[it.title] = [];
+                                            grouped[it.title].push(it);
+                                        });
 
-                    <div class="software-category">
-                        <div class="shadcn-card">
-                            <div class="shadcn-card-header">
-                                <div class="shadcn-card-title">
-                                    <span>Adobe Media Encoder</span>
-                                    <span class="shadcn-badge shadcn-badge-secondary">CUDA / NVENC Hardware Accelerated</span>
-                                </div>
-                                <p class="shadcn-card-description">High-speed background rendering and format encoding queue.</p>
-                            </div>
-                            <div class="shadcn-card-content">
-                                <div class="software-cards-grid">
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">Media Encoder 2025</span>
-                                            <span class="item-tag">v25.3.0.073 • Latest</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1KDLUgBCyRIChpB2NHzd3apD5ltFLY6vC/view" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">Media Encoder 2024</span>
-                                            <span class="item-tag">Stable • Fast Queue</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1QQTlp3BPlD_-qz7qenZ2miCe1y2JniRT/view" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                        container.innerHTML = Object.keys(grouped).map(title => {
+                                            const subItems = grouped[title];
+                                            const first = subItems[0];
+                                            return `
+                                                <div class="software-category">
+                                                    <div class="shadcn-card">
+                                                        <div class="shadcn-card-header">
+                                                            <div class="shadcn-card-title">
+                                                                <span>${escapeHtml(title)}</span>
+                                                                <span class="shadcn-badge shadcn-badge-${first.badge_variant || 'secondary'}">${escapeHtml(first.badge || 'Windows Software')}</span>
+                                                            </div>
+                                                            ${first.description ? `<p class="shadcn-card-description">${escapeHtml(first.description)}</p>` : ''}
+                                                        </div>
+                                                        <div class="shadcn-card-content">
+                                                            <div class="software-cards-grid">
+                                                                ${subItems.map(it => `
+                                                                    <div class="software-item-card">
+                                                                        <div class="item-meta">
+                                                                            <span class="item-name">${escapeHtml(it.item_name)}</span>
+                                                                            <span class="item-tag">${escapeHtml(it.item_tag || 'Verified Package')}</span>
+                                                                        </div>
+                                                                        <a href="${it.download_url}" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm">
+                                                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                                                                            Download
+                                                                        </a>
+                                                                    </div>
+                                                                `).join('')}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            `;
+                                        }).join('');
+                                        return;
+                                    }
+                                }
+                            } catch (e) {
+                                console.warn('Catalog load error:', e);
+                            }
 
-                    <div class="software-category">
-                        <div class="shadcn-card">
-                            <div class="shadcn-card-header">
-                                <div class="shadcn-card-title">
-                                    <span>Adobe Illustrator</span>
-                                    <span class="shadcn-badge shadcn-badge-secondary">Vector Graphics</span>
+                            container.innerHTML = `
+                                <div class="empty-state-box" style="margin:2rem auto;">
+                                    <div class="empty-state-icon">📦</div>
+                                    <h2 class="empty-state-title">No Windows Software in Directory</h2>
+                                    <p class="empty-state-desc">
+                                        All mock packages have been cleared. Manage verified packages via the <a href="master-admin.html" style="color:var(--neo-black); font-weight:800; text-decoration:underline;">Master Admin Control Center</a>.
+                                    </p>
+                                    <a href="master-admin.html" class="btn btn-primary">
+                                        Open Master Admin
+                                    </a>
                                 </div>
-                                <p class="shadcn-card-description">Precision vector artwork, logo, typography, and illustration suite.</p>
-                            </div>
-                            <div class="shadcn-card-content">
-                                <div class="software-cards-grid">
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">Illustrator 2025</span>
-                                            <span class="item-tag">v29.4.0.152 • Windows x64</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1FHwmE0GMpRlnmrMfjyk1htnUJuGeGY7X/view" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            `;
+                        });
 
-                    <div class="software-category">
-                        <div class="shadcn-card">
-                            <div class="shadcn-card-header">
-                                <div class="shadcn-card-title">
-                                    <span>Topaz Labs AI</span>
-                                    <span class="shadcn-badge shadcn-badge-outline">RTX Tensor Core Optimized</span>
-                                </div>
-                                <p class="shadcn-card-description">State-of-the-art neural network upscalers for 4K/8K frame generation and deinterlacing.</p>
-                            </div>
-                            <div class="shadcn-card-content">
-                                <div class="software-cards-grid">
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">Topaz Video AI 6.1.2 RC</span>
-                                            <span class="item-tag">DirectML &amp; TensorRT</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1uTWcbuh38OSVkkVLbSvp6CUYnkIADeE_/view" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">Topaz Gigapixel AI 8.3.4</span>
-                                            <span class="item-tag">High-DPI Upscaling</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1iCIF55i3bQbzjg3P7F0xjBB_7os-6ASh/view" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="software-category">
-                        <div class="shadcn-card">
-                            <div class="shadcn-card-header">
-                                <div class="shadcn-card-title">
-                                    <span>Blackmagic Design</span>
-                                    <span class="shadcn-badge shadcn-badge-outline">Color Grading &amp; Fusion</span>
-                                </div>
-                                <p class="shadcn-card-description">Hollywood standard color correction, editing, Fairlight audio, and VFX suite.</p>
-                            </div>
-                            <div class="shadcn-card-content">
-                                <div class="software-cards-grid">
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">DaVinci Resolve Studio 20.0</span>
-                                            <span class="item-tag">Windows x64 • Studio</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/17vq56Wr-z9ephqTIq9utyBLYEWM7fX0B/view" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        function escapeHtml(str) {
+                            return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                        }
+                    </script>
 
                     <footer class="site-footer">
                         <nav class="footer-nav-row" aria-label="Footer Legal Links">

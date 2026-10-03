@@ -111,7 +111,6 @@
                     <h3>Plugins</h3>
                     <a href="windows-plugins.html" class="nav-link">Windows plug-ins</a>
                     <a href="mac-plugins.html" class="nav-link">Mac plug-ins</a>
-                    <a href="blender-addons.html" class="nav-link">Blender addons</a>
                 </div>
                 <div class="nav-group">
                     <h3>Assets</h3>
@@ -173,238 +172,86 @@
                         </div>
                     </div>
 
-                    <!-- Software Catalog in Shadcn Cards -->
-                    <div class="software-category">
-                        <div class="shadcn-card">
-                            <div class="shadcn-card-header">
-                                <div class="shadcn-card-title">
-                                    <span>Adobe After Effects</span>
-                                    <span class="shadcn-badge shadcn-badge-secondary">macOS Universal / Silicon</span>
-                                </div>
-                                <p class="shadcn-card-description">Industry-standard motion graphics, visual effects, and cinematic compositing suite.</p>
-                            </div>
-                            <div class="shadcn-card-content">
-                                <div class="software-cards-grid">
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">After Effects 2025</span>
-                                            <span class="item-tag">macOS • Latest Release</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1i3ytfGVl1W_ZF06Occje6HloAOC2zAND/view" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">After Effects 2024</span>
-                                            <span class="item-tag">macOS • Stable Long-Term</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/19vPLDg5HAEC9O-RehFTaDdtK74_PuUO8/view" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<!-- Dynamic Software & Plugin Catalog (Connected to Live Database) -->
+                    <div id="softwareCatalogContainer" class="software-catalog-list">
+                        <!-- Dynamic Cards Rendered from Cloudflare D1 -->
                     </div>
 
-                    <div class="software-category">
-                        <div class="shadcn-card">
-                            <div class="shadcn-card-header">
-                                <div class="shadcn-card-title">
-                                    <span>Adobe Premiere Pro</span>
-                                    <span class="shadcn-badge shadcn-badge-secondary">Apple Silicon M-Series &amp; Intel</span>
-                                </div>
-                                <p class="shadcn-card-description">Timeline-based video editing software for film, TV, and web creators.</p>
-                            </div>
-                            <div class="shadcn-card-content">
-                                <div class="software-cards-grid">
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">Premiere Pro 2025.3</span>
-                                            <span class="item-tag">macOS • Optimized Build</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/15XkxqCF_Vu0tT6Jx8_OqjHFdJYL7d_36/view" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', async () => {
+                            const container = document.getElementById('softwareCatalogContainer');
+                            container.innerHTML = '<div style="display:flex; align-items:center; justify-content:center; padding:3rem; font-weight:700; color:var(--neo-black);">Loading directory from database...</div>';
 
-                    <div class="software-category">
-                        <div class="shadcn-card">
-                            <div class="shadcn-card-header">
-                                <div class="shadcn-card-title">
-                                    <span>Adobe Photoshop</span>
-                                    <span class="shadcn-badge shadcn-badge-secondary">macOS</span>
-                                </div>
-                                <p class="shadcn-card-description">Leading raster graphic design and image manipulation software.</p>
-                            </div>
-                            <div class="shadcn-card-content">
-                                <div class="software-cards-grid">
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">Photoshop 2025</span>
-                                            <span class="item-tag">macOS • Neural Filter Ready</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1PJPWvePn9eCFQ5-Dn9_t3m4CRuJplDGu/view" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            try {
+                                const res = await fetch('https://kec-community-chat-api.karunadueditorsclub.workers.dev/api/catalog?category=mac-softwares');
+                                if (res.ok) {
+                                    const data = await res.json();
+                                    const items = data.items || [];
+                                    if (items.length > 0) {
+                                        const grouped = {};
+                                        items.forEach(it => {
+                                            if (!grouped[it.title]) grouped[it.title] = [];
+                                            grouped[it.title].push(it);
+                                        });
 
-                    <div class="software-category">
-                        <div class="shadcn-card">
-                            <div class="shadcn-card-header">
-                                <div class="shadcn-card-title">
-                                    <span>Adobe Media Encoder</span>
-                                    <span class="shadcn-badge shadcn-badge-secondary">macOS Hardware Accelerated</span>
-                                </div>
-                                <p class="shadcn-card-description">High-performance media export queue and background transcoding engine.</p>
-                            </div>
-                            <div class="shadcn-card-content">
-                                <div class="software-cards-grid">
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">Media Encoder 2025</span>
-                                            <span class="item-tag">macOS • ProRes &amp; H.265 Accelerated</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1NvKBE4qtPEYKqA200m07x9ZrqvBjW2Ew/view" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">Media Encoder 2024</span>
-                                            <span class="item-tag">macOS • Stable</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1YFc2oQ9oaonbVW3csRYWmP8NW0T-np3e/view" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                        container.innerHTML = Object.keys(grouped).map(title => {
+                                            const subItems = grouped[title];
+                                            const first = subItems[0];
+                                            return `
+                                                <div class="software-category">
+                                                    <div class="shadcn-card">
+                                                        <div class="shadcn-card-header">
+                                                            <div class="shadcn-card-title">
+                                                                <span>${escapeHtml(title)}</span>
+                                                                <span class="shadcn-badge shadcn-badge-${first.badge_variant || 'secondary'}">${escapeHtml(first.badge || 'Mac Software')}</span>
+                                                            </div>
+                                                            ${first.description ? `<p class="shadcn-card-description">${escapeHtml(first.description)}</p>` : ''}
+                                                        </div>
+                                                        <div class="shadcn-card-content">
+                                                            <div class="software-cards-grid">
+                                                                ${subItems.map(it => `
+                                                                    <div class="software-item-card">
+                                                                        <div class="item-meta">
+                                                                            <span class="item-name">${escapeHtml(it.item_name)}</span>
+                                                                            <span class="item-tag">${escapeHtml(it.item_tag || 'Verified Package')}</span>
+                                                                        </div>
+                                                                        <a href="${it.download_url}" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm">
+                                                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                                                                            Download
+                                                                        </a>
+                                                                    </div>
+                                                                `).join('')}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            `;
+                                        }).join('');
+                                        return;
+                                    }
+                                }
+                            } catch (e) {
+                                console.warn('Catalog load error:', e);
+                            }
 
-                    <div class="software-category">
-                        <div class="shadcn-card">
-                            <div class="shadcn-card-header">
-                                <div class="shadcn-card-title">
-                                    <span>Adobe Design &amp; Publishing</span>
-                                    <span class="shadcn-badge shadcn-badge-secondary">Vector &amp; Editorial</span>
+                            container.innerHTML = `
+                                <div class="empty-state-box" style="margin:2rem auto;">
+                                    <div class="empty-state-icon">📦</div>
+                                    <h2 class="empty-state-title">No Mac Software in Directory</h2>
+                                    <p class="empty-state-desc">
+                                        All mock packages have been cleared. Manage verified packages via the <a href="master-admin.html" style="color:var(--neo-black); font-weight:800; text-decoration:underline;">Master Admin Control Center</a>.
+                                    </p>
+                                    <a href="master-admin.html" class="btn btn-primary">
+                                        Open Master Admin
+                                    </a>
                                 </div>
-                                <p class="shadcn-card-description">Vector graphics illustration and professional page publishing packages.</p>
-                            </div>
-                            <div class="shadcn-card-content">
-                                <div class="software-cards-grid">
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">Adobe Illustrator 2024</span>
-                                            <span class="item-tag">macOS • Vector Design</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1_VErX3mUcSkVyQVWJ6yKsU7i0YeR8scy/view" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">InDesign 2024</span>
-                                            <span class="item-tag">macOS • Layout Publishing</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1FlnCYctOiRSABYu3Zy7x4REA59HNhzgN/view" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            `;
+                        });
 
-                    <div class="software-category">
-                        <div class="shadcn-card">
-                            <div class="shadcn-card-header">
-                                <div class="shadcn-card-title">
-                                    <span>Topaz Labs AI</span>
-                                    <span class="shadcn-badge shadcn-badge-outline">Neural Upscaling</span>
-                                </div>
-                                <p class="shadcn-card-description">State-of-the-art neural network upscalers for 4K/8K frame generation and sharpening.</p>
-                            </div>
-                            <div class="shadcn-card-content">
-                                <div class="software-cards-grid">
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">Topaz Video AI 6.0.4</span>
-                                            <span class="item-tag">macOS • Apple Neural Engine</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1F_PWrfOJzizkuCWZ__FsSbww6ALlZCd9/view" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">Topaz Gigapixel AI 8.1.1</span>
-                                            <span class="item-tag">macOS • Image AI Super-Resolution</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1Svf6ox6d0PciSjmVI9WgrqHX6kXTMAFg/view" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="software-category">
-                        <div class="shadcn-card">
-                            <div class="shadcn-card-header">
-                                <div class="shadcn-card-title">
-                                    <span>Blackmagic Design &amp; 3D</span>
-                                    <span class="shadcn-badge shadcn-badge-outline">Color &amp; Motion</span>
-                                </div>
-                                <p class="shadcn-card-description">Hollywood standard color correction, Fairlight audio, and 3D visual creation.</p>
-                            </div>
-                            <div class="shadcn-card-content">
-                                <div class="software-cards-grid">
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">DaVinci Resolve Studio v20.0.1</span>
-                                            <span class="item-tag">macOS • Studio Edition</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/1UXkmArxHL7EODYRQvIp61EKIQPNhI4gE/view" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                    <div class="software-item-card">
-                                        <div class="item-meta">
-                                            <span class="item-name">Maxon Cinema 4D</span>
-                                            <span class="item-tag">macOS • 3D Motion Graphics</span>
-                                        </div>
-                                        <a href="https://drive.google.com/file/d/157Q1H4er8AEo4nM3CM_wG1LL4aVjARdq/view" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
-                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                            Download
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        function escapeHtml(str) {
+                            return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                        }
+                    </script>
 
                     <footer class="site-footer">
                         <nav class="footer-nav-row" aria-label="Footer Legal Links">
