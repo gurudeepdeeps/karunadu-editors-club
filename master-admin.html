@@ -577,7 +577,10 @@
                                         <option value="mac-plugins">Mac Plugins</option>
                                     </select>
                                 </div>
-                                <div>
+                                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                    <button type="button" class="btn btn-sm btn-secondary" onclick="openReorderModal()" style="font-weight: 800;">
+                                        ↕ Arrange Titles Order
+                                    </button>
                                     <button type="button" class="btn btn-sm btn-primary" onclick="openNewCatalogModal()">
                                         + Add Software / Plugin
                                     </button>
@@ -734,6 +737,45 @@
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Reorder Titles Modal -->
+    <div id="reorderModal" class="admin-modal-overlay">
+        <div class="admin-modal-card" style="max-width: 580px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 style="font-size: 1.25rem; font-weight: 900; text-transform: uppercase; margin: 0;">
+                    Arrange Titles Order
+                </h3>
+                <button type="button" class="btn btn-sm btn-outline" onclick="closeReorderModal()">✕</button>
+            </div>
+            <p style="font-size: 0.85rem; font-weight: 600; color: #4b5563; margin-bottom: 1.25rem;">
+                Select a category and use <strong>Move Up (▲)</strong> and <strong>Move Down (▼)</strong> to position software titles in your desired display order.
+            </p>
+
+            <div class="admin-field-group" style="margin-bottom: 1rem;">
+                <label for="reorderCategorySelect" style="font-weight: 800;">Target Category</label>
+                <select id="reorderCategorySelect" class="admin-select" onchange="renderReorderList()">
+                    <option value="windows-softwares">Windows Software</option>
+                    <option value="mac-softwares">Mac Software</option>
+                    <option value="mobile-apps">Mobile Apps</option>
+                    <option value="windows-plugins">Windows Plugins</option>
+                    <option value="mac-plugins">Mac Plugins</option>
+                </select>
+            </div>
+
+            <div id="reorderListContainer" style="max-height: 380px; overflow-y: auto; border: 2px solid #000; border-radius: 8px; padding: 0.75rem; background: #fafafa; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; box-shadow: 2px 2px 0px #000;">
+                <!-- Dynamically populated -->
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+                <button type="button" class="btn btn-outline" onclick="closeReorderModal()">
+                    Cancel
+                </button>
+                <button type="button" id="saveReorderBtn" class="btn btn-primary" onclick="saveReorderedTitles()">
+                    Save Titles Order
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1201,6 +1243,165 @@
                 document.getElementById('statNoticeStatus').textContent = enabled ? 'Active' : 'Off';
             } catch (err) {
                 alert('Notice save error: ' + err.message);
+            }
+        }
+
+        // 7. Title Reordering Handlers
+        let reorderTitlesList = []; // Array of { title, icon, versionCount }
+
+        function openReorderModal() {
+            const currentCatFilter = document.getElementById('catalogCategoryFilter').value;
+            const targetCat = currentCatFilter || 'windows-softwares';
+            document.getElementById('reorderCategorySelect').value = targetCat;
+            document.getElementById('reorderModal').style.display = 'flex';
+            renderReorderList();
+        }
+
+        function closeReorderModal() {
+            document.getElementById('reorderModal').style.display = 'none';
+        }
+
+        function renderReorderList() {
+            const targetCat = document.getElementById('reorderCategorySelect').value;
+            const container = document.getElementById('reorderListContainer');
+
+            // Filter items by category
+            const catItems = allCatalogItems.filter(it => it.category === targetCat);
+
+            // Group distinct titles in their existing sort order
+            const titleMap = new Map();
+            catItems.forEach(it => {
+                const t = (it.title || '').trim();
+                if (!t) return;
+                if (!titleMap.has(t)) {
+                    titleMap.set(t, {
+                        title: t,
+                        icon: it.icon_url || getTitleIcon(t),
+                        versionCount: 1,
+                        sortOrder: typeof it.sort_order === 'number' ? it.sort_order : 0
+                    });
+                } else {
+                    titleMap.get(t).versionCount += 1;
+                }
+            });
+
+            // If titles list hasn't been modified yet, populate it from titleMap
+            reorderTitlesList = Array.from(titleMap.values());
+
+            if (reorderTitlesList.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: #6b7280; font-weight: 700;">
+                        No software titles found in this category yet.
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = reorderTitlesList.map((item, idx) => {
+                const isFirst = idx === 0;
+                const isLast = idx === reorderTitlesList.length - 1;
+                return `
+                    <div style="display: flex; align-items: center; justify-content: space-between; background: #ffffff; border: 2px solid #000; border-radius: 6px; padding: 0.6rem 0.85rem; box-shadow: 2px 2px 0px #000;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <span style="font-weight: 900; font-size: 0.85rem; color: #4b5563; min-width: 22px;">#${idx + 1}</span>
+                            ${item.icon ? `
+                                <img src="${escapeHtml(item.icon)}" alt="icon" style="width: 28px; height: 28px; object-fit: contain; border: 1.5px solid #000; border-radius: 4px; background: #fff;">
+                            ` : `
+                                <div style="width: 28px; height: 28px; border: 1.5px solid #000; border-radius: 4px; background: #e5e7eb; display: inline-flex; align-items: center; justify-content: center; font-size: 0.9rem;">📦</div>
+                            `}
+                            <div>
+                                <div style="font-weight: 800; font-size: 0.95rem; color: #000;">${escapeHtml(item.title)}</div>
+                                <div style="font-size: 0.75rem; color: #6b7280; font-weight: 600;">${item.versionCount} version${item.versionCount > 1 ? 's' : ''}</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 0.35rem;">
+                            <button type="button" class="btn-action-sm" onclick="moveReorderTitle(${idx}, -1)" ${isFirst ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : 'style="background:#f3f4f6; font-weight:900;"'} title="Move Up">
+                                ▲ Up
+                            </button>
+                            <button type="button" class="btn-action-sm" onclick="moveReorderTitle(${idx}, 1)" ${isLast ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : 'style="background:#f3f4f6; font-weight:900;"'} title="Move Down">
+                                ▼ Down
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function moveReorderTitle(index, direction) {
+            const newIndex = index + direction;
+            if (newIndex < 0 || newIndex >= reorderTitlesList.length) return;
+            const temp = reorderTitlesList[index];
+            reorderTitlesList[index] = reorderTitlesList[newIndex];
+            reorderTitlesList[newIndex] = temp;
+            
+            // Re-render UI with current state
+            const container = document.getElementById('reorderListContainer');
+            container.innerHTML = reorderTitlesList.map((item, idx) => {
+                const isFirst = idx === 0;
+                const isLast = idx === reorderTitlesList.length - 1;
+                return `
+                    <div style="display: flex; align-items: center; justify-content: space-between; background: #ffffff; border: 2px solid #000; border-radius: 6px; padding: 0.6rem 0.85rem; box-shadow: 2px 2px 0px #000;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <span style="font-weight: 900; font-size: 0.85rem; color: #4b5563; min-width: 22px;">#${idx + 1}</span>
+                            ${item.icon ? `
+                                <img src="${escapeHtml(item.icon)}" alt="icon" style="width: 28px; height: 28px; object-fit: contain; border: 1.5px solid #000; border-radius: 4px; background: #fff;">
+                            ` : `
+                                <div style="width: 28px; height: 28px; border: 1.5px solid #000; border-radius: 4px; background: #e5e7eb; display: inline-flex; align-items: center; justify-content: center; font-size: 0.9rem;">📦</div>
+                            `}
+                            <div>
+                                <div style="font-weight: 800; font-size: 0.95rem; color: #000;">${escapeHtml(item.title)}</div>
+                                <div style="font-size: 0.75rem; color: #6b7280; font-weight: 600;">${item.versionCount} version${item.versionCount > 1 ? 's' : ''}</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 0.35rem;">
+                            <button type="button" class="btn-action-sm" onclick="moveReorderTitle(${idx}, -1)" ${isFirst ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : 'style="background:#f3f4f6; font-weight:900;"'} title="Move Up">
+                                ▲ Up
+                            </button>
+                            <button type="button" class="btn-action-sm" onclick="moveReorderTitle(${idx}, 1)" ${isLast ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : 'style="background:#f3f4f6; font-weight:900;"'} title="Move Down">
+                                ▼ Down
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function saveReorderedTitles() {
+            if (!reorderTitlesList || reorderTitlesList.length === 0) {
+                closeReorderModal();
+                return;
+            }
+
+            const targetCat = document.getElementById('reorderCategorySelect').value;
+            const titles = reorderTitlesList.map(item => item.title);
+            const btn = document.getElementById('saveReorderBtn');
+            btn.disabled = true;
+            btn.textContent = 'Saving Order...';
+
+            try {
+                const res = await fetch(`${API_URL}/api/admin/catalog/reorder-titles`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Admin-Token': adminToken
+                    },
+                    body: JSON.stringify({
+                        category: targetCat,
+                        titles: titles
+                    })
+                });
+
+                const data = await res.json().catch(() => ({}));
+                if (!res.ok) throw new Error(data.error || 'Failed to reorder titles');
+
+                alert(`Order saved successfully! ${titles.length} titles reordered.`);
+                closeReorderModal();
+                await loadAdminCatalog();
+            } catch (err) {
+                alert('Reorder error: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Save Titles Order';
             }
         }
 

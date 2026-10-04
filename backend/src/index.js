@@ -114,6 +114,9 @@ export default {
                         return await handleAdminCreateCatalogItem(request, env, corsHeaders);
                     }
                 }
+                if (url.pathname === '/api/admin/catalog/reorder-titles' && request.method === 'POST') {
+                    return await handleAdminReorderTitles(request, env, corsHeaders);
+                }
                 if (url.pathname.startsWith('/api/admin/catalog/')) {
                     const itemId = url.pathname.replace('/api/admin/catalog/', '');
                     if (request.method === 'PUT') {
@@ -568,6 +571,33 @@ async function handleAdminDeleteCatalogItem(itemId, env, corsHeaders) {
     await env.DB.prepare(`DELETE FROM catalog_items WHERE id = ?`).bind(itemId).run();
     return jsonResponse({ success: true, message: `Item ${itemId} deleted` }, 200, corsHeaders);
 }
+
+// POST /api/admin/catalog/reorder-titles
+async function handleAdminReorderTitles(request, env, corsHeaders) {
+    const body = await request.json().catch(() => ({}));
+    const category = (body.category || '').trim();
+    const titles = Array.isArray(body.titles) ? body.titles : [];
+
+    if (!category || titles.length === 0) {
+        return jsonResponse({ error: 'Category and titles list are required' }, 400, corsHeaders);
+    }
+
+    // Update sort_order for each title in the specified category
+    for (let i = 0; i < titles.length; i++) {
+        const title = String(titles[i] || '').trim();
+        if (!title) continue;
+        await env.DB.prepare(`
+            UPDATE catalog_items
+            SET sort_order = ?
+            WHERE category = ? AND LOWER(TRIM(title)) = LOWER(TRIM(?))
+        `).bind(i * 10, category, title).run().catch(err => {
+            console.error('Error updating sort_order for title:', title, err);
+        });
+    }
+
+    return jsonResponse({ success: true, message: 'Titles reordered successfully', count: titles.length }, 200, corsHeaders);
+}
+
 
 // ================= SITE SETTINGS & BROADCAST NOTICES =================
 
