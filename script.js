@@ -91,7 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
         search: `<svg class="lucide-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>`,
         menu: `<svg class="lucide-icon" viewBox="0 0 24 24" style="width:20px;height:20px;"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>`,
         copy: `<svg class="lucide-icon" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`,
-        check: `<svg class="lucide-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`
+        check: `<svg class="lucide-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`,
+        smartphone: `<svg class="lucide-icon" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><line x1="12" x2="12" y1="18" y2="18"/></svg>`
     };
 
     // Update search triggers in DOM to use Shadcn Search Icon
@@ -111,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'index.html': LucideIcons.home,
         'windows-softwares.html': LucideIcons.monitor,
         'mac-softwares.html': LucideIcons.apple,
+        'mobile-apps.html': LucideIcons.smartphone,
         'windows-plugins.html': LucideIcons.plug,
         'mac-plugins.html': LucideIcons.zap,
         'car-clips.html': LucideIcons.film,
@@ -153,6 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: 'Introduction', url: 'index.html', icon: LucideIcons.home, category: 'General' },
         { title: 'Windows Softwares', url: 'windows-softwares.html', icon: LucideIcons.monitor, category: 'Software' },
         { title: 'Mac Softwares', url: 'mac-softwares.html', icon: LucideIcons.apple, category: 'Software' },
+        { title: 'Mobile Apps', url: 'mobile-apps.html', icon: LucideIcons.smartphone, category: 'Software' },
         { title: 'Windows Plugins', url: 'windows-plugins.html', icon: LucideIcons.plug, category: 'Plugins' },
         { title: 'Mac Plugins', url: 'mac-plugins.html', icon: LucideIcons.zap, category: 'Plugins' },
         { title: 'Car Clips', url: 'car-clips.html', icon: LucideIcons.film, category: 'Assets' },
@@ -265,8 +268,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    window.LucideIcons = LucideIcons;
+
     // Copyable Password Chip Feature
-    function initCopyablePasswords() {
+    window.initCopyablePasswords = function initCopyablePasswords() {
         document.querySelectorAll('.copyable-pass').forEach(chip => {
             if (!chip.querySelector('.copy-icon')) {
                 const iconSpan = document.createElement('span');

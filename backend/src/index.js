@@ -122,6 +122,10 @@ export default {
                         return await handleAdminDeleteCatalogItem(itemId, env, corsHeaders);
                     }
                 }
+                // Admin Icon Upload (Permanent - Not 24hr auto-delete)
+                if (url.pathname === '/api/admin/upload-icon' && request.method === 'POST') {
+                    return await handleAdminUploadIcon(request, env, corsHeaders);
+                }
 
                 // Global Settings / Announcements
                 if (url.pathname === '/api/admin/settings' && request.method === 'POST') {
@@ -393,9 +397,13 @@ async function handleGetPublicCatalog(request, env, corsHeaders) {
             download_url TEXT NOT NULL,
             archive_password TEXT DEFAULT 'lofix',
             sort_order INTEGER DEFAULT 0,
+            icon_url TEXT,
             created_at INTEGER NOT NULL
         )
     `).run().catch(() => {});
+
+    // Ensure icon_url column exists in existing tables
+    await env.DB.prepare(`ALTER TABLE catalog_items ADD COLUMN icon_url TEXT`).run().catch(() => {});
 
     let query = `SELECT * FROM catalog_items`;
     const params = [];
@@ -422,42 +430,52 @@ async function handleAdminCreateCatalogItem(request, env, corsHeaders) {
     }
 
     const id = 'item_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6);
-    const badge = body.badge || 'Free';
-    const badgeVariant = body.badgeVariant || 'secondary';
-    const description = body.description || '';
-    const itemTag = body.itemTag || 'Stable';
-    const archivePassword = body.archivePassword || 'lofix';
+    const badge = body.badge !== undefined && body.badge !== null ? String(body.badge).trim() : 'Free';
+    const badgeVariant = body.badgeVariant !== undefined && body.badgeVariant !== null ? String(body.badgeVariant).trim() : 'secondary';
+    const description = body.description !== undefined && body.description !== null ? String(body.description).trim() : '';
+    const itemTag = body.itemTag !== undefined && body.itemTag !== null ? String(body.itemTag).trim() : 'Stable';
+    const archivePassword = body.archivePassword !== undefined && body.archivePassword !== null ? String(body.archivePassword).trim() : 'lofix';
     const sortOrder = parseInt(body.sortOrder || '0', 10);
+    const iconUrl = body.iconUrl !== undefined && body.iconUrl !== null ? String(body.iconUrl).trim() : null;
     const now = Date.now();
+
+    // Ensure icon_url column exists
+    await env.DB.prepare(`ALTER TABLE catalog_items ADD COLUMN icon_url TEXT`).run().catch(() => {});
 
     await env.DB.prepare(`
         INSERT INTO catalog_items (
             id, category, title, badge, badge_variant, description,
-            item_name, item_tag, download_url, archive_password, sort_order, created_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            item_name, item_tag, download_url, archive_password, sort_order, icon_url, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).bind(
         id, category, title, badge, badgeVariant, description,
-        itemName, itemTag, downloadUrl, archivePassword, sortOrder, now
+        itemName, itemTag, downloadUrl, archivePassword, sortOrder, iconUrl, now
     ).run();
 
-    return jsonResponse({ success: true, item: { id, category, title, itemName, downloadUrl } }, 201, corsHeaders);
+    return jsonResponse({ success: true, item: { id, category, title, itemName, downloadUrl, iconUrl } }, 201, corsHeaders);
 }
 
 // PUT /api/admin/catalog/:id
 async function handleAdminUpdateCatalogItem(itemId, request, env, corsHeaders) {
     const body = await request.json().catch(() => ({}));
-    const category = body.category;
-    const title = body.title;
-    const itemName = body.itemName;
-    const downloadUrl = body.downloadUrl;
-    const badge = body.badge;
-    const badgeVariant = body.badgeVariant;
-    const description = body.description;
-    const itemTag = body.itemTag;
-    const archivePassword = body.archivePassword;
-    const sortOrder = parseInt(body.sortOrder || '0', 10);
+    
+    // Explicitly normalize all fields: convert undefined to null so D1 driver never throws bind error
+    const category = body.category !== undefined ? String(body.category).trim() : null;
+    const title = body.title !== undefined ? String(body.title).trim() : null;
+    const itemName = body.itemName !== undefined ? String(body.itemName).trim() : null;
+    const downloadUrl = body.downloadUrl !== undefined ? String(body.downloadUrl).trim() : null;
+    const badge = body.badge !== undefined ? String(body.badge).trim() : null;
+    const badgeVariant = body.badgeVariant !== undefined ? String(body.badgeVariant).trim() : null;
+    const description = body.description !== undefined ? String(body.description).trim() : null;
+    const itemTag = body.itemTag !== undefined ? String(body.itemTag).trim() : null;
+    const archivePassword = body.archivePassword !== undefined ? String(body.archivePassword).trim() : null;
+    const sortOrder = body.sortOrder !== undefined ? parseInt(body.sortOrder, 10) : null;
+    const iconUrl = body.iconUrl !== undefined ? String(body.iconUrl).trim() : null;
 
-    await env.DB.prepare(`
+    // Ensure icon_url column exists
+    await env.DB.prepare(`ALTER TABLE catalog_items ADD COLUMN icon_url TEXT`).run().catch(() => {});
+
+    const res = await env.DB.prepare(`
         UPDATE catalog_items
         SET category = COALESCE(?, category),
             title = COALESCE(?, title),
@@ -468,13 +486,59 @@ async function handleAdminUpdateCatalogItem(itemId, request, env, corsHeaders) {
             description = COALESCE(?, description),
             item_tag = COALESCE(?, item_tag),
             archive_password = COALESCE(?, archive_password),
-            sort_order = COALESCE(?, sort_order)
+            sort_order = COALESCE(?, sort_order),
+            icon_url = COALESCE(?, icon_url)
         WHERE id = ?
     `).bind(
-        category, title, itemName, downloadUrl, badge, badgeVariant, description, itemTag, archivePassword, sortOrder, itemId
+        category, title, itemName, downloadUrl, badge, badgeVariant, description, itemTag, archivePassword, sortOrder, iconUrl, itemId
     ).run();
 
-    return jsonResponse({ success: true, message: `Item ${itemId} updated` }, 200, corsHeaders);
+    return jsonResponse({ success: true, message: `Item ${itemId} updated successfully` }, 200, corsHeaders);
+}
+
+// POST /api/admin/upload-icon
+async function handleAdminUploadIcon(request, env, corsHeaders) {
+    const contentType = request.headers.get('Content-Type') || '';
+    if (!contentType.includes('multipart/form-data')) {
+        return jsonResponse({ error: 'Expected multipart/form-data' }, 400, corsHeaders);
+    }
+
+    const formData = await request.formData();
+    const file = formData.get('file');
+
+    if (!file || typeof file === 'string') {
+        return jsonResponse({ error: 'No valid file provided' }, 400, corsHeaders);
+    }
+
+    // Limit icons to 2MB
+    if (file.size > 2 * 1024 * 1024) {
+        return jsonResponse({ error: 'Icon file exceeds 2 MB limit' }, 413, corsHeaders);
+    }
+
+    const ext = file.name.split('.').pop() || 'png';
+    const key = `icon_${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${ext.replace(/[^a-zA-Z0-9]/g, '')}`;
+
+    // Store in Cloudflare R2 WITHOUT expiresAt metadata so it stays permanently!
+    await env.BUCKET.put(key, await file.arrayBuffer(), {
+        httpMetadata: {
+            contentType: file.type || 'image/png',
+        },
+        customMetadata: {
+            uploadedAt: Date.now().toString(),
+            originalName: file.name,
+            assetType: 'software-icon'
+        }
+    });
+
+    const url = new URL(request.url);
+    const iconUrl = `${url.origin}/api/attachments/${key}`;
+
+    return jsonResponse({
+        success: true,
+        key,
+        name: file.name,
+        url: iconUrl
+    }, 200, corsHeaders);
 }
 
 // DELETE /api/admin/catalog/:id

@@ -1,5 +1,26 @@
 User-agent: *
 Allow: /
+Disallow: /master-admin.html
+Disallow: /master-admin
+
+# Explicitly Allow Generative AI & Answer Engine Crawlers (AEO)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
 
 # Sitemaps
 Sitemap: https://karunadueditorsclub.vercel.app/sitemap.xml

@@ -26,6 +26,12 @@
     <meta name="twitter:description" content="Download tested Windows video editing tools including Adobe After Effects, Premiere Pro, DaVinci Resolve Studio, and Topaz AI for video editors.">
     <meta name="twitter:image" content="https://karunadueditorsclub.vercel.app/kec-logo.png">
 
+    <!-- GEO / Geographical Targeting Meta Tags -->
+    <meta name="geo.region" content="IN-KA">
+    <meta name="geo.placename" content="Bengaluru, Karnataka">
+    <meta name="geo.position" content="12.9716;77.5946">
+    <meta name="ICBM" content="12.9716, 77.5946">
+
     <!-- Structured Data (JSON-LD) for LocalBusiness & Breadcrumb -->
     <script type="application/ld+json">
 {
@@ -50,6 +56,52 @@
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Windows Video Editing Software Collection",
+  "description": "Verified Windows creative tools including DaVinci Resolve Studio, CapCut Pro, Topaz Video AI, and Adobe creative software.",
+  "itemListElement": [
+    {
+      "@type": "SoftwareApplication",
+      "position": 1,
+      "name": "DaVinci Resolve Studio",
+      "operatingSystem": "Windows 10, Windows 11 (x64)",
+      "applicationCategory": "MultimediaApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "INR"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "position": 2,
+      "name": "CapCut Pro PC",
+      "operatingSystem": "Windows 10, Windows 11 (x64)",
+      "applicationCategory": "MultimediaApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "INR"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "position": 3,
+      "name": "Topaz Video AI",
+      "operatingSystem": "Windows 10, Windows 11 (x64)",
+      "applicationCategory": "MultimediaApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "INR"
+      }
+    }
+  ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "Karunadu Editors Club",
   "alternateName": "KEC",
@@ -59,13 +111,14 @@
   "image": "https://karunadueditorsclub.vercel.app/kec-logo.png",
   "address": {
     "@type": "PostalAddress",
+    "addressLocality": "Bengaluru",
     "addressRegion": "Karnataka",
     "addressCountry": "IN"
   },
   "geo": {
     "@type": "GeoCoordinates",
-    "latitude": "12.9716",
-    "longitude": "77.5946"
+    "latitude": 12.9716,
+    "longitude": 77.5946
   },
   "sameAs": [
     "https://github.com/gurudeepdeeps/karunadu-editors-club"
@@ -106,6 +159,7 @@
                     <h3>Softwares</h3>
                     <a href="windows-softwares.html" class="nav-link active">Windows-Softwares</a>
                     <a href="mac-softwares.html" class="nav-link">Mac-Softwares</a>
+                    <a href="mobile-apps.html" class="nav-link">Mobile-Apps</a>
                 </div>
                 <div class="nav-group">
                     <h3>Plugins</h3>
@@ -197,12 +251,16 @@
                                         container.innerHTML = Object.keys(grouped).map(title => {
                                             const subItems = grouped[title];
                                             const first = subItems[0];
+                                            const categoryIcon = first.icon_url || (subItems.find(x => x.icon_url) || {}).icon_url;
                                             return `
                                                 <div class="software-category">
                                                     <div class="shadcn-card">
                                                         <div class="shadcn-card-header">
                                                             <div class="shadcn-card-title">
-                                                                <span>${escapeHtml(title)}</span>
+                                                                <div style="display:flex; align-items:center; gap:0.75rem;">
+                                                                    ${categoryIcon ? `<img src="${escapeHtml(categoryIcon)}" alt="${escapeHtml(title)} logo" class="software-header-icon">` : ''}
+                                                                    <span>${escapeHtml(title)}</span>
+                                                                </div>
                                                                 <span class="shadcn-badge shadcn-badge-${first.badge_variant || 'secondary'}">${escapeHtml(first.badge || 'Windows Software')}</span>
                                                             </div>
                                                             ${first.description ? `<p class="shadcn-card-description">${escapeHtml(first.description)}</p>` : ''}
@@ -211,14 +269,25 @@
                                                             <div class="software-cards-grid">
                                                                 ${subItems.map(it => `
                                                                     <div class="software-item-card">
-                                                                        <div class="item-meta">
-                                                                            <span class="item-name">${escapeHtml(it.item_name)}</span>
-                                                                            <span class="item-tag">${escapeHtml(it.item_tag || 'Verified Package')}</span>
+                                                                        <div class="software-item-with-icon">
+                                                                            ${it.icon_url ? `<img src="${escapeHtml(it.icon_url)}" alt="${escapeHtml(it.item_name)} icon" class="software-item-icon">` : ''}
+                                                                            <div class="item-meta">
+                                                                                <span class="item-name">${escapeHtml(it.item_name)}</span>
+                                                                                <span class="item-tag">${escapeHtml(it.item_tag || 'Verified Package')}</span>
+                                                                            </div>
                                                                         </div>
-                                                                        <a href="${it.download_url}" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm">
-                                                                            <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                                                            Download
-                                                                        </a>
+                                                                        <div class="software-item-actions">
+                                                                            ${it.archive_password ? `
+                                                                                <div class="software-item-pass" title="Archive password">
+                                                                                    <span style="font-size:0.72rem; color:#6b7280; text-transform:uppercase;">Pass:</span>
+                                                                                    <code class="shadcn-code copyable-pass" data-pass="${escapeHtml(it.archive_password)}" title="Click to copy password">${escapeHtml(it.archive_password)}</code>
+                                                                                </div>
+                                                                            ` : ''}
+                                                                            <a href="${it.download_url}" target="_blank" rel="noopener noreferrer" class="btn btn-default btn-sm">
+                                                                                <svg class="lucide-icon" style="width:14px;height:14px;" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                                                                                Download
+                                                                            </a>
+                                                                        </div>
                                                                     </div>
                                                                 `).join('')}
                                                             </div>
@@ -227,6 +296,7 @@
                                                 </div>
                                             `;
                                         }).join('');
+                                        if (window.initCopyablePasswords) window.initCopyablePasswords();
                                         return;
                                     }
                                 }

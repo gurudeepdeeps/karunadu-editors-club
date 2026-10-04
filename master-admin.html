@@ -371,6 +371,7 @@
                     <h3>Softwares</h3>
                     <a href="windows-softwares.html" class="nav-link">Windows-Softwares</a>
                     <a href="mac-softwares.html" class="nav-link">Mac-Softwares</a>
+                    <a href="mobile-apps.html" class="nav-link">Mobile-Apps</a>
                 </div>
 
                 <div class="nav-group">
@@ -571,6 +572,7 @@
                                         <option value="">All Categories</option>
                                         <option value="windows-softwares">Windows Software</option>
                                         <option value="mac-softwares">Mac Software</option>
+                                        <option value="mobile-apps">Mobile Apps</option>
                                         <option value="windows-plugins">Windows Plugins</option>
                                         <option value="mac-plugins">Mac Plugins</option>
                                     </select>
@@ -586,6 +588,7 @@
                                 <table class="admin-table">
                                     <thead>
                                         <tr>
+                                            <th>Icon</th>
                                             <th>Category</th>
                                             <th>Title</th>
                                             <th>Item / Version</th>
@@ -597,7 +600,7 @@
                                     </thead>
                                     <tbody id="adminCatalogTbody">
                                         <tr>
-                                            <td colspan="7" style="text-align:center; padding:2rem; font-weight:700;">Loading catalog items from Cloudflare D1...</td>
+                                            <td colspan="8" style="text-align:center; padding:2rem; font-weight:700;">Loading catalog items from Cloudflare D1...</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -666,14 +669,30 @@
                     <select id="itemCategoryInput" class="admin-select" required>
                         <option value="windows-softwares">Windows Software</option>
                         <option value="mac-softwares">Mac Software</option>
+                        <option value="mobile-apps">Mobile Apps</option>
                         <option value="windows-plugins">Windows Plugins</option>
                         <option value="mac-plugins">Mac Plugins</option>
                     </select>
                 </div>
 
                 <div class="admin-field-group">
+                    <label>Software Logo / App Icon</label>
+                    <div style="display: flex; gap: 0.75rem; align-items: center;">
+                        <div id="iconPreviewBox" style="width: 52px; height: 52px; border: 2px solid #000; border-radius: 8px; background: #f3f4f6; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; box-shadow: 2px 2px 0px #000;">
+                            <span id="iconPreviewPlaceholder" style="font-size: 1.5rem;">📦</span>
+                            <img id="iconPreviewImg" src="" alt="Icon preview" style="width: 100%; height: 100%; object-fit: contain; display: none;">
+                        </div>
+                        <div style="flex: 1;">
+                            <input type="file" id="itemIconFileInput" accept="image/png, image/jpeg, image/webp, image/svg+xml" style="font-size: 0.85rem;" onchange="handleAdminIconUpload(event)">
+                            <div style="font-size: 0.75rem; color: #6b7280; margin-top: 0.25rem;">Upload PNG, SVG, JPG or WebP (Max 2MB). Stored permanently.</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="itemIconUrlInput">
+                </div>
+
+                <div class="admin-field-group">
                     <label for="itemTitleInput">Main Title</label>
-                    <input type="text" id="itemTitleInput" class="admin-input" placeholder="e.g. Adobe After Effects" required>
+                    <input type="text" id="itemTitleInput" class="admin-input" placeholder="e.g. Adobe After Effects or CapCut Pro" required>
                 </div>
 
                 <div class="admin-field-group">
@@ -953,12 +972,19 @@
                 allCatalogItems;
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:1.5rem; color:#6b7280;">No catalog entries found. Click "+ Add Software / Plugin" to create one.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:1.5rem; color:#6b7280;">No catalog entries found. Click "+ Add Software / Plugin" to create one.</td></tr>`;
                 return;
             }
 
             tbody.innerHTML = filtered.map(item => `
                 <tr>
+                    <td style="text-align:center;">
+                        ${item.icon_url ? `
+                            <img src="${escapeHtml(item.icon_url)}" alt="icon" style="width:34px; height:34px; object-fit:contain; border:2px solid #000; border-radius:6px; background:#fff; box-shadow:1px 1px 0px #000; display:inline-block; vertical-align:middle;">
+                        ` : `
+                            <div style="width:34px; height:34px; border:2px solid #000; border-radius:6px; background:#e5e7eb; display:inline-flex; align-items:center; justify-content:center; font-size:1.1rem; box-shadow:1px 1px 0px #000;">📦</div>
+                        `}
+                    </td>
                     <td><span class="shadcn-badge shadcn-badge-secondary">${escapeHtml(item.category)}</span></td>
                     <td><strong>${escapeHtml(item.title)}</strong></td>
                     <td>${escapeHtml(item.item_name)} <span style="font-size:0.75rem; color:#6b7280;">(${escapeHtml(item.item_tag || 'Stable')})</span></td>
@@ -975,9 +1001,56 @@
             `).join('');
         }
 
+        function setIconPreview(url) {
+            const previewImg = document.getElementById('iconPreviewImg');
+            const placeholder = document.getElementById('iconPreviewPlaceholder');
+            const input = document.getElementById('itemIconUrlInput');
+            input.value = url || '';
+            if (url) {
+                previewImg.src = url;
+                previewImg.style.display = 'block';
+                placeholder.style.display = 'none';
+            } else {
+                previewImg.src = '';
+                previewImg.style.display = 'none';
+                placeholder.style.display = 'inline';
+            }
+        }
+
+        async function handleAdminIconUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            if (file.size > 2 * 1024 * 1024) {
+                alert('Logo/Icon file size cannot exceed 2MB.');
+                e.target.value = '';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const res = await fetch(`${API_URL}/api/admin/upload-icon`, {
+                    method: 'POST',
+                    headers: { 'X-Admin-Token': adminToken },
+                    body: formData
+                });
+                const data = await res.json();
+                if (!res.ok || !data.success) {
+                    throw new Error(data.error || 'Failed to upload icon');
+                }
+                setIconPreview(data.url);
+            } catch (err) {
+                alert('Icon upload error: ' + err.message);
+                e.target.value = '';
+            }
+        }
+
         function openNewCatalogModal() {
             document.getElementById('catalogModalTitle').textContent = 'Add Software / Plugin';
             document.getElementById('catalogModalItemId').value = '';
+            document.getElementById('itemCategoryInput').value = 'windows-softwares';
             document.getElementById('itemTitleInput').value = '';
             document.getElementById('itemNameInput').value = '';
             document.getElementById('itemTagInput').value = 'v2025 • Stable';
@@ -985,6 +1058,8 @@
             document.getElementById('itemDownloadUrlInput').value = '';
             document.getElementById('itemArchivePassInput').value = 'lofix';
             document.getElementById('itemDescriptionInput').value = '';
+            document.getElementById('itemIconFileInput').value = '';
+            setIconPreview('');
             document.getElementById('catalogModal').style.display = 'flex';
         }
 
@@ -1002,6 +1077,8 @@
             document.getElementById('itemDownloadUrlInput').value = item.download_url;
             document.getElementById('itemArchivePassInput').value = item.archive_password || 'lofix';
             document.getElementById('itemDescriptionInput').value = item.description || '';
+            document.getElementById('itemIconFileInput').value = '';
+            setIconPreview(item.icon_url || '');
             document.getElementById('catalogModal').style.display = 'flex';
         }
 
@@ -1018,9 +1095,11 @@
                 itemName: document.getElementById('itemNameInput').value.trim(),
                 itemTag: document.getElementById('itemTagInput').value.trim(),
                 badge: document.getElementById('itemBadgeInput').value.trim(),
+                badgeVariant: 'secondary',
                 downloadUrl: document.getElementById('itemDownloadUrlInput').value.trim(),
                 archivePassword: document.getElementById('itemArchivePassInput').value.trim(),
-                description: document.getElementById('itemDescriptionInput').value.trim()
+                description: document.getElementById('itemDescriptionInput').value.trim(),
+                iconUrl: document.getElementById('itemIconUrlInput').value.trim() || null
             };
 
             const btn = document.getElementById('saveCatalogItemBtn');
@@ -1040,7 +1119,8 @@
                     body: JSON.stringify(payload)
                 });
 
-                if (!res.ok) throw new Error('Failed to save item');
+                const data = await res.json().catch(() => ({}));
+                if (!res.ok) throw new Error(data.error || 'Failed to save item');
                 closeCatalogModal();
                 loadAdminCatalog();
             } catch (err) {
