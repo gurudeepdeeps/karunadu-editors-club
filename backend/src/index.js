@@ -452,6 +452,13 @@ async function handleAdminCreateCatalogItem(request, env, corsHeaders) {
         itemName, itemTag, downloadUrl, archivePassword, sortOrder, iconUrl, now
     ).run();
 
+    // If iconUrl is provided, propagate the icon to all items with the same title
+    if (iconUrl) {
+        await env.DB.prepare(`
+            UPDATE catalog_items SET icon_url = ? WHERE LOWER(TRIM(title)) = LOWER(TRIM(?))
+        `).bind(iconUrl, title).run().catch(() => {});
+    }
+
     return jsonResponse({ success: true, item: { id, category, title, itemName, downloadUrl, iconUrl } }, 201, corsHeaders);
 }
 
@@ -475,7 +482,7 @@ async function handleAdminUpdateCatalogItem(itemId, request, env, corsHeaders) {
     // Ensure icon_url column exists
     await env.DB.prepare(`ALTER TABLE catalog_items ADD COLUMN icon_url TEXT`).run().catch(() => {});
 
-    const res = await env.DB.prepare(`
+    await env.DB.prepare(`
         UPDATE catalog_items
         SET category = COALESCE(?, category),
             title = COALESCE(?, title),
@@ -492,6 +499,21 @@ async function handleAdminUpdateCatalogItem(itemId, request, env, corsHeaders) {
     `).bind(
         category, title, itemName, downloadUrl, badge, badgeVariant, description, itemTag, archivePassword, sortOrder, iconUrl, itemId
     ).run();
+
+    // If iconUrl is provided, propagate the icon to ALL versions/items with the same title
+    if (iconUrl) {
+        // Find title of this item if not provided
+        let targetTitle = title;
+        if (!targetTitle) {
+            const currentItem = await env.DB.prepare(`SELECT title FROM catalog_items WHERE id = ?`).bind(itemId).first();
+            if (currentItem) targetTitle = currentItem.title;
+        }
+        if (targetTitle) {
+            await env.DB.prepare(`
+                UPDATE catalog_items SET icon_url = ? WHERE LOWER(TRIM(title)) = LOWER(TRIM(?))
+            `).bind(iconUrl, targetTitle).run().catch(() => {});
+        }
+    }
 
     return jsonResponse({ success: true, message: `Item ${itemId} updated successfully` }, 200, corsHeaders);
 }

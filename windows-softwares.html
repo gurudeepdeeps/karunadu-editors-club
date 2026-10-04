@@ -267,10 +267,12 @@
                                                         </div>
                                                         <div class="shadcn-card-content">
                                                             <div class="software-cards-grid">
-                                                                ${subItems.map(it => `
+                                                                ${subItems.map(it => {
+                                                                    const itemIcon = it.icon_url || categoryIcon;
+                                                                    return `
                                                                     <div class="software-item-card">
                                                                         <div class="software-item-with-icon">
-                                                                            ${it.icon_url ? `<img src="${escapeHtml(it.icon_url)}" alt="${escapeHtml(it.item_name)} icon" class="software-item-icon">` : ''}
+                                                                            ${itemIcon ? `<img src="${escapeHtml(itemIcon)}" alt="${escapeHtml(it.item_name)} icon" class="software-item-icon">` : ''}
                                                                             <div class="item-meta">
                                                                                 <span class="item-name">${escapeHtml(it.item_name)}</span>
                                                                                 <span class="item-tag">${escapeHtml(it.item_tag || 'Verified Package')}</span>
@@ -289,7 +291,8 @@
                                                                             </a>
                                                                         </div>
                                                                     </div>
-                                                                `).join('')}
+                                                                    `;
+                                                                }).join('')}
                                                             </div>
                                                         </div>
                                                     </div>

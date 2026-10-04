@@ -963,6 +963,12 @@
             }
         }
 
+        function getTitleIcon(title) {
+            if (!title) return '';
+            const match = allCatalogItems.find(it => it.icon_url && it.title && it.title.trim().toLowerCase() === title.trim().toLowerCase());
+            return match ? match.icon_url : '';
+        }
+
         function renderCatalogTable() {
             const tbody = document.getElementById('adminCatalogTbody');
             const categoryFilter = document.getElementById('catalogCategoryFilter').value;
@@ -976,29 +982,32 @@
                 return;
             }
 
-            tbody.innerHTML = filtered.map(item => `
-                <tr>
-                    <td style="text-align:center;">
-                        ${item.icon_url ? `
-                            <img src="${escapeHtml(item.icon_url)}" alt="icon" style="width:34px; height:34px; object-fit:contain; border:2px solid #000; border-radius:6px; background:#fff; box-shadow:1px 1px 0px #000; display:inline-block; vertical-align:middle;">
-                        ` : `
-                            <div style="width:34px; height:34px; border:2px solid #000; border-radius:6px; background:#e5e7eb; display:inline-flex; align-items:center; justify-content:center; font-size:1.1rem; box-shadow:1px 1px 0px #000;">📦</div>
-                        `}
-                    </td>
-                    <td><span class="shadcn-badge shadcn-badge-secondary">${escapeHtml(item.category)}</span></td>
-                    <td><strong>${escapeHtml(item.title)}</strong></td>
-                    <td>${escapeHtml(item.item_name)} <span style="font-size:0.75rem; color:#6b7280;">(${escapeHtml(item.item_tag || 'Stable')})</span></td>
-                    <td><span class="shadcn-badge shadcn-badge-outline">${escapeHtml(item.badge || 'Free')}</span></td>
-                    <td><code class="shadcn-code">${escapeHtml(item.archive_password || 'lofix')}</code></td>
-                    <td><a href="${item.download_url}" target="_blank" style="color:var(--neo-black); text-decoration:underline; font-weight:700;">Open Link</a></td>
-                    <td>
-                        <div style="display:flex; gap:0.4rem;">
-                            <button type="button" class="btn-action-sm btn-action-edit" onclick="openEditCatalogModal('${item.id}')">Edit</button>
-                            <button type="button" class="btn-action-sm btn-action-delete" onclick="deleteCatalogItem('${item.id}')">Delete</button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
+            tbody.innerHTML = filtered.map(item => {
+                const itemIcon = item.icon_url || getTitleIcon(item.title);
+                return `
+                    <tr>
+                        <td style="text-align:center;">
+                            ${itemIcon ? `
+                                <img src="${escapeHtml(itemIcon)}" alt="icon" style="width:34px; height:34px; object-fit:contain; border:2px solid #000; border-radius:6px; background:#fff; box-shadow:1px 1px 0px #000; display:inline-block; vertical-align:middle;">
+                            ` : `
+                                <div style="width:34px; height:34px; border:2px solid #000; border-radius:6px; background:#e5e7eb; display:inline-flex; align-items:center; justify-content:center; font-size:1.1rem; box-shadow:1px 1px 0px #000;">📦</div>
+                            `}
+                        </td>
+                        <td><span class="shadcn-badge shadcn-badge-secondary">${escapeHtml(item.category)}</span></td>
+                        <td><strong>${escapeHtml(item.title)}</strong></td>
+                        <td>${escapeHtml(item.item_name)} <span style="font-size:0.75rem; color:#6b7280;">(${escapeHtml(item.item_tag || 'Stable')})</span></td>
+                        <td><span class="shadcn-badge shadcn-badge-outline">${escapeHtml(item.badge || 'Free')}</span></td>
+                        <td><code class="shadcn-code">${escapeHtml(item.archive_password || 'lofix')}</code></td>
+                        <td><a href="${item.download_url}" target="_blank" style="color:var(--neo-black); text-decoration:underline; font-weight:700;">Open Link</a></td>
+                        <td>
+                            <div style="display:flex; gap:0.4rem;">
+                                <button type="button" class="btn-action-sm btn-action-edit" onclick="openEditCatalogModal('${item.id}')">Edit</button>
+                                <button type="button" class="btn-action-sm btn-action-delete" onclick="deleteCatalogItem('${item.id}')">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
 
         function setIconPreview(url) {
@@ -1078,7 +1087,10 @@
             document.getElementById('itemArchivePassInput').value = item.archive_password || 'lofix';
             document.getElementById('itemDescriptionInput').value = item.description || '';
             document.getElementById('itemIconFileInput').value = '';
-            setIconPreview(item.icon_url || '');
+            
+            // If item has icon, use it; otherwise check if any other item with this title has an icon!
+            const inheritedIcon = item.icon_url || getTitleIcon(item.title);
+            setIconPreview(inheritedIcon || '');
             document.getElementById('catalogModal').style.display = 'flex';
         }
 
